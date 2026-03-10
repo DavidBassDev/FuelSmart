@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:fuel_smart/core/features/auth/data/auth_service.dart';
 import 'package:fuel_smart/core/theme/app_theme.dart';
 import 'package:fuel_smart/core/widgets/button_action.dart';
 import 'package:fuel_smart/core/widgets/dividerPersonalizated.dart';
 import 'package:fuel_smart/core/widgets/form_widget.dart';
 import 'package:fuel_smart/main.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,6 +65,7 @@ class LoginScreen extends StatelessWidget {
                 FormWidget(
                   icon: Icons.mail_outline_outlined,
                   obscureText: false,
+                  controller: TextEditingController(),
                 ),
                 //formulario contraseña
                 SizedBox(height: 10),
@@ -76,14 +85,23 @@ class LoginScreen extends StatelessWidget {
 
                 SizedBox(height: 10),
 
-                FormWidget(icon: Icons.lock_outline, obscureText: true),
+                FormWidget(
+                  icon: Icons.lock_outline,
+                  obscureText: true,
+                  controller: passwordController,
+                ),
                 SizedBox(height: 35),
 
                 /// BOTON
                 ButtonAction(
                   text: "Continuar",
-                  onPressed: () {
-                    MyApp.of(context)?.changeTheme(AppTheme.redTheme());
+                  onPressed: () async {
+                    final authService = AuthService();
+                    final response = await authService.login(
+                      "david@test.com",
+                      "123456",
+                    );
+                    print(response["token"]);
                   },
                 ),
                 SizedBox(height: 40),
