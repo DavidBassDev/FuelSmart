@@ -1,7 +1,47 @@
 import 'package:flutter/material.dart';
-import 'wine_Theme.dart';
+import 'package:fuel_smart/core/theme/text_theme.dart';
 
-//Para manejar que tema selecciona el usuario
 class AppTheme {
-  static ThemeData light = wineTheme;
+  static ThemeData wineTheme() {
+    return ThemeData(
+      useMaterial3: true,
+      fontFamily: "SFProText",
+      brightness: Brightness.dark,
+      scaffoldBackgroundColor: const Color(0xFF883955),
+
+      colorScheme: const ColorScheme(
+        brightness: Brightness.dark,
+        primary: Color(0xFF552235), // botones principales
+        onPrimary: Colors.white, // texto sobre botones
+        secondary: Color(0xFF552235),
+        onSecondary: Colors.white,
+        error: Colors.red,
+        onError: Colors.white,
+        surface: Color(0xFF883955),
+        onSurface: Colors.white, // texto normal
+      ),
+
+      textTheme: appTextTheme,
+    );
+  }
+
+  //color rojo
+  static ThemeData redTheme() {
+    return ThemeData(
+      useMaterial3: true,
+      brightness: Brightness.dark,
+      scaffoldBackgroundColor: const Color(0xFFA23B3C),
+      colorScheme: const ColorScheme(
+        brightness: Brightness.dark,
+        primary: Color(0xFFA23B3C), // botones principales
+        onPrimary: Colors.white, // texto sobre botones
+        secondary: Color(0XFF6E2324),
+        onSecondary: Colors.white,
+        error: Colors.red,
+        onError: Colors.white,
+        surface: Color(0xFFA23B3C),
+        onSurface: Colors.white, // texto normal
+      ),
+    );
+  }
 }

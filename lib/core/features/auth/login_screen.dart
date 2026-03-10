@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:fuel_smart/core/theme/app_theme.dart';
+import 'package:fuel_smart/core/widgets/button_action.dart';
+import 'package:fuel_smart/core/widgets/dividerPersonalizated.dart';
+import 'package:fuel_smart/core/widgets/form_widget.dart';
+import 'package:fuel_smart/main.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -6,62 +11,62 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          children: [
-            const SizedBox(height: 60),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Image.asset(
-                "assets/images/logoFM.png",
-                width: 80,
-                height: 80,
-              ),
-            ),
-            const SizedBox(height: 60),
-            Text(
-              'Iniciar sesión',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-            const SizedBox(height: 40),
-            Text(
-              'Introduce tus credenciales.',
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-            SizedBox(height: 40),
-            Column(
+      body: SingleChildScrollView(
+        child: Center(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 24),
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                SizedBox(height: 40),
+
+                /// LOGO
+                Center(
+                  child: Image.asset(
+                    "assets/images/logoFM.png",
+                    width: 80,
+                    height: 80,
+                  ),
+                ),
+
+                SizedBox(height: 50),
+
+                /// TITULO
+                Text(
+                  'Iniciar sesión',
+                  style: Theme.of(context).textTheme.headlineMedium,
+                ),
+
+                SizedBox(height: 10),
+
+                Text(
+                  'Introduce tus credenciales.',
+                  style: Theme.of(context).textTheme.titleSmall,
+                ),
+
+                SizedBox(height: 30),
+
                 /// EMAIL
                 Text(
                   "Dirección de correo electrónico",
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
 
-                const SizedBox(height: 20),
-
-                TextFormField(
-                  decoration: InputDecoration(
-                    suffixIcon: const Icon(
-                      Icons.mail_outline,
-                      color: Colors.black,
-                    ),
-                    filled: true,
-                    fillColor: Colors.white,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(25),
-                    ),
-                  ),
+                SizedBox(height: 10),
+                //formulario para el correo
+                FormWidget(
+                  icon: Icons.mail_outline_outlined,
+                  obscureText: false,
                 ),
-
-                const SizedBox(height: 8),
+                //formulario contraseña
+                SizedBox(height: 10),
 
                 Text(
                   "Ejemplo: nombre@correo.com",
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
 
-                const SizedBox(height: 30),
+                SizedBox(height: 25),
 
                 /// PASSWORD
                 Text(
@@ -69,49 +74,37 @@ class LoginScreen extends StatelessWidget {
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
 
-                const SizedBox(height: 8),
+                SizedBox(height: 10),
 
-                TextFormField(
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    suffixIcon: const Icon(
-                      Icons.lock_outline,
-                      color: Colors.black,
-                    ),
-                    filled: true,
-                    fillColor: Colors.white,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(25),
-                    ),
-                  ),
-                ),
-
-                const SizedBox(height: 40),
+                FormWidget(icon: Icons.lock_outline, obscureText: true),
+                SizedBox(height: 35),
 
                 /// BOTON
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xFF552235),
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                    ),
-                    onPressed: () {
-                      print("dio click");
-                    },
-                    child: Text(
-                      "Continuar",
-                      style: TextStyle(
-                        color: const Color.fromARGB(255, 255, 255, 255),
-                        fontSize: 18,
-                      ),
-                    ),
+                ButtonAction(
+                  text: "Continuar",
+                  onPressed: () {
+                    MyApp.of(context)?.changeTheme(AppTheme.redTheme());
+                  },
+                ),
+                SizedBox(height: 40),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: Text(
+                    "¿Olvidaste tu contraseña?",
+                    style: Theme.of(context).textTheme.bodyLarge,
                   ),
                 ),
+                SizedBox(height: 45),
+                DividerPersonalizated(),
               ],
             ),
-          ],
+          ),
         ),
+      ),
+
+      floatingActionButton: Text(
+        'Solicita tu usuario contactando a admin@correo.com',
+        style: Theme.of(context).textTheme.titleSmall,
       ),
     );
   }
