@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fuel_smart/core/api/login_screen.dart';
+import 'package:fuel_smart/core/features/auth/login_screen.dart';
 import 'package:fuel_smart/core/theme/app_theme.dart';
 
 void main() {

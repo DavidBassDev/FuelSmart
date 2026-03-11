@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:fuel_smart/core/features/auth/data/auth_service.dart';
-import 'package:fuel_smart/core/theme/app_theme.dart';
+import 'package:fuel_smart/core/features/users/main_screen.dart';
+import 'package:fuel_smart/core/services/auth_service.dart';
 import 'package:fuel_smart/core/widgets/button_action.dart';
 import 'package:fuel_smart/core/widgets/dividerPersonalizated.dart';
 import 'package:fuel_smart/core/widgets/form_widget.dart';
-import 'package:fuel_smart/main.dart';
+import 'package:fuel_smart/core/widgets/show_dialog.dart';
+import 'package:http/http.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -65,7 +66,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 FormWidget(
                   icon: Icons.mail_outline_outlined,
                   obscureText: false,
-                  controller: TextEditingController(),
+                  controller: emailController,
                 ),
                 //formulario contraseña
                 SizedBox(height: 10),
@@ -96,12 +97,34 @@ class _LoginScreenState extends State<LoginScreen> {
                 ButtonAction(
                   text: "Continuar",
                   onPressed: () async {
+                    if (emailController.text.isEmpty ||
+                        passwordController.text.isEmpty) {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return const ShowDialogPersonalizated();
+                        },
+                      );
+                      return; //para aca si no cumple con el controller
+                    }
+
                     final authService = AuthService();
                     final response = await authService.login(
-                      "david@test.com",
-                      "123456",
+                      emailController.text,
+                      passwordController.text,
                     );
-                    print(response["token"]);
+                    if (response == null || response["token"] == null) {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return const ShowDialogPersonalizated();
+                        },
+                      );
+                      return;
+                    } else {
+                      final rol = response["usuario"]["rol"];
+                      final token = (response["token"]);
+                    }
                   },
                 ),
                 SizedBox(height: 40),
