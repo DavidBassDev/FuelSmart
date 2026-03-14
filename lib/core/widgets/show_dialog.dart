@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class ShowDialogPersonalizated extends StatelessWidget {
-  const ShowDialogPersonalizated({super.key});
+  final text;
+
+  const ShowDialogPersonalizated({super.key, required this.text});
 
   @override
   Widget build(BuildContext context) {
@@ -12,8 +14,8 @@ class ShowDialogPersonalizated extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Text(
-              "Usuario y/o contraseña no coinciden!",
+            Text(
+              text.toString(),
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 18),
             ),
@@ -32,7 +34,10 @@ class ShowDialogPersonalizated extends StatelessWidget {
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                child: const Text("Aceptar", style: TextStyle(fontSize: 18)),
+                child: const Text(
+                  "Aceptar",
+                  style: TextStyle(fontSize: 18, color: Colors.white),
+                ),
               ),
             ),
           ],

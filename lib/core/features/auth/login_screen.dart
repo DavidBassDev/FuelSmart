@@ -5,7 +5,6 @@ import 'package:fuel_smart/core/widgets/button_action.dart';
 import 'package:fuel_smart/core/widgets/dividerPersonalizated.dart';
 import 'package:fuel_smart/core/widgets/form_widget.dart';
 import 'package:fuel_smart/core/widgets/show_dialog.dart';
-import 'package:http/http.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -102,7 +101,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       showDialog(
                         context: context,
                         builder: (context) {
-                          return const ShowDialogPersonalizated();
+                          return ShowDialogPersonalizated(
+                            text: "Debes llenar ambos campos",
+                          );
                         },
                       );
                       return; //para aca si no cumple con el controller
@@ -117,13 +118,26 @@ class _LoginScreenState extends State<LoginScreen> {
                       showDialog(
                         context: context,
                         builder: (context) {
-                          return const ShowDialogPersonalizated();
+                          return const ShowDialogPersonalizated(
+                            text: "Credenciales invalidas",
+                          );
                         },
                       );
                       return;
                     } else {
                       final rol = response["usuario"]["rol"];
                       final token = (response["token"]);
+                      final nombreUsuario = (response["usuario"]["nombre"]);
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => MainScreen(
+                            rol: rol,
+                            userName: nombreUsuario,
+                            token: token,
+                          ),
+                        ),
+                      );
                     }
                   },
                 ),
