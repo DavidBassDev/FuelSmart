@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fuel_smart/core/features/users/main_screen.dart';
+import 'package:fuel_smart/core/features/users/models/user.dart';
 import 'package:fuel_smart/core/services/auth_service.dart';
 import 'package:fuel_smart/core/widgets/button_action.dart';
 import 'package:fuel_smart/core/widgets/dividerPersonalizated.dart';
@@ -125,17 +126,13 @@ class _LoginScreenState extends State<LoginScreen> {
                       );
                       return;
                     } else {
-                      final rol = response["usuario"]["rol"];
+                      final user = User.fromJson(response["usuario"]);
                       final token = (response["token"]);
-                      final nombreUsuario = (response["usuario"]["nombre"]);
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => MainScreen(
-                            rol: rol,
-                            userName: nombreUsuario,
-                            token: token,
-                          ),
+                          builder: (context) =>
+                              MainScreen(user: user, token: token),
                         ),
                       );
                     }
@@ -149,17 +146,21 @@ class _LoginScreenState extends State<LoginScreen> {
                     style: Theme.of(context).textTheme.bodyLarge,
                   ),
                 ),
-                SizedBox(height: 45),
-                DividerPersonalizated(),
+                SizedBox(height: 15),
+                DividerPersonalizated(thicknessSize: 1),
+                Text(
+                  'Solicita tu usuario contactando a admin@correo.com',
+                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 10,
+                  ),
+                  textAlign: TextAlign.end,
+                ),
+                SizedBox(height: 25),
               ],
             ),
           ),
         ),
-      ),
-
-      floatingActionButton: Text(
-        'Solicita tu usuario contactando a admin@correo.com',
-        style: Theme.of(context).textTheme.titleSmall,
       ),
     );
   }

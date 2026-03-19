@@ -8,7 +8,7 @@ class CardAdminOperation extends StatelessWidget {
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
-        side: BorderSide(color: Color(0xFF6E2C3E), width: 5),
+        side: BorderSide(color: Color(0xFF6E2C3E), width: 3),
       ),
       color: Colors.white,
       child: InkWell(

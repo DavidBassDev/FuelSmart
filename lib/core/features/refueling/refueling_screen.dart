@@ -46,7 +46,7 @@ class _RefuelingScreenState extends State<RefuelingScreen> {
       ),
       body: Column(
         children: [
-          const DividerPersonalizated(),
+          const DividerPersonalizated(thicknessSize: 1),
           const Icon(Icons.directions_car, size: 110),
           const SizedBox(height: 30),
 
@@ -58,7 +58,7 @@ class _RefuelingScreenState extends State<RefuelingScreen> {
           ),
 
           const SizedBox(height: 25),
-          const DividerPersonalizated(),
+          const DividerPersonalizated(thicknessSize: 1),
 
           Expanded(
             child: vehicles.isEmpty
@@ -66,7 +66,7 @@ class _RefuelingScreenState extends State<RefuelingScreen> {
                 : ListView.separated(
                     itemCount: vehicles.length,
                     separatorBuilder: (context, index) {
-                      return const DividerPersonalizated();
+                      return const DividerPersonalizated(thicknessSize: 1);
                     },
                     itemBuilder: (context, index) {
                       final vehicle = vehicles[index];

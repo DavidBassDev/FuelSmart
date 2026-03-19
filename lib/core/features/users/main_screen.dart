@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:fuel_smart/core/features/users/carousel_widget.dart';
+import 'package:fuel_smart/core/features/users/models/user.dart';
+import 'package:fuel_smart/core/features/users/screens/widgets/carousel_widget.dart';
+import 'package:fuel_smart/core/widgets/button_nav_bar.dart';
 import 'package:fuel_smart/core/widgets/card_admin_operation.dart';
 
 class MainScreen extends StatelessWidget {
-  final String userName;
-  final String rol;
+  final User user;
   final String token;
-  const MainScreen({
-    super.key,
-    required this.rol,
-    required this.userName,
-    required this.token,
-  });
+
+  const MainScreen({super.key, required this.user, required this.token});
 
   @override
   Widget build(BuildContext context) {
@@ -27,25 +24,27 @@ class MainScreen extends StatelessWidget {
                     SizedBox(height: 90),
                     Expanded(
                       child: Text(
-                        'Bienvenido $userName!',
+                        'Bienvenido ${user.nombre}',
                         style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                           fontWeight: FontWeight.bold,
+                          fontSize: 14,
                         ),
                         textAlign: TextAlign.center,
                       ),
                     ),
                     Expanded(
                       child: Text(
-                        rol,
+                        user.rol,
                         style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                           fontWeight: FontWeight.bold,
+                          fontSize: 14,
                         ),
                         textAlign: TextAlign.center,
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 20),
+
                 const CardAdminOperation(),
                 const SizedBox(height: 20),
 
@@ -82,6 +81,12 @@ class MainScreen extends StatelessWidget {
           ),
         ),
       ),
+      /*bottomNavigationBar: Positioned(
+        bottom: 20,
+        left: 0,
+        right: 0,
+        child: ButtonNavBar(),
+      ),*/
     );
   }
 }

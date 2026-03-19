@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 
 class DividerPersonalizated extends StatelessWidget {
-  const DividerPersonalizated({super.key});
+  final double thicknessSize;
+  const DividerPersonalizated({super.key, required this.thicknessSize});
 
   @override
   Widget build(BuildContext context) {
     return Divider(
       height: 20,
-      thickness: 5,
+      thickness: thicknessSize,
       indent: 20,
       endIndent: 0,
       color: const Color.fromARGB(255, 255, 255, 255),

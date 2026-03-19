@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fuel_smart/core/features/refueling/refueling_screen.dart';
+import 'package:fuel_smart/core/features/refueling/screens/refueling_screen.dart';
 import 'package:fuel_smart/core/widgets/carousel_functions.dart';
 
 class CarouselWidget extends StatelessWidget {
@@ -29,14 +29,7 @@ class CarouselWidget extends StatelessWidget {
         CarouselFunctions(
           icon: Icons.add_circle,
           text: "Crear\nvehículo",
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => RefuelingScreen(token: token),
-              ),
-            );
-          },
+          onPressed: () {},
         ),
         SizedBox(width: 20),
         CarouselFunctions(
