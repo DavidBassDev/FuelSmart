@@ -1,11 +1,11 @@
 class Vehicle {
   final int vehicleId;
   final int userId;
-  final int? fuelSupplierId;
+  final String? fuelSupplierId;
   final String plate;
   final double teoricPerformance;
   final double actualPerformance;
-  final int typeOfVehicle;
+  final String typeOfVehicle;
   final double avaliableFuel;
   final bool state;
   final DateTime creationDate;
@@ -29,30 +29,40 @@ class Vehicle {
 
   factory Vehicle.fromJson(Map<String, dynamic> json) {
     return Vehicle(
-      vehicleId: json['id_vehiculo'] ?? 0,
-      userId: json['usuario_id'] ?? 0,
-      fuelSupplierId: json['proveedor_id'],
-      plate: json['placa'] ?? '',
+      vehicleId: int.tryParse(json['id_vehiculo']?.toString() ?? '') ?? 0,
+
+      userId: int.tryParse(json['usuario_id']?.toString() ?? '') ?? 0,
+
+      fuelSupplierId: json['proveedor']?.toString() ?? '',
+
+      plate: json['placa']?.toString() ?? '',
 
       teoricPerformance:
-          (json['rendimiento_teorico'] as num?)?.toDouble() ?? 0.0,
+          double.tryParse(json['rendimiento_teorico']?.toString() ?? '') ?? 0.0,
 
-      actualPerformance: (json['rendimiento'] as num?)?.toDouble() ?? 0.0,
+      actualPerformance:
+          double.tryParse(json['rendimiento']?.toString() ?? '') ?? 0.0,
 
-      typeOfVehicle: json['tipo_vehiculo_id'] ?? 0,
+      typeOfVehicle: json['tipo_vehiculo']?.toString() ?? '',
 
-      avaliableFuel: (json['cupo_combustible'] as num?)?.toDouble() ?? 0.0,
+      avaliableFuel:
+          double.tryParse(json['cupo_combustible']?.toString() ?? '') ?? 0.0,
 
-      state: json['estado'] ?? true,
+      state: json['estado'] == null
+          ? true
+          : json['estado'] == true ||
+                json['estado'].toString() == 'true' ||
+                json['estado'].toString() == '1',
 
       creationDate:
-          DateTime.tryParse(json['fecha_creacion'] ?? '') ?? DateTime.now(),
-
-      updateDate:
-          DateTime.tryParse(json['fecha_actualizacion'] ?? '') ??
+          DateTime.tryParse(json['fecha_creacion']?.toString() ?? '') ??
           DateTime.now(),
 
-      createBy: json['creado_por'] ?? 0,
+      updateDate:
+          DateTime.tryParse(json['fecha_actualizacion']?.toString() ?? '') ??
+          DateTime.now(),
+
+      createBy: int.tryParse(json['creado_por']?.toString() ?? '') ?? 0,
     );
   }
 
@@ -63,7 +73,7 @@ class Vehicle {
       'placa': plate,
       'rendimiento_teorico': teoricPerformance,
       'rendimiento': actualPerformance,
-      'tipo_vehiculo_id': typeOfVehicle,
+      'tipo_vehiculo': typeOfVehicle,
       'cupo_combustible': avaliableFuel,
       'estado': state,
       'fecha_creacion': creationDate.toIso8601String(),
@@ -78,15 +88,14 @@ class Vehicle {
     return data;
   }
 
-  /// 🔄 CopyWith (con marker para nullables)
   Vehicle copyWith({
     int? vehicleId,
     int? userId,
-    Object? fuelSupplierId = _marker,
+    String? fuelSupplierId,
     String? plate,
     double? teoricPerformance,
     double? actualPerformance,
-    int? typeOfVehicle,
+    String? typeOfVehicle,
     double? avaliableFuel,
     bool? state,
     DateTime? creationDate,
@@ -96,9 +105,7 @@ class Vehicle {
     return Vehicle(
       vehicleId: vehicleId ?? this.vehicleId,
       userId: userId ?? this.userId,
-      fuelSupplierId: fuelSupplierId == _marker
-          ? this.fuelSupplierId
-          : fuelSupplierId as int?,
+      fuelSupplierId: fuelSupplierId ?? this.fuelSupplierId,
       plate: plate ?? this.plate,
       teoricPerformance: teoricPerformance ?? this.teoricPerformance,
       actualPerformance: actualPerformance ?? this.actualPerformance,
@@ -110,6 +117,4 @@ class Vehicle {
       createBy: createBy ?? this.createBy,
     );
   }
-
-  static const _marker = Object();
 }

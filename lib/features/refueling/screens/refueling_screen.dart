@@ -1,34 +1,51 @@
 import 'package:flutter/material.dart';
-import 'package:fuel_smart/core/features/vehicles/services/vehicle_service.dart';
+import 'package:fuel_smart/features/refueling/screens/create_refueling.dart';
+import 'package:fuel_smart/features/vehicles/models/vehicle.dart';
+import 'package:fuel_smart/core/providers/auth_provider.dart';
 import 'package:fuel_smart/core/widgets/dividerPersonalizated.dart';
+import 'package:fuel_smart/features/vehicles/services/vehicle_service.dart';
+import 'package:provider/provider.dart';
 
 class RefuelingScreen extends StatefulWidget {
-  final String token;
-
-  const RefuelingScreen({super.key, required this.token});
+  const RefuelingScreen({super.key});
 
   @override
   State<RefuelingScreen> createState() => _RefuelingScreenState();
 }
 
 class _RefuelingScreenState extends State<RefuelingScreen> {
-  List<Map<String, dynamic>> vehicles = [];
+  List<Vehicle> vehicles = [];
+  bool isLoading = true;
+  bool _loaded = false;
 
   @override
-  void initState() {
-    super.initState();
-    loadVehicles();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    if (!_loaded) {
+      loadVehicles();
+      _loaded = true;
+    }
   }
 
-  Future loadVehicles() async {
-    final vehicleService = VehicleService();
+  Future<void> loadVehicles() async {
+    final auth = Provider.of<AuthProvider>(context, listen: false);
 
-    final response = await vehicleService.getMyVehicles(widget.token);
+    if (auth.token == null) {
+      setState(() {
+        isLoading = false;
+      });
+      return;
+    }
+
+    final vehicleService = VehicleService();
+    final response = await vehicleService.getMyVehicles(auth.token!);
+
+    if (!mounted) return;
 
     setState(() {
-      vehicles = (response as List)
-          .map((vehicle) => Map<String, dynamic>.from(vehicle))
-          .toList();
+      vehicles = (response as List).map((v) => Vehicle.fromJson(v)).toList();
+      isLoading = false;
     });
   }
 
@@ -61,21 +78,22 @@ class _RefuelingScreenState extends State<RefuelingScreen> {
           const DividerPersonalizated(thicknessSize: 1),
 
           Expanded(
-            child: vehicles.isEmpty
+            child: isLoading
+                ? const Center(child: CircularProgressIndicator())
+                : vehicles.isEmpty
                 ? const Center(child: Text("No hay vehículos disponibles"))
                 : ListView.separated(
                     itemCount: vehicles.length,
-                    separatorBuilder: (context, index) {
-                      return const DividerPersonalizated(thicknessSize: 1);
-                    },
+                    separatorBuilder: (_, __) =>
+                        const DividerPersonalizated(thicknessSize: 1),
                     itemBuilder: (context, index) {
                       final vehicle = vehicles[index];
 
                       return ListTile(
                         leading: const Icon(Icons.directions_car, size: 50),
-                        title: Text(vehicle["placa"] ?? ""),
+                        title: Text(vehicle.plate),
                         subtitle: Text(
-                          "Rendimiento: ${vehicle["rendimiento_teorico"] ?? ""}",
+                          "Rendimiento: ${vehicle.teoricPerformance}",
                         ),
                         trailing: ElevatedButton(
                           style: ElevatedButton.styleFrom(
@@ -90,7 +108,13 @@ class _RefuelingScreenState extends State<RefuelingScreen> {
                             ),
                           ),
                           onPressed: () {
-                            print("Vehículo seleccionado: ${vehicle["placa"]}");
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) =>
+                                    CreateRefueling(vehicle: vehicle),
+                              ),
+                            );
                           },
                           child: const Text("Seleccionar"),
                         ),

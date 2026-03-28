@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:fuel_smart/core/features/users/main_screen.dart';
-import 'package:fuel_smart/core/features/users/models/user.dart';
-import 'package:fuel_smart/core/services/auth_service.dart';
+import 'package:fuel_smart/features/users/models/user.dart';
+import 'package:fuel_smart/core/providers/auth_provider.dart';
+import 'package:fuel_smart/core/api/auth_service.dart';
 import 'package:fuel_smart/core/widgets/button_action.dart';
 import 'package:fuel_smart/core/widgets/dividerPersonalizated.dart';
 import 'package:fuel_smart/core/widgets/form_widget.dart';
 import 'package:fuel_smart/core/widgets/show_dialog.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -126,15 +127,13 @@ class _LoginScreenState extends State<LoginScreen> {
                       );
                       return;
                     } else {
-                      final user = User.fromJson(response["usuario"]);
+                      final User user = User.fromJson(response["usuario"]);
                       final token = (response["token"]);
-                      Navigator.pushReplacement(
+                      //actualizar datos en provider
+                      Provider.of<AuthProvider>(
                         context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              MainScreen(user: user, token: token),
-                        ),
-                      );
+                        listen: false,
+                      ).login(token, user);
                     }
                   },
                 ),
@@ -154,7 +153,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     fontWeight: FontWeight.bold,
                     fontSize: 10,
                   ),
-                  textAlign: TextAlign.end,
                 ),
                 SizedBox(height: 25),
               ],

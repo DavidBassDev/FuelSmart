@@ -1,36 +1,42 @@
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:fuel_smart/features/refueling/screens/refueling_screen.dart';
+import 'package:fuel_smart/features/users/screens/main_screen.dart';
+import 'package:fuel_smart/core/providers/nav_provider.dart';
+import 'package:provider/provider.dart';
 
-class ButtonNavBar extends StatelessWidget {
+class ButtonNavBar extends StatefulWidget {
   const ButtonNavBar({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 70,
-      margin: const EdgeInsets.symmetric(horizontal: 20),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(35),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          _item(Icons.home, true),
-          _item(Icons.emoji_transportation, true),
-          _item(Icons.person, true),
-        ],
-      ),
-    );
-  }
+  State<ButtonNavBar> createState() => _ButtonNavBarState();
+}
 
-  Widget _item(IconData icon, bool selected) {
-    return Container(
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: selected ? Colors.grey[300] : Colors.transparent,
+class _ButtonNavBarState extends State<ButtonNavBar> {
+  @override
+  Widget build(BuildContext context) {
+    final nav = Provider.of<NavProvider>(context);
+    final screens = [const MainScreen(), const RefuelingScreen()];
+
+    final items = const <Widget>[
+      Icon(Icons.home, size: 30, color: Colors.black),
+      Icon(Icons.person, size: 30, color: Colors.black),
+    ];
+
+    return Scaffold(
+      body: screens[nav.index],
+
+      bottomNavigationBar: CurvedNavigationBar(
+        index: nav.index,
+        backgroundColor: const Color(0xFF552235),
+        color: const Color(0XFFE0E0E0),
+        items: items,
+        onTap: (i) {
+          setState(() {
+            nav.changeIndex(i);
+          });
+        },
       ),
-      child: Icon(icon, size: 28, color: Colors.black),
     );
   }
 }

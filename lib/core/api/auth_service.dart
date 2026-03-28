@@ -1,4 +1,4 @@
-import 'package:fuel_smart/core/services/api_service.dart';
+import 'package:fuel_smart/core/api/api_service.dart';
 
 class AuthService {
   final ApiService api = ApiService();

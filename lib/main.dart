@@ -1,10 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:fuel_smart/core/features/auth/screens/login_screen.dart';
-import 'package:fuel_smart/core/features/users/main_screen.dart';
+import 'package:fuel_smart/features/auth/screens/login_screen.dart';
+import 'package:fuel_smart/core/providers/auth_provider.dart';
+import 'package:fuel_smart/core/providers/nav_provider.dart';
 import 'package:fuel_smart/core/theme/app_theme.dart';
+import 'package:fuel_smart/core/widgets/button_nav_bar.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => AuthProvider()),
+        ChangeNotifierProvider(create: (_) => NavProvider()),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatefulWidget {
@@ -28,6 +39,11 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(theme: currentTheme, home: const LoginScreen());
+    final auth = Provider.of<AuthProvider>(context);
+
+    return MaterialApp(
+      theme: currentTheme,
+      home: auth.isLogged ? const ButtonNavBar() : const LoginScreen(),
+    );
   }
 }

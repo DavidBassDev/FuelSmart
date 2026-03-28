@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:fuel_smart/core/features/refueling/screens/refueling_screen.dart';
+import 'package:fuel_smart/core/providers/nav_provider.dart';
 import 'package:fuel_smart/core/widgets/carousel_functions.dart';
+import 'package:provider/provider.dart';
 
 class CarouselWidget extends StatelessWidget {
   final String token;
@@ -36,12 +37,7 @@ class CarouselWidget extends StatelessWidget {
           icon: Icons.local_gas_station,
           text: "Registrar\nrepostaje",
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => RefuelingScreen(token: token),
-              ),
-            );
+            Provider.of<NavProvider>(context, listen: false).changeIndex(1);
           },
         ),
         SizedBox(width: 20),

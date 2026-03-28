@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:fuel_smart/core/features/refueling/refueling_screen.dart';
+import 'package:fuel_smart/features/refueling/screens/refueling_screen.dart';
 import 'package:fuel_smart/core/widgets/carousel_functions.dart';
 
 class CarouselWidget extends StatelessWidget {
-  final String token;
-
-  const CarouselWidget({super.key, required this.token});
+  const CarouselWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -32,9 +30,7 @@ class CarouselWidget extends StatelessWidget {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(
-                builder: (context) => RefuelingScreen(token: token),
-              ),
+              MaterialPageRoute(builder: (context) => RefuelingScreen()),
             );
           },
         ),
@@ -45,9 +41,7 @@ class CarouselWidget extends StatelessWidget {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(
-                builder: (context) => RefuelingScreen(token: token),
-              ),
+              MaterialPageRoute(builder: (context) => RefuelingScreen()),
             );
           },
         ),
