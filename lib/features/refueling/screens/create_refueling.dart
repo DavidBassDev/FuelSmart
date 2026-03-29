@@ -24,6 +24,8 @@ class _CreateRefuelingState extends State<CreateRefueling> {
   final totalGallons = TextEditingController();
   final supllierName = TextEditingController();
   final comment = TextEditingController();
+  final odometer = TextEditingController();
+  final ticketNumber = TextEditingController();
   final totalMoney = TextEditingController();
 
   Future<void> getImageFromCamera() async {
@@ -96,7 +98,12 @@ class _CreateRefuelingState extends State<CreateRefueling> {
                     fit: BoxFit.cover,
                   ),
             const SizedBox(height: 20),
-            ButtonAction(text: 'ENVIAR REGISTRO', onPressed: () {}),
+            ButtonAction(
+              text: 'ENVIAR REGISTRO',
+              onPressed: () {
+                //FUNCION PARA ENVIAR TODO
+              },
+            ),
           ],
         ),
       ),
