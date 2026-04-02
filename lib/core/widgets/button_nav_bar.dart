@@ -20,7 +20,7 @@ class _ButtonNavBarState extends State<ButtonNavBar> {
 
     final items = const <Widget>[
       Icon(Icons.home, size: 30, color: Colors.black),
-      Icon(Icons.person, size: 30, color: Colors.black),
+      Icon(Icons.local_gas_station, size: 30, color: Colors.black),
     ];
 
     return Scaffold(

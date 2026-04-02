@@ -1,12 +1,15 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:fuel_smart/core/providers/auth_provider.dart';
 import 'package:fuel_smart/core/widgets/button_action.dart';
+import 'package:fuel_smart/features/refueling/services/refueling_service.dart';
 import 'package:fuel_smart/features/refueling/widgets/refueling_form.dart';
 import 'package:fuel_smart/features/vehicles/models/vehicle.dart';
 import 'package:fuel_smart/features/vehicles/widgets/card_vehicle.dart';
 import 'package:fuel_smart/core/widgets/dividerPersonalizated.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 
 class CreateRefueling extends StatefulWidget {
   final Vehicle vehicle;
@@ -50,6 +53,7 @@ class _CreateRefuelingState extends State<CreateRefueling> {
 
   @override
   Widget build(BuildContext context) {
+    final token = context.read<AuthProvider>().token;
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -89,19 +93,64 @@ class _CreateRefuelingState extends State<CreateRefueling> {
             const SizedBox(height: 10),
 
             /// PREVIEW IMAGEN
+            /// FALTA AGREGAR PARA QUE AL PRESIONAR MUESTRE LA IMAGEN
             photo == null
                 ? const Icon(Icons.image, size: 80)
-                : Image.file(
-                    File(photo!.path),
-                    width: 120,
-                    height: 120,
-                    fit: BoxFit.cover,
+                : GestureDetector(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (_) => Dialog(
+                          child: Image.file(
+                            File(photo!.path),
+                            fit: BoxFit.contain,
+                          ),
+                        ),
+                      );
+                    },
+                    child: Image.file(
+                      File(photo!.path),
+                      width: 120,
+                      height: 120,
+                      fit: BoxFit.cover,
+                    ),
                   ),
             const SizedBox(height: 20),
             ButtonAction(
               text: 'ENVIAR REGISTRO',
-              onPressed: () {
-                //FUNCION PARA ENVIAR TODO
+              onPressed: () async {
+                print("TOKEN: $token");
+                print("VEHICLE: ${widget.vehicle}");
+                print("VEHICLE ID: ${widget.vehicle.vehicleId}");
+                print("USER ID: ${widget.vehicle.userId}");
+
+                final data = {
+                  "vehiculo_id": widget.vehicle.vehicleId.toString(),
+                  "usuario_id": widget.vehicle.userId.toString(),
+                  "proveedor_id": "3",
+                  "fecha": DateTime.timestamp(),
+                  "galones": 00,
+                  "valor_total": 123,
+                  "odometro": 12222,
+                  "numero_soporte": "123333",
+                  "comentario": "test",
+                };
+
+                File? imageFile = photo != null ? File(photo!.path) : null;
+
+                final response = await RefuelingService().createNewRefueling(
+                  token!,
+                  data,
+                  imageFile,
+                );
+
+                print("RESPONSE: $response");
+
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text("Registro enviado correctamente"),
+                  ),
+                );
               },
             ),
           ],

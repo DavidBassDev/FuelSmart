@@ -10,6 +10,7 @@ class Refueling {
   final String? ticketSerial;
   final String? refuelingImage;
   final String? comment;
+  final double odometer;
   static const _sentinel =
       Object(); //un sentinela o marcador, para manejar los null desde la bd
   Refueling({
@@ -24,6 +25,7 @@ class Refueling {
     this.ticketSerial,
     this.refuelingImage,
     this.comment,
+    required this.odometer,
   });
 
   factory Refueling.fromJson(Map<String, dynamic> json) {
@@ -45,6 +47,8 @@ class Refueling {
       ticketSerial: json['numero_soporte'],
       refuelingImage: json['vaucher_url'],
       comment: json['comentario'],
+
+      odometer: json['odometro'],
     );
   }
 
@@ -61,6 +65,7 @@ class Refueling {
       'numero_soporte': ticketSerial,
       'vaucher_url': refuelingImage,
       'comentario': comment,
+      'odometro': odometer,
     };
   }
 
@@ -76,6 +81,7 @@ class Refueling {
     Object? ticketSerial = _sentinel,
     Object? refuelingImage = _sentinel,
     Object? comment = _sentinel,
+    double? odometer,
   }) {
     return Refueling(
       refuelingId: refuelingId ?? this.refuelingId,
@@ -85,6 +91,7 @@ class Refueling {
       refuelingDate: refuelingDate ?? this.refuelingDate,
       suppliedGallons: suppliedGallons ?? this.suppliedGallons,
       cost: cost ?? this.cost,
+      odometer: odometer ?? this.odometer,
       refuelingType: refuelingType ?? this.refuelingType,
       ticketSerial: ticketSerial == _sentinel
           ? this.ticketSerial

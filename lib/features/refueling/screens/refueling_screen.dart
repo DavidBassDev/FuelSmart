@@ -53,12 +53,12 @@ class _RefuelingScreenState extends State<RefuelingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: const Icon(Icons.arrow_back),
+        centerTitle: true,
         title: Text(
           "Registrar consumo caja menor",
           style: Theme.of(
             context,
-          ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+          ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
         ),
       ),
       body: Column(

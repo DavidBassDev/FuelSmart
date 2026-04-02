@@ -25,7 +25,7 @@ class MainScreen extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
-              const SizedBox(height: 90),
+              const SizedBox(height: 20),
 
               Row(
                 children: [

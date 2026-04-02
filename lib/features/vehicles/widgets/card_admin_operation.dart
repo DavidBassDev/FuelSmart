@@ -21,7 +21,7 @@ class CardAdminOperation extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  "Administrar\nmi operación",
+                  "Administrar\nMi operación",
                   style: Theme.of(
                     context,
                   ).textTheme.headlineMedium?.copyWith(color: Colors.black),

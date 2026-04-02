@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:http/http.dart' as http;
 
 class ApiService {
@@ -57,5 +58,40 @@ class ApiService {
     );
 
     return jsonDecode(response.body);
+  }
+
+  //ENVIAR IMAGEN, POST REFUELING
+  Future<dynamic> postMultipartWithToken(
+    String endpoint,
+    Map<String, dynamic> data,
+    String token,
+    File? image,
+  ) async {
+    var request = http.MultipartRequest(
+      'POST',
+      Uri.parse('$baseUrl/$endpoint'),
+    );
+
+    // 🔐 Headers
+    request.headers['Authorization'] = 'Bearer $token';
+
+    // 📦 Campos normales
+    data.forEach((key, value) {
+      request.fields[key] = value.toString();
+    });
+
+    // 📸 Imagen (opcional)
+    if (image != null) {
+      request.files.add(
+        await http.MultipartFile.fromPath('imagen', image.path),
+      );
+    }
+
+    // 🚀 Enviar
+    var response = await request.send();
+
+    // Convertir respuesta
+    final respStr = await response.stream.bytesToString();
+    return jsonDecode(respStr);
   }
 }
