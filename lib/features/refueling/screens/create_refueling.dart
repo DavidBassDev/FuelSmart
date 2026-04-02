@@ -75,7 +75,13 @@ class _CreateRefuelingState extends State<CreateRefueling> {
             const DividerPersonalizated(thicknessSize: 2),
             const SizedBox(height: 10),
 
-            RefuelingForm(),
+            RefuelingForm(
+              comment: comment,
+              odometer: odometer,
+              ticketNumber: ticketNumber,
+              totalGallons: totalGallons,
+              totalMoney: totalMoney,
+            ),
 
             const SizedBox(height: 20),
 
@@ -119,21 +125,26 @@ class _CreateRefuelingState extends State<CreateRefueling> {
             ButtonAction(
               text: 'ENVIAR REGISTRO',
               onPressed: () async {
-                print("TOKEN: $token");
                 print("VEHICLE: ${widget.vehicle}");
                 print("VEHICLE ID: ${widget.vehicle.vehicleId}");
                 print("USER ID: ${widget.vehicle.userId}");
-
+                print("galones ${totalGallons.text}");
                 final data = {
-                  "vehiculo_id": widget.vehicle.vehicleId.toString(),
-                  "usuario_id": widget.vehicle.userId.toString(),
+                  "vehiculo_id": widget.vehicle.vehicleId,
+                  "usuario_id": widget.vehicle.userId,
                   "proveedor_id": "3",
-                  "fecha": DateTime.timestamp(),
-                  "galones": 00,
-                  "valor_total": 123,
-                  "odometro": 12222,
-                  "numero_soporte": "123333",
-                  "comentario": "test",
+                  "fecha": DateTime.now().toIso8601String(),
+                  "galones": double.parse(totalGallons.text),
+                  "valor_total": totalMoney.text.isEmpty
+                      ? null
+                      : double.parse(totalMoney.text),
+                  "odometro": odometer.text.isEmpty
+                      ? null
+                      : int.parse(odometer.text),
+                  "numero_soporte": ticketNumber.text.isEmpty
+                      ? null
+                      : ticketNumber.text,
+                  "comentario": comment.text,
                 };
 
                 File? imageFile = photo != null ? File(photo!.path) : null;
@@ -141,7 +152,7 @@ class _CreateRefuelingState extends State<CreateRefueling> {
                 final response = await RefuelingService().createNewRefueling(
                   token!,
                   data,
-                  imageFile,
+                  File(photo!.path),
                 );
 
                 print("RESPONSE: $response");

@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 
-//widget para usar en los distintos formularios
 class FormRow extends StatelessWidget {
   final String label;
   final IconData icon;
+  final TextEditingController controller;
 
-  const FormRow({super.key, required this.label, required this.icon});
+  const FormRow({
+    super.key,
+    required this.label,
+    required this.icon,
+    required this.controller, // 🔥 NUEVO
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -13,13 +18,10 @@ class FormRow extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: Row(
         children: [
-          // Texto izquierdo
           Expanded(
             flex: 2,
             child: Text(label, style: Theme.of(context).textTheme.bodyMedium),
           ),
-
-          // Input derecho
           Expanded(
             flex: 3,
             child: Container(
@@ -32,6 +34,7 @@ class FormRow extends StatelessWidget {
                 children: [
                   Expanded(
                     child: TextField(
+                      controller: controller, // 🔥 CLAVE
                       decoration: const InputDecoration(
                         border: InputBorder.none,
                         contentPadding: EdgeInsets.symmetric(horizontal: 12),

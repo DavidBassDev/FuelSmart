@@ -2,22 +2,46 @@ import 'package:flutter/material.dart';
 import 'package:fuel_smart/core/widgets/form_row.dart';
 
 class RefuelingForm extends StatelessWidget {
-  const RefuelingForm({super.key});
+  final TextEditingController totalGallons;
+  final TextEditingController totalMoney;
+  final TextEditingController odometer;
+  final TextEditingController ticketNumber;
+  final TextEditingController comment;
+
+  const RefuelingForm({
+    super.key,
+    required this.totalGallons,
+    required this.totalMoney,
+    required this.odometer,
+    required this.ticketNumber,
+    required this.comment,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: const [
-        FormRow(label: 'Fecha Repostaje', icon: Icons.calendar_today),
-        FormRow(label: 'Total Galones', icon: Icons.local_gas_station),
-        FormRow(label: 'Nombre EDS', icon: Icons.qr_code), //CAMBIAR
-        FormRow(label: 'Justificación uso caja menor', icon: Icons.description),
+      children: [
+        FormRow(
+          label: 'Total Galones',
+          icon: Icons.local_gas_station,
+          controller: totalGallons,
+        ),
         FormRow(
           label: 'Número factura',
           icon: Icons.attach_money,
-        ), //cambiar icon
-        FormRow(label: 'Odómetro', icon: Icons.attach_money), //cambiar icon
-        FormRow(label: 'Total \$\$\$', icon: Icons.attach_money),
+          controller: ticketNumber,
+        ),
+        FormRow(label: 'Odómetro', icon: Icons.speed, controller: odometer),
+        FormRow(
+          label: 'Total \$\$\$',
+          icon: Icons.attach_money,
+          controller: totalMoney,
+        ),
+        FormRow(
+          label: 'Comentario',
+          icon: Icons.description,
+          controller: comment,
+        ),
       ],
     );
   }

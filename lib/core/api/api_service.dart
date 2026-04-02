@@ -60,7 +60,6 @@ class ApiService {
     return jsonDecode(response.body);
   }
 
-  //ENVIAR IMAGEN, POST REFUELING
   Future<dynamic> postMultipartWithToken(
     String endpoint,
     Map<String, dynamic> data,
@@ -77,7 +76,9 @@ class ApiService {
 
     // 📦 Campos normales
     data.forEach((key, value) {
-      request.fields[key] = value.toString();
+      if (value != null) {
+        request.fields[key] = value.toString(); // 🔥 FIX REAL
+      }
     });
 
     // 📸 Imagen (opcional)
@@ -90,8 +91,12 @@ class ApiService {
     // 🚀 Enviar
     var response = await request.send();
 
-    // Convertir respuesta
     final respStr = await response.stream.bytesToString();
-    return jsonDecode(respStr);
+
+    try {
+      return jsonDecode(respStr);
+    } catch (e) {
+      return respStr;
+    }
   }
 }
