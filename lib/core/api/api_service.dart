@@ -3,10 +3,10 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 
 class ApiService {
-  static const ipLocal = "192.168.1.1";
+  static const ipLocal = "192.168.1.2";
   static const ipADV = "10.0.2.2";
 
-  static final String baseUrl = "http://$ipADV:3000";
+  static final String baseUrl = "http://$ipLocal:3000";
 
   /// GET sin token
   Future<dynamic> get(String endpoint) async {

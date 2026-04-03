@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:fuel_smart/core/providers/auth_provider.dart';
 import 'package:fuel_smart/core/widgets/button_action.dart';
+import 'package:fuel_smart/core/widgets/show_dialog.dart';
 import 'package:fuel_smart/features/refueling/services/refueling_service.dart';
 import 'package:fuel_smart/features/refueling/widgets/refueling_form.dart';
 import 'package:fuel_smart/features/vehicles/models/vehicle.dart';
@@ -125,10 +126,6 @@ class _CreateRefuelingState extends State<CreateRefueling> {
             ButtonAction(
               text: 'ENVIAR REGISTRO',
               onPressed: () async {
-                print("VEHICLE: ${widget.vehicle}");
-                print("VEHICLE ID: ${widget.vehicle.vehicleId}");
-                print("USER ID: ${widget.vehicle.userId}");
-                print("galones ${totalGallons.text}");
                 final data = {
                   "vehiculo_id": widget.vehicle.vehicleId,
                   "usuario_id": widget.vehicle.userId,
@@ -147,19 +144,20 @@ class _CreateRefuelingState extends State<CreateRefueling> {
                   "comentario": comment.text,
                 };
 
-                File? imageFile = photo != null ? File(photo!.path) : null;
-
                 final response = await RefuelingService().createNewRefueling(
                   token!,
                   data,
                   File(photo!.path),
                 );
 
-                print("RESPONSE: $response");
+                print(
+                  "RESPONSE: $response",
+                ); //enviar este response al otro screen o consultarlo mediante el id creado
 
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text("Registro enviado correctamente"),
+                showDialog(
+                  context: context,
+                  builder: (context) => ShowDialogPersonalizated(
+                    text: 'Consumo registrado correctamente',
                   ),
                 );
               },
