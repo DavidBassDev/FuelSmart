@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:fuel_smart/core/providers/auth_provider.dart';
 import 'package:fuel_smart/core/widgets/button_action.dart';
 import 'package:fuel_smart/core/widgets/show_dialog.dart';
+import 'package:fuel_smart/features/refueling/models/refueling.dart';
+import 'package:fuel_smart/features/refueling/screens/see_cash_refueling.dart';
 import 'package:fuel_smart/features/refueling/services/refueling_service.dart';
 import 'package:fuel_smart/features/refueling/widgets/refueling_form.dart';
 import 'package:fuel_smart/features/vehicles/models/vehicle.dart';
@@ -149,16 +151,20 @@ class _CreateRefuelingState extends State<CreateRefueling> {
                   data,
                   File(photo!.path),
                 );
-                final idRefueling =
-                    response['']; //construir el screen con este idRefueling
-                print(
-                  "RESPONSE: $idRefueling",
-                ); //enviar este response al otro screen o consultarlo mediante el id creado
-
-                showDialog(
+                final refueling = Refueling.fromJson(response);
+                await showDialog(
                   context: context,
                   builder: (context) => ShowDialogPersonalizated(
                     text: 'Consumo registrado correctamente',
+                  ),
+                );
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => SeeCashRefueling(
+                      refueling: refueling,
+                      vehicle: widget.vehicle,
+                    ),
                   ),
                 );
               },

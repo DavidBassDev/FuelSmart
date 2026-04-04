@@ -77,7 +77,7 @@ class ApiService {
     // 📦 Campos normales
     data.forEach((key, value) {
       if (value != null) {
-        request.fields[key] = value.toString(); // 🔥 FIX REAL
+        request.fields[key] = value.toString();
       }
     });
 

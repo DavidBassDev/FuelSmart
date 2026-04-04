@@ -16,4 +16,8 @@ class RefuelingService {
       image,
     );
   }
+
+  Future seeRefuelingPC(String token, String idRefueling) async {
+    return await api.getWithToken("refueling/pettycash/$idRefueling", token);
+  }
 }

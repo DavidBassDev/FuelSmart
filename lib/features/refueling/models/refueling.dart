@@ -39,8 +39,8 @@ class Refueling {
           ? DateTime.parse(json['fecha_repostaje'])
           : DateTime.now(),
 
-      suppliedGallons: (json['galones_consumidos'] as num?)?.toDouble() ?? 0.0,
-      cost: (json['valor_dinero'] as num?)?.toDouble() ?? 0.0,
+      suppliedGallons: double.parse(json['galones_suministrados']),
+      cost: double.parse(json['valor_dinero']),
 
       refuelingType: json['tipo_repostaje'] ?? '',
 
@@ -48,7 +48,7 @@ class Refueling {
       refuelingImage: json['vaucher_url'],
       comment: json['comentario'],
 
-      odometer: json['odometro'],
+      odometer: double.parse(json['odometro']),
     );
   }
 
