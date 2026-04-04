@@ -149,9 +149,10 @@ class _CreateRefuelingState extends State<CreateRefueling> {
                   data,
                   File(photo!.path),
                 );
-
+                final idRefueling =
+                    response['']; //construir el screen con este idRefueling
                 print(
-                  "RESPONSE: $response",
+                  "RESPONSE: $idRefueling",
                 ); //enviar este response al otro screen o consultarlo mediante el id creado
 
                 showDialog(
