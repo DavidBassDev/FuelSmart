@@ -9,7 +9,7 @@ class FormRow extends StatelessWidget {
     super.key,
     required this.label,
     required this.icon,
-    required this.controller, // 🔥 NUEVO
+    required this.controller,
   });
 
   @override
@@ -34,7 +34,8 @@ class FormRow extends StatelessWidget {
                 children: [
                   Expanded(
                     child: TextField(
-                      controller: controller, // 🔥 CLAVE
+                      style: const TextStyle(color: Colors.black),
+                      controller: controller,
                       decoration: const InputDecoration(
                         border: InputBorder.none,
                         contentPadding: EdgeInsets.symmetric(horizontal: 12),

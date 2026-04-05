@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fuel_smart/core/api/api_service.dart';
+import 'package:fuel_smart/core/widgets/dividerPersonalizated.dart';
 import 'package:fuel_smart/features/refueling/models/refueling.dart';
+import 'package:intl/intl.dart';
 
 final baseUrl = ApiService.baseUrl;
 
@@ -11,6 +13,11 @@ class RefuelingDetailCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final formatter = NumberFormat.currency(
+      locale: 'es_CO',
+      symbol: '\$',
+      decimalDigits: 0, //para quitar el cero que viene desde BD
+    );
     final imageUrl = "$baseUrl${refueling.refuelingImage}";
     return Card(
       elevation: 5,
@@ -21,40 +28,41 @@ class RefuelingDetailCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            /// FECHA
             Text(
-              "Fecha: ${refueling.refuelingDate}",
-              style: const TextStyle(fontWeight: FontWeight.bold),
+              "Resumen repostaje",
+              style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                color: const Color.fromARGB(255, 255, 255, 255),
+              ),
             ),
 
             const SizedBox(height: 10),
-
-            /// GALONES
+            _item(
+              "Fecha",
+              DateFormat('yyyy-MM-dd').format(refueling.refuelingDate),
+            ),
             _item("Galones", refueling.suppliedGallons.toString()),
-
-            /// VALOR
-            _item("Valor total", "\$${refueling.cost}"),
-
-            /// ODOMETRO
+            _item("Valor total", formatter.format(refueling.cost)),
             _item("Odómetro", refueling.odometer.toString()),
 
-            /// TICKET
             if (refueling.ticketSerial?.isEmpty ??
                 refueling.ticketSerial == 'noTicket')
               _item("Soporte", refueling.ticketSerial.toString()),
 
             const SizedBox(height: 10),
 
-            /// COMENTARIO
-            const Text(
-              "Comentario:",
-              style: TextStyle(fontWeight: FontWeight.bold),
+            // COMENTARIO
+            Text(
+              "Justificación uso caja menor:",
+              style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                color: const Color.fromARGB(255, 255, 255, 255),
+              ),
             ),
             Text(refueling.comment!),
 
             const SizedBox(height: 15),
+            DividerPersonalizated(thicknessSize: 1),
 
-            /// IMAGEN
+            // IMAGEN
             if (refueling.refuelingImage != null)
               GestureDetector(
                 onTap: () {
@@ -66,7 +74,8 @@ class RefuelingDetailCard extends StatelessWidget {
                   );
                 },
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(15),
+
                   child: Image.network(
                     imageUrl,
                     height: 150,

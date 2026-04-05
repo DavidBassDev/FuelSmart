@@ -88,7 +88,7 @@ class _CreateRefuelingState extends State<CreateRefueling> {
 
             const SizedBox(height: 20),
 
-            /// BOTÓN CÁMARA
+            // BOTON CAMARA
             IconButton(
               onPressed: getImageFromCamera,
               icon: const Icon(Icons.camera_alt_outlined, size: 80),
@@ -102,7 +102,6 @@ class _CreateRefuelingState extends State<CreateRefueling> {
             const SizedBox(height: 10),
 
             /// PREVIEW IMAGEN
-            /// FALTA AGREGAR PARA QUE AL PRESIONAR MUESTRE LA IMAGEN
             photo == null
                 ? const Icon(Icons.image, size: 80)
                 : GestureDetector(
@@ -158,6 +157,18 @@ class _CreateRefuelingState extends State<CreateRefueling> {
                     text: 'Consumo registrado correctamente',
                   ),
                 );
+                cleanForm(
+                  refuelingDate,
+                  totalGallons,
+                  supllierName,
+                  comment,
+                  odometer,
+                  ticketNumber,
+                  totalMoney,
+                );
+                setState(() {
+                  photo = null;
+                });
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -174,4 +185,22 @@ class _CreateRefuelingState extends State<CreateRefueling> {
       ),
     );
   }
+}
+
+void cleanForm(
+  refuelingDate,
+  totalGallons,
+  supllierName,
+  comment,
+  odometer,
+  ticketNumber,
+  totalMoney,
+) {
+  refuelingDate.clear();
+  totalGallons.clear();
+  supllierName.clear();
+  comment.clear();
+  odometer.clear();
+  ticketNumber.clear();
+  totalMoney.clear();
 }

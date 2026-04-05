@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:fuel_smart/core/providers/nav_provider.dart';
 import 'package:fuel_smart/core/widgets/dividerPersonalizated.dart';
 import 'package:fuel_smart/features/refueling/models/refueling.dart';
 import 'package:fuel_smart/features/refueling/widgets/refueling_detail_card.dart';
 import 'package:fuel_smart/features/vehicles/models/vehicle.dart';
 import 'package:fuel_smart/features/vehicles/widgets/card_vehicle.dart';
+import 'package:provider/provider.dart';
 
 class SeeCashRefueling extends StatelessWidget {
   final Vehicle vehicle;
   final Refueling refueling;
+
   const SeeCashRefueling({
     super.key,
     required this.vehicle,
@@ -19,6 +22,13 @@ class SeeCashRefueling extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          iconSize: 35,
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         title: Text(
           "Ver consumo caja menor",
           style: Theme.of(
@@ -28,10 +38,9 @@ class SeeCashRefueling extends StatelessWidget {
       ),
       body: Column(
         children: [
-          DividerPersonalizated(thicknessSize: 1),
+          const DividerPersonalizated(thicknessSize: 1),
           CardVehicle(vehicle: vehicle),
-          DividerPersonalizated(thicknessSize: 1),
-          //formulario con la data de repostaje
+          const DividerPersonalizated(thicknessSize: 1),
           RefuelingDetailCard(refueling: refueling),
         ],
       ),
