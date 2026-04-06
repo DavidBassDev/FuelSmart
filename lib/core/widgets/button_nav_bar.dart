@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fuel_smart/features/refueling/screens/refueling_screen.dart';
 import 'package:fuel_smart/features/users/screens/main_screen.dart';
 import 'package:fuel_smart/core/providers/nav_provider.dart';
+import 'package:fuel_smart/features/users/screens/profile_screen.dart';
 import 'package:provider/provider.dart';
 
 class ButtonNavBar extends StatefulWidget {
@@ -16,11 +17,16 @@ class _ButtonNavBarState extends State<ButtonNavBar> {
   @override
   Widget build(BuildContext context) {
     final nav = Provider.of<NavProvider>(context);
-    final screens = [const MainScreen(), const RefuelingScreen()];
+    final screens = [
+      const MainScreen(),
+      const RefuelingScreen(),
+      const ProfileScreen(),
+    ];
 
     final items = const <Widget>[
       Icon(Icons.home, size: 30, color: Colors.black),
       Icon(Icons.local_gas_station, size: 30, color: Colors.black),
+      Icon(Icons.person, size: 30, color: Colors.black),
     ];
 
     return Scaffold(

@@ -29,6 +29,24 @@ class ApiService {
     return jsonDecode(response.body);
   }
 
+  //PUT CON TOKEN
+  Future<dynamic> putWithToken(
+    String endpoint,
+    Map<String, dynamic> data,
+    String token,
+  ) async {
+    final response = await http.put(
+      Uri.parse('$baseUrl/$endpoint'),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token",
+      },
+      body: jsonEncode(data),
+    );
+
+    return jsonDecode(response.body);
+  }
+
   ///  GET con token
   Future<dynamic> getWithToken(String endpoint, String token) async {
     final response = await http.get(

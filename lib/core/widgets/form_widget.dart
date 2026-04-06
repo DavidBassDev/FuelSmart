@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 class FormWidget extends StatelessWidget {
   final IconData icon;
   final bool obscureText;
-  final TextEditingController controller;
+  final TextEditingController? controller;
 
   const FormWidget({
     super.key,
     required this.icon,
     required this.obscureText,
-    required this.controller,
+    this.controller,
   });
 
   @override
