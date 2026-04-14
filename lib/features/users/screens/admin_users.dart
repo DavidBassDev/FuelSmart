@@ -39,12 +39,12 @@ class _AdminUsersState extends State<AdminUsers> {
     }
 
     final userService = UserService();
-    final response = await userService.getUsers(auth.token!);
+    final response = await userService.gerCarDriverUsers(auth.token!);
 
     if (!mounted) return;
 
     setState(() {
-      users = (response as List).map((u) => User.fromJson(u)).toList();
+      users = (response['users'] as List).map((u) => User.fromJson(u)).toList();
       isLoading = false;
     });
   }

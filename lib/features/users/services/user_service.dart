@@ -7,7 +7,11 @@ class UserService {
     return await api.putWithToken("auth/changepassword", data, token);
   }
 
-  Future getUsers(String token) async {
-    return await api.getWithToken("users/listUsers", token);
+  Future gerCarDriverUsers(String token) async {
+    return await api.getWithToken("users/listDrivers", token);
   }
+
+  //ENDPOINT PARA USUARIOS SUPERVISORES
+
+  //ENDPOINT ADMINISTRADORES
 }
