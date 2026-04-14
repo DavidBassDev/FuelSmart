@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fuel_smart/core/providers/nav_provider.dart';
 import 'package:fuel_smart/core/widgets/carousel_functions.dart';
+import 'package:fuel_smart/features/users/screens/admin_users.dart';
 import 'package:provider/provider.dart';
 
 class CarouselWidget extends StatelessWidget {
@@ -17,7 +18,10 @@ class CarouselWidget extends StatelessWidget {
           icon: Icons.person,
           text: 'Usuarios',
           onPressed: () {
-            print("pressed");
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => AdminUsers()),
+            );
           },
         ),
         SizedBox(width: 20),

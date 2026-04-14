@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fuel_smart/features/refueling/screens/refueling_screen.dart';
 import 'package:fuel_smart/core/widgets/carousel_functions.dart';
+import 'package:fuel_smart/features/users/screens/admin_users.dart';
 
 class CarouselWidget extends StatelessWidget {
   const CarouselWidget({super.key});
@@ -14,7 +15,7 @@ class CarouselWidget extends StatelessWidget {
           icon: Icons.person,
           text: 'Usuarios',
           onPressed: () {
-            print("pressed");
+            print('presiono');
           },
         ),
         SizedBox(width: 20),

@@ -6,17 +6,14 @@ import 'package:fuel_smart/core/providers/nav_provider.dart';
 import 'package:fuel_smart/features/users/screens/profile_screen.dart';
 import 'package:provider/provider.dart';
 
-class ButtonNavBar extends StatefulWidget {
+// ALMACENAR TODOS LOS SCREENS ACA
+class ButtonNavBar extends StatelessWidget {
   const ButtonNavBar({super.key});
 
   @override
-  State<ButtonNavBar> createState() => _ButtonNavBarState();
-}
-
-class _ButtonNavBarState extends State<ButtonNavBar> {
-  @override
   Widget build(BuildContext context) {
-    final nav = Provider.of<NavProvider>(context);
+    final nav = context.watch<NavProvider>();
+
     final screens = [
       const MainScreen(),
       const RefuelingScreen(),
@@ -38,9 +35,7 @@ class _ButtonNavBarState extends State<ButtonNavBar> {
         color: const Color(0XFFE0E0E0),
         items: items,
         onTap: (i) {
-          setState(() {
-            nav.changeIndex(i);
-          });
+          context.read<NavProvider>().changeIndex(i);
         },
       ),
     );
