@@ -44,6 +44,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       theme: currentTheme,
       home: auth.isLogged ? const ButtonNavBar() : const LoginScreen(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }

@@ -7,6 +7,7 @@ class RefuelingForm extends StatelessWidget {
   final TextEditingController odometer;
   final TextEditingController ticketNumber;
   final TextEditingController comment;
+  final TextInputType? keyboardType;
 
   const RefuelingForm({
     super.key,
@@ -15,6 +16,7 @@ class RefuelingForm extends StatelessWidget {
     required this.odometer,
     required this.ticketNumber,
     required this.comment,
+    this.keyboardType,
   });
 
   @override

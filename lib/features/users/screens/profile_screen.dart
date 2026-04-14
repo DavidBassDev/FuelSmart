@@ -42,8 +42,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Center(child: Icon(Icons.person, size: 80)),
-            const SizedBox(height: 30),
+            const Center(child: Icon(Icons.person, size: 120)),
+            const SizedBox(height: 70),
 
             const Text('Nueva contraseña'),
             const SizedBox(height: 10),
@@ -53,7 +53,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               obscureText: true,
             ),
 
-            const SizedBox(height: 30),
+            const SizedBox(height: 60),
 
             const Text('Repetir contraseña'),
             const SizedBox(height: 10),
@@ -62,8 +62,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
               icon: Icons.lock_outline,
               obscureText: true,
             ),
+            const SizedBox(height: 20),
 
-            const SizedBox(height: 40),
+            const SizedBox(height: 30),
 
             ButtonAction(
               text: 'Guardar cambios',
@@ -105,6 +106,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 }
               },
             ),
+            const SizedBox(height: 60),
+            Align(
+              alignment: Alignment.centerRight,
+              child: GestureDetector(
+                onTap: () async {
+                  //cerrar sesion
+
+                  final result = await showYesNoDialog(context);
+
+                  if (result == true) {
+                    context.read<AuthProvider>().logout();
+                  }
+                },
+
+                child: Text(
+                  'Cerrar Sesión',
+                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15,
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),
@@ -118,4 +142,26 @@ bool validatePassword(String password1, String password2) {
   } else {
     return false;
   }
+}
+
+Future<bool?> showYesNoDialog(BuildContext context) {
+  return showDialog<bool>(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        title: Text("Confirmar"),
+        content: Text("¿Seguro que deseas cerrar sesión?"),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: Text("No", style: TextStyle(color: Colors.white)),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: Text("Sí", style: TextStyle(color: Colors.white)),
+          ),
+        ],
+      );
+    },
+  );
 }

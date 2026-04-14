@@ -17,7 +17,7 @@ class ShowDialogPersonalizated extends StatelessWidget {
             Text(
               text.toString(),
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 18),
+              style: TextStyle(fontSize: 20),
             ),
 
             const SizedBox(height: 20),
@@ -36,7 +36,7 @@ class ShowDialogPersonalizated extends StatelessWidget {
                 },
                 child: const Text(
                   "Aceptar",
-                  style: TextStyle(fontSize: 18, color: Colors.white),
+                  style: TextStyle(fontSize: 20, color: Colors.white),
                 ),
               ),
             ),

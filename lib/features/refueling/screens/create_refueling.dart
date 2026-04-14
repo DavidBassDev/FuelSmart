@@ -57,6 +57,7 @@ class _CreateRefuelingState extends State<CreateRefueling> {
   @override
   Widget build(BuildContext context) {
     final token = context.read<AuthProvider>().token;
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -101,7 +102,7 @@ class _CreateRefuelingState extends State<CreateRefueling> {
 
             const SizedBox(height: 10),
 
-            /// PREVIEW IMAGEN
+            // PREVIEW IMAGEN
             photo == null
                 ? const Icon(Icons.image, size: 80)
                 : GestureDetector(
@@ -157,6 +158,7 @@ class _CreateRefuelingState extends State<CreateRefueling> {
                     text: 'Consumo registrado correctamente',
                   ),
                 );
+                //LIMPIO FORMULARIO
                 cleanForm(
                   refuelingDate,
                   totalGallons,
@@ -187,6 +189,7 @@ class _CreateRefuelingState extends State<CreateRefueling> {
   }
 }
 
+//LIMPIAR FORMULARIO POR SI REGRESA
 void cleanForm(
   refuelingDate,
   totalGallons,

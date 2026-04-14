@@ -79,7 +79,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                 SizedBox(height: 25),
 
-                /// PASSWORD
+                // PASSWORD
                 Text(
                   "Contraseña",
                   style: Theme.of(context).textTheme.bodyLarge,
@@ -94,7 +94,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 SizedBox(height: 35),
 
-                /// BOTON
+                // BOTON
                 ButtonAction(
                   text: "Continuar",
                   onPressed: () async {
@@ -147,6 +147,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 SizedBox(height: 15),
                 DividerPersonalizated(thicknessSize: 1),
+                SizedBox(height: 80),
                 Text(
                   'Solicita tu usuario contactando a admin@correo.com',
                   style: Theme.of(context).textTheme.titleSmall?.copyWith(
