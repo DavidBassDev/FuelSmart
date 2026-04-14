@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:fuel_smart/core/providers/auth_provider.dart';
+import 'package:fuel_smart/core/widgets/dividerPersonalizated.dart';
 import 'package:fuel_smart/features/shared/widgets/pill_btn_personalizated.dart';
 import 'package:fuel_smart/features/users/models/user.dart';
 import 'package:fuel_smart/features/users/services/user_service.dart';
+import 'package:fuel_smart/features/vehicles/models/vehicle.dart';
 import 'package:provider/provider.dart';
 
 class AdminUsers extends StatefulWidget {
-  /*final User user;*/
-
-  const AdminUsers({super.key /*required this.user*/});
+  const AdminUsers({super.key});
 
   @override
   State<AdminUsers> createState() => _AdminUsersState();
@@ -24,12 +24,12 @@ class _AdminUsersState extends State<AdminUsers> {
     super.didChangeDependencies();
 
     if (!_loaded) {
-      /*loadVehicles();*/ //metodo para cargar los usuarios
+      loadUsers();
       _loaded = true;
     }
   }
 
-  Future<void> loadVehicles() async {
+  Future<void> loadUsers() async {
     final auth = Provider.of<AuthProvider>(context, listen: false);
 
     if (auth.token == null) {
@@ -45,7 +45,7 @@ class _AdminUsersState extends State<AdminUsers> {
     if (!mounted) return;
 
     setState(() {
-      users = (response as List).map((v) => User.fromJson(v)).toList();
+      users = (response as List).map((u) => User.fromJson(u)).toList();
       isLoading = false;
     });
   }
@@ -66,51 +66,55 @@ class _AdminUsersState extends State<AdminUsers> {
           ),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              Center(
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      PillBtnPersonalizated(
-                        text: 'Conductores',
-                        textStyle: Theme.of(context).textTheme.titleMedium
-                            ?.copyWith(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15,
-                              color: Colors.white,
-                            ),
-                      ),
-                      const SizedBox(width: 15),
-                      PillBtnPersonalizated(
-                        text: 'Supervisores',
-                        textStyle: Theme.of(context).textTheme.titleMedium
-                            ?.copyWith(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15,
-                              color: Colors.white,
-                            ),
-                      ),
-                      const SizedBox(width: 15),
-                      PillBtnPersonalizated(
-                        text: 'Administradores',
-                        textStyle: Theme.of(context).textTheme.titleMedium
-                            ?.copyWith(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15,
-                              color: Colors.white,
-                            ),
-                      ),
-                    ],
-                  ),
-                ),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  PillBtnPersonalizated(text: 'Conductores'),
+                  const SizedBox(width: 15),
+                  PillBtnPersonalizated(text: 'Supervisores'),
+                  const SizedBox(width: 15),
+                  PillBtnPersonalizated(text: 'Administradores'),
+                ],
               ),
-            ],
-          ),
+            ),
+
+            const SizedBox(height: 10),
+
+            Expanded(
+              child: isLoading
+                  ? const Center(child: CircularProgressIndicator())
+                  : users.isEmpty
+                  ? const Center(child: Text("No hay usuarios disponibles"))
+                  : ListView.separated(
+                      itemCount: users.length,
+                      separatorBuilder: (_, __) =>
+                          const DividerPersonalizated(thicknessSize: 1),
+                      itemBuilder: (context, index) {
+                        final user = users[index];
+
+                        return ListTile(
+                          leading: const Icon(Icons.person, size: 40),
+
+                          title: Text(user.nombre),
+
+                          subtitle: Text(user.placa ?? 'sin dato'),
+
+                          trailing: ElevatedButton(
+                            onPressed: () {
+                              // acción futura
+                            },
+                            child: const Text("Ver"),
+                          ),
+                        );
+                      },
+                    ),
+            ),
+          ],
         ),
       ),
     );

@@ -6,4 +6,8 @@ class UserService {
   Future changePassword(String token, Map<String, dynamic> data) async {
     return await api.putWithToken("auth/changepassword", data, token);
   }
+
+  Future getUsers(String token) async {
+    return await api.getWithToken("users/listUsers", token);
+  }
 }

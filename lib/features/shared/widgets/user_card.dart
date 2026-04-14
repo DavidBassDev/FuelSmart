@@ -27,7 +27,6 @@ class UserCard extends StatelessWidget {
       ),
       child: Row(
         children: [
-          // Avatar + estado
           Stack(
             children: [
               const CircleAvatar(

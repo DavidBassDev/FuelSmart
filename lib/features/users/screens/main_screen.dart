@@ -42,7 +42,7 @@ class MainScreen extends StatelessWidget {
                   ),
                   Expanded(
                     child: Text(
-                      user.rol,
+                      user.rol!,
                       style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                         fontWeight: FontWeight.bold,
                         fontSize: 14,
