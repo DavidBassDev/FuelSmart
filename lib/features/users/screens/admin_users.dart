@@ -4,7 +4,6 @@ import 'package:fuel_smart/core/widgets/dividerPersonalizated.dart';
 import 'package:fuel_smart/features/shared/widgets/pill_btn_personalizated.dart';
 import 'package:fuel_smart/features/users/models/user.dart';
 import 'package:fuel_smart/features/users/services/user_service.dart';
-import 'package:fuel_smart/features/vehicles/models/vehicle.dart';
 import 'package:provider/provider.dart';
 
 class AdminUsers extends StatefulWidget {
@@ -89,7 +88,15 @@ class _AdminUsersState extends State<AdminUsers> {
               child: isLoading
                   ? const Center(child: CircularProgressIndicator())
                   : users.isEmpty
-                  ? const Center(child: Text("No hay usuarios disponibles"))
+                  ? Center(
+                      child: Text(
+                        "No hay usuarios disponibles",
+                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14,
+                        ),
+                      ),
+                    )
                   : ListView.separated(
                       itemCount: users.length,
                       separatorBuilder: (_, __) =>
@@ -100,15 +107,36 @@ class _AdminUsersState extends State<AdminUsers> {
                         return ListTile(
                           leading: const Icon(Icons.person, size: 40),
 
-                          title: Text(user.nombre),
+                          title: Text(
+                            user.nombre,
+                            style: Theme.of(context).textTheme.titleLarge
+                                ?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
+                                ),
+                          ),
 
-                          subtitle: Text(user.placa ?? 'sin dato'),
+                          subtitle: Text(
+                            "Placa: ${user.placa ?? 'sin dato'}\n"
+                            "Cliente: ${user.nombreProyecto ?? 'Sede Principal'}",
+                            style: Theme.of(context).textTheme.titleSmall
+                                ?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
+                                ),
+                          ),
 
                           trailing: ElevatedButton(
                             onPressed: () {
-                              // acción futura
+                              // para llevar a la ventana del usuario
                             },
-                            child: const Text("Ver"),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Color(0xFF552235),
+                            ),
+                            child: Text(
+                              style: TextStyle(color: Colors.white),
+                              "Ver",
+                            ),
                           ),
                         );
                       },

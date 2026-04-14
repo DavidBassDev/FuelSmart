@@ -33,7 +33,7 @@ class MainScreen extends StatelessWidget {
                   Expanded(
                     child: Text(
                       'Bienvenido ${user.nombre}',
-                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
                         fontWeight: FontWeight.bold,
                         fontSize: 14,
                       ),
