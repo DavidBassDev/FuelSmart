@@ -14,21 +14,24 @@ class AdminUsers extends StatefulWidget {
 }
 
 class _AdminUsersState extends State<AdminUsers> {
-  List<User> users = [];
+  List<User> usersDrivers = [];
   bool isLoading = true;
   bool _loaded = false;
+
+  //estado por defecto
+  String selectedRole = 'conductor';
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
 
     if (!_loaded) {
-      loadUsers();
+      loadUsers(selectedRole);
       _loaded = true;
     }
   }
 
-  Future<void> loadUsers() async {
+  Future<void> loadUsers(String selectedRole) async {
     final auth = Provider.of<AuthProvider>(context, listen: false);
 
     if (auth.token == null) {
@@ -38,13 +41,23 @@ class _AdminUsersState extends State<AdminUsers> {
       return;
     }
 
+    setState(() {
+      isLoading = true;
+    });
+
     final userService = UserService();
-    final response = await userService.gerCarDriverUsers(auth.token!);
+
+    final response = await userService.getUsersByRole(
+      auth.token!,
+      selectedRole,
+    );
 
     if (!mounted) return;
 
     setState(() {
-      users = (response['users'] as List).map((u) => User.fromJson(u)).toList();
+      usersDrivers = (response['users'] as List)
+          .map((u) => User.fromJson(u))
+          .toList();
       isLoading = false;
     });
   }
@@ -73,11 +86,48 @@ class _AdminUsersState extends State<AdminUsers> {
               scrollDirection: Axis.horizontal,
               child: Row(
                 children: [
-                  PillBtnPersonalizated(text: 'Conductores'),
+                  PillBtnPersonalizated(
+                    text: 'Conductores',
+                    selected: selectedRole == 'conductores',
+                    onTap: () {
+                      if (selectedRole != 'conductores') {
+                        setState(() {
+                          selectedRole = 'conductores';
+                        });
+                        loadUsers('conductores');
+                      }
+                    },
+                  ),
+
                   const SizedBox(width: 15),
-                  PillBtnPersonalizated(text: 'Supervisores'),
+
+                  PillBtnPersonalizated(
+                    text: 'Supervisores',
+                    selected: selectedRole == 'supervisor',
+                    onTap: () {
+                      if (selectedRole != 'supervisor') {
+                        setState(() {
+                          selectedRole = 'supervisor';
+                        });
+                        loadUsers('supervisor');
+                      }
+                    },
+                  ),
+
                   const SizedBox(width: 15),
-                  PillBtnPersonalizated(text: 'Administradores'),
+
+                  PillBtnPersonalizated(
+                    text: 'Administradores',
+                    selected: selectedRole == 'admin',
+                    onTap: () {
+                      if (selectedRole != 'admin') {
+                        setState(() {
+                          selectedRole = 'admin';
+                        });
+                        loadUsers('admin');
+                      }
+                    },
+                  ),
                 ],
               ),
             ),
@@ -87,7 +137,7 @@ class _AdminUsersState extends State<AdminUsers> {
             Expanded(
               child: isLoading
                   ? const Center(child: CircularProgressIndicator())
-                  : users.isEmpty
+                  : usersDrivers.isEmpty
                   ? Center(
                       child: Text(
                         "No hay usuarios disponibles",
@@ -98,15 +148,14 @@ class _AdminUsersState extends State<AdminUsers> {
                       ),
                     )
                   : ListView.separated(
-                      itemCount: users.length,
+                      itemCount: usersDrivers.length,
                       separatorBuilder: (_, __) =>
                           const DividerPersonalizated(thicknessSize: 1),
                       itemBuilder: (context, index) {
-                        final user = users[index];
+                        final user = usersDrivers[index];
 
                         return ListTile(
                           leading: const Icon(Icons.person, size: 40),
-
                           title: Text(
                             user.nombre,
                             style: Theme.of(context).textTheme.titleLarge
@@ -115,7 +164,6 @@ class _AdminUsersState extends State<AdminUsers> {
                                   fontSize: 20,
                                 ),
                           ),
-
                           subtitle: Text(
                             "Placa: ${user.placa ?? 'sin dato'}\n"
                             "Cliente: ${user.nombreProyecto ?? 'Sede Principal'}",
@@ -125,17 +173,14 @@ class _AdminUsersState extends State<AdminUsers> {
                                   fontSize: 14,
                                 ),
                           ),
-
                           trailing: ElevatedButton(
-                            onPressed: () {
-                              // para llevar a la ventana del usuario
-                            },
+                            onPressed: () {},
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Color(0xFF552235),
+                              backgroundColor: const Color(0xFF552235),
                             ),
-                            child: Text(
-                              style: TextStyle(color: Colors.white),
+                            child: const Text(
                               "Ver",
+                              style: TextStyle(color: Colors.white),
                             ),
                           ),
                         );

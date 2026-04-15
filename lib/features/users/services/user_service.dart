@@ -7,8 +7,12 @@ class UserService {
     return await api.putWithToken("auth/changepassword", data, token);
   }
 
-  Future gerCarDriverUsers(String token) async {
-    return await api.getWithToken("users/listDrivers", token);
+  Future getUsersByRole(String token, String rol) async {
+    if (rol == 'conductor') {
+      return await api.getWithToken("users/listDrivers", token);
+    } else if (rol == 'supervisor') {
+      return await api.getWithToken("users/listSupervisor", token);
+    }
   }
 
   //ENDPOINT PARA USUARIOS SUPERVISORES
