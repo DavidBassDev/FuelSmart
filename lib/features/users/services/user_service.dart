@@ -15,6 +15,8 @@ class UserService {
       return await api.getWithToken("users/listSupervisor", token);
     }
     //ENDPOINT ADMINISTRADORES
-    else {}
+    else {
+      return await api.getWithToken("users/listAdmin", token);
+    }
   }
 }

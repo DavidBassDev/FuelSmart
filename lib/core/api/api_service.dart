@@ -89,24 +89,24 @@ class ApiService {
       Uri.parse('$baseUrl/$endpoint'),
     );
 
-    // 🔐 Headers
+    //  Headers
     request.headers['Authorization'] = 'Bearer $token';
 
-    // 📦 Campos normales
+    //  Campos normales
     data.forEach((key, value) {
       if (value != null) {
         request.fields[key] = value.toString();
       }
     });
 
-    // 📸 Imagen (opcional)
+    // Imagen (opcional)
     if (image != null) {
       request.files.add(
         await http.MultipartFile.fromPath('imagen', image.path),
       );
     }
 
-    // 🚀 Enviar
+    //  Enviar
     var response = await request.send();
 
     final respStr = await response.stream.bytesToString();
