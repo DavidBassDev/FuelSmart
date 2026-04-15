@@ -88,13 +88,13 @@ class _AdminUsersState extends State<AdminUsers> {
                 children: [
                   PillBtnPersonalizated(
                     text: 'Conductores',
-                    selected: selectedRole == 'conductores',
+                    selected: selectedRole == 'conductor',
                     onTap: () {
-                      if (selectedRole != 'conductores') {
+                      if (selectedRole != 'conductor') {
                         setState(() {
-                          selectedRole = 'conductores';
+                          selectedRole = 'conductor';
                         });
-                        loadUsers('conductores');
+                        loadUsers('conductor');
                       }
                     },
                   ),

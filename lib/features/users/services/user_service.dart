@@ -10,12 +10,11 @@ class UserService {
   Future getUsersByRole(String token, String rol) async {
     if (rol == 'conductor') {
       return await api.getWithToken("users/listDrivers", token);
+      //ENDPOINT PARA USUARIOS SUPERVISORES
     } else if (rol == 'supervisor') {
       return await api.getWithToken("users/listSupervisor", token);
     }
+    //ENDPOINT ADMINISTRADORES
+    else {}
   }
-
-  //ENDPOINT PARA USUARIOS SUPERVISORES
-
-  //ENDPOINT ADMINISTRADORES
 }
