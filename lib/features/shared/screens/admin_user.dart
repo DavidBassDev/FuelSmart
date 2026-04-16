@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fuel_smart/core/providers/auth_provider.dart';
 import 'package:fuel_smart/core/widgets/dividerPersonalizated.dart';
+import 'package:fuel_smart/features/shared/widgets/card_admin_user.dart';
 import 'package:fuel_smart/features/users/models/user.dart';
 import 'package:provider/provider.dart';
 
@@ -59,7 +60,7 @@ class AdminUserScreen extends StatelessWidget {
             ],
           ),
           DividerPersonalizated(thicknessSize: 1),
-          const SizedBox(height: 25),
+          const SizedBox(height: 10),
           Center(
             child: Row(
               mainAxisAlignment: MainAxisAlignment
@@ -77,7 +78,15 @@ class AdminUserScreen extends StatelessWidget {
             ),
           ),
           DividerPersonalizated(thicknessSize: 1),
-          const SizedBox(height: 25),
+          const SizedBox(height: 10),
+          CardAdminUser(
+            icon: Icons.contact_emergency_rounded,
+            titulo: 'Ver usuarios creados',
+            descripcion: 'Ver y editar usuarios \n creados en el sistema',
+            onPressed: () {
+              print('funca');
+            },
+          ),
         ],
       ),
     );
