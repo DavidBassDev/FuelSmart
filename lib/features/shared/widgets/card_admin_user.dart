@@ -5,6 +5,7 @@ class CardAdminUser extends StatelessWidget {
   final String titulo;
   final String descripcion;
   final VoidCallback onPressed;
+  final String nameButtom;
 
   const CardAdminUser({
     super.key,
@@ -12,6 +13,7 @@ class CardAdminUser extends StatelessWidget {
     required this.titulo,
     required this.descripcion,
     required this.onPressed,
+    required this.nameButtom,
   });
 
   @override
@@ -75,7 +77,13 @@ class CardAdminUser extends StatelessWidget {
               ),
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
             ),
-            child: Text("Ir", style: TextStyle(color: Colors.white)),
+            child: Text(
+              nameButtom,
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                fontWeight: FontWeight.bold,
+                fontSize: 13,
+              ),
+            ),
           ),
         ],
       ),

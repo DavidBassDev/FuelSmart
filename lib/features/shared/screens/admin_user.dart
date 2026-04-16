@@ -87,12 +87,13 @@ class AdminUserScreen extends StatelessWidget {
           DividerPersonalizated(thicknessSize: 1),
           const SizedBox(height: 5),
           CardAdminUser(
-            icon: Icons.contact_emergency_rounded,
+            icon: Icons.supervised_user_circle,
             titulo: 'Ver usuarios creados',
             descripcion: 'Ver y editar usuarios \n creados en el sistema',
             onPressed: () {
               print('funca');
             },
+            nameButtom: 'Ir',
           ),
           DividerPersonalizated(thicknessSize: 1),
           CardAdminUser(
@@ -101,6 +102,7 @@ class AdminUserScreen extends StatelessWidget {
             descripcion:
                 'Crear un usuario con rol \n administrador,coordinador o conductor',
             onPressed: () {},
+            nameButtom: 'Crear',
           ),
           DividerPersonalizated(thicknessSize: 1),
           TipAdminUsers(),

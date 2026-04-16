@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
 
-class TipAdminUsers extends StatelessWidget {
+class TipAdminUsers extends StatefulWidget {
   const TipAdminUsers({super.key});
 
+  @override
+  State<TipAdminUsers> createState() => _TipAdminUsersState();
+}
+
+class _TipAdminUsersState extends State<TipAdminUsers> {
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.05),
+        color: const Color.fromARGB(255, 128, 44, 65),
         borderRadius: BorderRadius.circular(16),
       ),
       child: Column(
@@ -17,15 +22,14 @@ class TipAdminUsers extends StatelessWidget {
         children: [
           // Título
           Row(
-            children: const [
+            children: [
               Icon(Icons.lightbulb_outline, color: Colors.white),
               SizedBox(width: 8),
               Text(
-                'Consejos rápidos',
-                style: TextStyle(
-                  fontSize: 16,
+                'Consejos rápido',
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                  fontSize: 20,
                 ),
               ),
             ],
@@ -34,9 +38,12 @@ class TipAdminUsers extends StatelessWidget {
           const SizedBox(height: 12),
 
           // Descripción
-          const Text(
+          Text(
             'Gestiona correctamente los permisos de cada usuario para mantener la seguridad y el buen funcionamiento del sistema.',
-            style: TextStyle(color: Colors.white70),
+            style: Theme.of(context).textTheme.displayLarge?.copyWith(
+              fontWeight: FontWeight.normal,
+              fontSize: 15,
+            ),
           ),
 
           const SizedBox(height: 12),
@@ -48,9 +55,12 @@ class TipAdminUsers extends StatelessWidget {
 
           const SizedBox(height: 12),
 
-          const Text(
-            'Una buena gestión mejora el trabajo en equipo ❤️',
-            style: TextStyle(color: Colors.white54),
+          Text(
+            'Una buena gestión mejora el trabajo en equipo 🔒',
+            style: Theme.of(context).textTheme.displayLarge?.copyWith(
+              fontWeight: FontWeight.bold,
+              fontSize: 14,
+            ),
           ),
         ],
       ),
@@ -65,7 +75,13 @@ class TipAdminUsers extends StatelessWidget {
           const Icon(Icons.check_circle, size: 18, color: Colors.white70),
           const SizedBox(width: 8),
           Expanded(
-            child: Text(text, style: const TextStyle(color: Colors.white70)),
+            child: Text(
+              text,
+              style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                fontWeight: FontWeight.normal,
+                fontSize: 20,
+              ),
+            ),
           ),
         ],
       ),
