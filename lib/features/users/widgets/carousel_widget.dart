@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fuel_smart/features/refueling/screens/refueling_screen.dart';
 import 'package:fuel_smart/core/widgets/carousel_functions.dart';
-import 'package:fuel_smart/features/shared/screens/admin_user.dart';
+import 'package:fuel_smart/features/shared/screens/admin_user_screen.dart';
 
 class CarouselWidget extends StatelessWidget {
   const CarouselWidget({super.key});

@@ -6,14 +6,14 @@ import 'package:fuel_smart/features/users/models/user.dart';
 import 'package:fuel_smart/features/users/services/user_service.dart';
 import 'package:provider/provider.dart';
 
-class AdminUsers extends StatefulWidget {
-  const AdminUsers({super.key});
+class SeeUsersScreen extends StatefulWidget {
+  const SeeUsersScreen({super.key});
 
   @override
-  State<AdminUsers> createState() => _AdminUsersState();
+  State<SeeUsersScreen> createState() => _AdminUsersState();
 }
 
-class _AdminUsersState extends State<AdminUsers> {
+class _AdminUsersState extends State<SeeUsersScreen> {
   List<User> usersDrivers = [];
   bool isLoading = true;
   bool _loaded = false;
