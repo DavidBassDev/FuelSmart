@@ -15,8 +15,7 @@ class AdminUserScreen extends StatelessWidget {
     }
 
     final User user = auth.user!;
-    final name = user.nombre;
-    print('probando nombre $name');
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -34,18 +33,51 @@ class AdminUserScreen extends StatelessWidget {
       body: Column(
         children: [
           Row(
+            mainAxisAlignment: MainAxisAlignment
+                .spaceAround, // PARA QUE SE AJUSTE LA DISTRIBUCION
+
             children: [
               SizedBox(height: 30),
               Icon(Icons.person, color: Colors.black, size: 80),
               SizedBox(width: 20),
-              Text(user.nombre),
+              Text(
+                user.nombre,
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
+              ),
 
-              SizedBox(width: 20),
-              Text(user.rol ?? 'dintwork'),
+              SizedBox(width: 40),
+              Text(
+                user.rol ?? 'dintwork',
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15,
+                ),
+              ),
             ],
           ),
           DividerPersonalizated(thicknessSize: 1),
-          Center(child: Row(children: [Text('Administrar usuarios y roles')])),
+          const SizedBox(height: 25),
+          Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment
+                  .spaceAround, // PARA QUE SE AJUSTE LA DISTRIBUCION
+              children: [
+                Text(
+                  'Administrar usuarios y roles',
+                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
+                ),
+                Icon(Icons.groups_3_outlined, color: Colors.black, size: 80),
+              ],
+            ),
+          ),
+          DividerPersonalizated(thicknessSize: 1),
+          const SizedBox(height: 25),
         ],
       ),
     );
