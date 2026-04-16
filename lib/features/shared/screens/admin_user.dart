@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fuel_smart/core/providers/auth_provider.dart';
 import 'package:fuel_smart/core/widgets/dividerPersonalizated.dart';
 import 'package:fuel_smart/features/shared/widgets/card_admin_user.dart';
+import 'package:fuel_smart/features/shared/widgets/tip_admin_users.dart';
 import 'package:fuel_smart/features/users/models/user.dart';
 import 'package:provider/provider.dart';
 
@@ -23,6 +24,7 @@ class AdminUserScreen extends StatelessWidget {
           onPressed: () => Navigator.pop(context),
           icon: const Icon(Icons.arrow_back, size: 30),
         ),
+        centerTitle: true,
         title: Text(
           "Administrar usuarios y roles",
           style: Theme.of(context).textTheme.titleLarge?.copyWith(
@@ -33,13 +35,18 @@ class AdminUserScreen extends StatelessWidget {
       ),
       body: Column(
         children: [
+          DividerPersonalizated(thicknessSize: 1),
           Row(
             mainAxisAlignment: MainAxisAlignment
                 .spaceAround, // PARA QUE SE AJUSTE LA DISTRIBUCION
 
             children: [
               SizedBox(height: 30),
-              Icon(Icons.person, color: Colors.black, size: 80),
+              Icon(
+                Icons.person,
+                color: Color.fromARGB(255, 35, 35, 35),
+                size: 80,
+              ),
               SizedBox(width: 20),
               Text(
                 user.nombre,
@@ -60,7 +67,7 @@ class AdminUserScreen extends StatelessWidget {
             ],
           ),
           DividerPersonalizated(thicknessSize: 1),
-          const SizedBox(height: 25),
+          const SizedBox(height: 10),
           Center(
             child: Row(
               mainAxisAlignment: MainAxisAlignment
@@ -78,7 +85,7 @@ class AdminUserScreen extends StatelessWidget {
             ),
           ),
           DividerPersonalizated(thicknessSize: 1),
-          const SizedBox(height: 10),
+          const SizedBox(height: 5),
           CardAdminUser(
             icon: Icons.contact_emergency_rounded,
             titulo: 'Ver usuarios creados',
@@ -88,6 +95,15 @@ class AdminUserScreen extends StatelessWidget {
             },
           ),
           DividerPersonalizated(thicknessSize: 1),
+          CardAdminUser(
+            icon: Icons.person_add_alt_1,
+            titulo: 'Crear usuario',
+            descripcion:
+                'Crear un usuario con rol \n administrador,coordinador o conductor',
+            onPressed: () {},
+          ),
+          DividerPersonalizated(thicknessSize: 1),
+          TipAdminUsers(),
         ],
       ),
     );

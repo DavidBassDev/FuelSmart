@@ -30,7 +30,7 @@ class CardAdminUser extends StatelessWidget {
             decoration: BoxDecoration(shape: BoxShape.circle),
             child: Icon(
               icon,
-              color: const Color.fromARGB(255, 0, 0, 0),
+              color: const Color.fromARGB(255, 35, 35, 35),
               size: 60,
             ),
           ),
@@ -52,7 +52,7 @@ class CardAdminUser extends StatelessWidget {
 
                 const SizedBox(height: 4),
                 Text(
-                  textAlign: TextAlign.center,
+                  textAlign: TextAlign.left,
                   descripcion,
                   style: TextStyle(
                     color: Colors.white.withOpacity(0.8),
