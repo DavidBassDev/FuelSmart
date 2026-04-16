@@ -15,6 +15,8 @@ class AdminUserScreen extends StatelessWidget {
     }
 
     final User user = auth.user!;
+    final name = user.nombre;
+    print('probando nombre $name');
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -37,6 +39,7 @@ class AdminUserScreen extends StatelessWidget {
               Icon(Icons.person, color: Colors.black, size: 80),
               SizedBox(width: 20),
               Text(user.nombre),
+
               SizedBox(width: 20),
               Text(user.rol ?? 'dintwork'),
             ],
