@@ -60,7 +60,7 @@ class AdminUserScreen extends StatelessWidget {
             ],
           ),
           DividerPersonalizated(thicknessSize: 1),
-          const SizedBox(height: 10),
+          const SizedBox(height: 25),
           Center(
             child: Row(
               mainAxisAlignment: MainAxisAlignment
@@ -87,6 +87,7 @@ class AdminUserScreen extends StatelessWidget {
               print('funca');
             },
           ),
+          DividerPersonalizated(thicknessSize: 1),
         ],
       ),
     );

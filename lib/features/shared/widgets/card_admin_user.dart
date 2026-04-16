@@ -44,14 +44,15 @@ class CardAdminUser extends StatelessWidget {
               children: [
                 Text(
                   titulo,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
+                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                     fontWeight: FontWeight.bold,
+                    fontSize: 15,
                   ),
                 ),
+
                 const SizedBox(height: 4),
                 Text(
+                  textAlign: TextAlign.center,
                   descripcion,
                   style: TextStyle(
                     color: Colors.white.withOpacity(0.8),
