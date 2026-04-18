@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fuel_smart/core/providers/auth_provider.dart';
 import 'package:fuel_smart/core/widgets/dividerPersonalizated.dart';
+import 'package:fuel_smart/features/shared/screens/see_user_screen.dart';
 import 'package:fuel_smart/features/shared/widgets/pill_btn_personalizated.dart';
 import 'package:fuel_smart/features/users/models/user.dart';
 import 'package:fuel_smart/features/users/services/user_service.dart';
@@ -174,7 +175,14 @@ class _AdminUsersState extends State<SeeUsersScreen> {
                                 ),
                           ),
                           trailing: ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => SeeUserScreen(),
+                                ),
+                              );
+                            },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: const Color(0xFF552235),
                             ),

@@ -14,7 +14,8 @@ class ApiService {
       Uri.parse('$baseUrl/$endpoint'),
       headers: {"Content-Type": "application/json"},
     );
-
+    print("STATUS: ${response.statusCode}");
+    print("BODY: ${response.body}");
     return jsonDecode(response.body);
   }
 
