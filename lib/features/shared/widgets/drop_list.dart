@@ -40,12 +40,14 @@ class DropList<T> extends StatelessWidget {
             hint: Text(hint),
             isExpanded: true,
             underline: const SizedBox(),
+
             items: items.map((item) {
               return DropdownMenuItem<T>(
                 value: item,
                 child: Text(itemLabel(item)),
               );
             }).toList(),
+
             onChanged: onChanged,
           ),
         ),
