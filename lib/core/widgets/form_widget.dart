@@ -4,12 +4,14 @@ class FormWidget extends StatelessWidget {
   final IconData icon;
   final bool obscureText;
   final TextEditingController? controller;
+  final String? hint;
 
   const FormWidget({
     super.key,
     required this.icon,
     required this.obscureText,
     this.controller,
+    this.hint,
   });
 
   @override
@@ -20,7 +22,10 @@ class FormWidget extends StatelessWidget {
         controller: controller,
         style: TextStyle(color: Colors.black),
         obscureText: obscureText,
+
         decoration: InputDecoration(
+          hintText: hint,
+          hintStyle: TextStyle(color: const Color.fromARGB(255, 0, 0, 0)),
           isDense: true,
           contentPadding: EdgeInsets.symmetric(vertical: 14, horizontal: 16),
           suffixIcon: Icon(icon, color: Colors.black),
