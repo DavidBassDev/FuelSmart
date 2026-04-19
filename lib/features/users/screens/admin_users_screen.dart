@@ -179,7 +179,8 @@ class _AdminUsersState extends State<SeeUsersScreen> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (_) => SeeUserScreen(),
+                                  builder: (_) =>
+                                      SeeUserScreen(userSelected: user),
                                 ),
                               );
                             },

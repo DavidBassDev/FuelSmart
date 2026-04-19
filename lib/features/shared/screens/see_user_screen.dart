@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:fuel_smart/core/providers/auth_provider.dart';
 import 'package:fuel_smart/core/widgets/button_action.dart';
 import 'package:fuel_smart/core/widgets/dividerPersonalizated.dart';
 import 'package:fuel_smart/core/widgets/form_widget.dart';
-import 'package:fuel_smart/features/shared/services/RoleService.dart';
+import 'package:fuel_smart/features/clients/models/client.dart';
+import 'package:fuel_smart/features/shared/services/client_service.dart';
+import 'package:fuel_smart/features/shared/services/role_service.dart';
 import 'package:fuel_smart/features/shared/widgets/drop_list.dart';
+import 'package:fuel_smart/features/users/models/user.dart';
 import 'package:fuel_smart/features/users/models/user_rol.dart';
+import 'package:fuel_smart/features/vehicles/models/vehicle.dart';
+import 'package:fuel_smart/features/vehicles/services/vehicle_service.dart';
+import 'package:provider/provider.dart';
 
 class SeeUserScreen extends StatefulWidget {
-  const SeeUserScreen({super.key});
+  final User userSelected;
+  const SeeUserScreen({super.key, required this.userSelected});
 
   @override
   State<SeeUserScreen> createState() => _SeeUserScreenState();
@@ -15,15 +23,36 @@ class SeeUserScreen extends StatefulWidget {
 
 class _SeeUserScreenState extends State<SeeUserScreen> {
   final RoleService roleService = RoleService();
+  final ClientService clientService = ClientService();
+  final VehicleService vehicleService = VehicleService();
+
   final emailController = TextEditingController();
 
   List<UserRol> roles = [];
   UserRol? selectedRole;
 
+  List<Client> clients = [];
+  Client? selectedClient;
+
+  List<Vehicle> vehicles = [];
+  Vehicle? vehicleSelected;
+
   @override
   void initState() {
     super.initState();
     loadRoles();
+    loadClients();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    final auth = Provider.of<AuthProvider>(context);
+
+    if (auth.token != null) {
+      loadVehicles(auth.token!);
+    }
   }
 
   Future<void> loadRoles() async {
@@ -33,8 +62,31 @@ class _SeeUserScreenState extends State<SeeUserScreen> {
     });
   }
 
+  Future<void> loadClients() async {
+    final data = await clientService.getClient();
+    setState(() {
+      clients = data;
+    });
+  }
+
+  Future<void> loadVehicles(String token) async {
+    final data = await vehicleService.getVehicles();
+    setState(() {
+      vehicles = data;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    final auth = Provider.of<AuthProvider>(context);
+
+    if (!auth.isLogged || auth.user == null || auth.token == null) {
+      return const Scaffold(body: Center(child: Text("Token inválido")));
+    }
+
+    final User user = auth.user!;
+    final name = auth.token!;
+
     return Scaffold(
       backgroundColor: const Color(0xFF883955),
       appBar: AppBar(
@@ -47,25 +99,31 @@ class _SeeUserScreenState extends State<SeeUserScreen> {
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [Text('NOMBRE USUARIO'), Text('ROL'), Text('CLIENTE')],
+              children: [
+                Text(widget.userSelected.nombre),
+                Text(widget.userSelected.rol!),
+                Text(widget.userSelected.nombreProyecto ?? 'Sede Principal'),
+              ],
             ),
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
             DividerPersonalizated(thicknessSize: 1),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
+
             Text(
               "Dirección de correo electrónico",
               style: Theme.of(context).textTheme.bodyLarge,
             ),
-            SizedBox(height: 10),
-            //correo
+            const SizedBox(height: 10),
+
             FormWidget(
               icon: Icons.mail_outline_outlined,
               obscureText: false,
               controller: emailController,
               hint: 'correo@fuelsmart.com',
             ),
-            SizedBox(height: 30),
-            //Seleccionar Rol
+
+            const SizedBox(height: 30),
+
             DropList<UserRol>(
               label: "Rol de Usuario",
               hint: "Selecciona un rol",
@@ -78,36 +136,41 @@ class _SeeUserScreenState extends State<SeeUserScreen> {
                 });
               },
             ),
-            SizedBox(height: 20),
 
-            DropList<UserRol>(
+            const SizedBox(height: 20),
+
+            DropList<Client>(
               label: "Centro de operación",
               hint: "Selecciona un cliente",
-              items: roles,
-              value: selectedRole,
-              itemLabel: (rol) => rol.rolName,
+              items: clients,
+              value: selectedClient,
+              itemLabel: (client) => client.name,
               onChanged: (value) {
                 setState(() {
-                  selectedRole = value;
+                  selectedClient = value;
                 });
               },
             ),
-            SizedBox(height: 20),
-            DropList<UserRol>(
+
+            const SizedBox(height: 20),
+
+            DropList<Vehicle>(
               label: "Asignar vehículo",
-              hint: "PLACA ACTUAL",
-              items: roles,
-              value: selectedRole,
-              itemLabel: (rol) => rol.rolName,
+              hint: "Selecciona un vehículo",
+              items: vehicles,
+              value: vehicleSelected,
+              itemLabel: (vehicle) => vehicle.plate,
               onChanged: (value) {
                 setState(() {
-                  selectedRole = value;
+                  vehicleSelected = value;
                 });
               },
             ),
-            SizedBox(height: 20),
+
+            const SizedBox(height: 20),
+
             ButtonAction(text: 'Editar usuario', onPressed: () {}),
-            SizedBox(height: 40),
+            const SizedBox(height: 40),
             ButtonAction(text: 'Eliminar Usuario', onPressed: () {}),
           ],
         ),
