@@ -9,6 +9,7 @@ import 'package:fuel_smart/features/shared/services/role_service.dart';
 import 'package:fuel_smart/features/shared/widgets/drop_list.dart';
 import 'package:fuel_smart/features/users/models/user.dart';
 import 'package:fuel_smart/features/users/models/user_rol.dart';
+import 'package:fuel_smart/features/users/services/user_service.dart';
 import 'package:fuel_smart/features/vehicles/models/vehicle.dart';
 import 'package:fuel_smart/features/vehicles/services/vehicle_service.dart';
 import 'package:provider/provider.dart';
@@ -25,6 +26,7 @@ class _SeeUserScreenState extends State<SeeUserScreen> {
   final RoleService roleService = RoleService();
   final ClientService clientService = ClientService();
   final VehicleService vehicleService = VehicleService();
+  final UserService userService = UserService();
 
   final emailController = TextEditingController();
 
@@ -169,7 +171,29 @@ class _SeeUserScreenState extends State<SeeUserScreen> {
 
             const SizedBox(height: 20),
 
-            ButtonAction(text: 'Editar usuario', onPressed: () {}),
+            ButtonAction(
+              text: 'Editar usuario',
+              onPressed: () async {
+                try {
+                  var data = await userService.updateUser(auth.token!, {
+                    "id_usuario": widget.userSelected.id,
+                    "rol_id": selectedRole?.rolId,
+                    "cliente_id": selectedClient?.clientId,
+                    "id_vehiculo": vehicleSelected?.vehicleId,
+                  });
+
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text("Usuario actualizado")),
+                  );
+                } catch (e) {
+                  print(e);
+
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text("Error al actualizar")),
+                  );
+                }
+              },
+            ),
             const SizedBox(height: 40),
             ButtonAction(text: 'Eliminar Usuario', onPressed: () {}),
           ],

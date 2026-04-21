@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:fuel_smart/core/api/api_service.dart';
 
 class UserService {
@@ -17,6 +19,17 @@ class UserService {
     //ENDPOINT ADMINISTRADORES
     else {
       return await api.getWithToken("users/listAdmin", token);
+    }
+  }
+
+  //Actualizar usuario
+  Future<dynamic> updateUser(String token, Map<String, dynamic> data) async {
+    final response = await api.putWithToken("users/editUser", data, token);
+
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body);
+    } else {
+      throw Exception('Error ${response.statusCode}: ${response.body}');
     }
   }
 }
