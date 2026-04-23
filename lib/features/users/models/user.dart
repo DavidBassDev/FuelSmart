@@ -19,15 +19,13 @@ class User {
     return User(
       id: json["id"] ?? json["id_usuario"] ?? 0,
 
-      /// 🔥 SOLO nombre de usuario real
-      nombre: json["nombre_completo"] ?? "nombre con error",
+      // 🔥 SOPORTA AMBOS CASOS
+      nombre: json["nombre"] ?? json["nombre_completo"] ?? "nombre con error",
 
       rol: json["rol"] ?? 'errorAca',
 
       idVehicle: json["id_vehiculo"],
       placa: json["placa"],
-
-      /// 🔥 cliente
       nombreProyecto: json["nombre_proyecto"],
     );
   }

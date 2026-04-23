@@ -198,7 +198,12 @@ class _SeeUserScreenState extends State<SeeUserScreen> {
                 },
               ),
               const SizedBox(height: 40),
-              ButtonAction(text: 'Eliminar Usuario', onPressed: () {}),
+              ButtonAction(
+                text: 'Eliminar Usuario',
+                onPressed: () {
+                  //accion elo
+                },
+              ),
             ],
           ),
         ),

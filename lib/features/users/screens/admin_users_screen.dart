@@ -72,7 +72,6 @@ class _AdminUsersState extends State<SeeUsersScreen> {
 
           const SizedBox(width: 10),
 
-          /// 🔥 TEXTO CONTROLADO
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -150,7 +149,6 @@ class _AdminUsersState extends State<SeeUsersScreen> {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            /// 🔹 FILTROS
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
@@ -193,7 +191,7 @@ class _AdminUsersState extends State<SeeUsersScreen> {
 
             const SizedBox(height: 10),
 
-            /// 🔹 LISTA
+            //LISTA
             Expanded(
               child: isLoading
                   ? const Center(child: CircularProgressIndicator())
