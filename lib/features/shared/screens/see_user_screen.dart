@@ -181,6 +181,7 @@ class _SeeUserScreenState extends State<SeeUserScreen> {
                     "cliente_id": selectedClient?.clientId,
                     "id_vehiculo": vehicleSelected?.vehicleId,
                   });
+                  print('valor de id_vehiculo ${vehicleSelected?.vehicleId}');
 
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text("Usuario actualizado")),
