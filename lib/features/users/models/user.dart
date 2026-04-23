@@ -18,11 +18,17 @@ class User {
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
       id: json["id"] ?? json["id_usuario"] ?? 0,
-      nombre: json["nombre"] ?? json["nombre_completo"] ?? "nombre con error",
+
+      /// 🔥 SOLO nombre de usuario real
+      nombre: json["nombre_completo"] ?? "nombre con error",
+
       rol: json["rol"] ?? 'errorAca',
+
       idVehicle: json["id_vehiculo"],
       placa: json["placa"],
-      nombreProyecto: json["nombre_proyecto"] ?? json["nombre"],
+
+      /// 🔥 cliente
+      nombreProyecto: json["nombre_proyecto"],
     );
   }
 }

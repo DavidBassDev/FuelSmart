@@ -19,7 +19,6 @@ class _AdminUsersState extends State<SeeUsersScreen> {
   bool isLoading = true;
   bool _loaded = false;
 
-  //estado por defecto
   String selectedRole = 'conductor';
 
   @override
@@ -63,6 +62,74 @@ class _AdminUsersState extends State<SeeUsersScreen> {
     });
   }
 
+  Widget _buildUserItem(User user) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Icon(Icons.person, size: 40),
+
+          const SizedBox(width: 10),
+
+          /// 🔥 TEXTO CONTROLADO
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  user.nombre,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  "Placa: ${user.placa ?? 'sin dato'}",
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                  ),
+                ),
+                Text(
+                  "Cliente: ${user.nombreProyecto ?? 'Sede Principal'}",
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          const SizedBox(width: 10),
+
+          ElevatedButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => SeeUserScreen(userSelected: user),
+                ),
+              );
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(0xFF552235),
+            ),
+            child: const Text("Ver", style: TextStyle(color: Colors.white)),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -83,6 +150,7 @@ class _AdminUsersState extends State<SeeUsersScreen> {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
+            /// 🔹 FILTROS
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
@@ -92,39 +160,29 @@ class _AdminUsersState extends State<SeeUsersScreen> {
                     selected: selectedRole == 'conductor',
                     onTap: () {
                       if (selectedRole != 'conductor') {
-                        setState(() {
-                          selectedRole = 'conductor';
-                        });
+                        setState(() => selectedRole = 'conductor');
                         loadUsers('conductor');
                       }
                     },
                   ),
-
                   const SizedBox(width: 15),
-
                   PillBtnPersonalizated(
                     text: 'Supervisores',
                     selected: selectedRole == 'supervisor',
                     onTap: () {
                       if (selectedRole != 'supervisor') {
-                        setState(() {
-                          selectedRole = 'supervisor';
-                        });
+                        setState(() => selectedRole = 'supervisor');
                         loadUsers('supervisor');
                       }
                     },
                   ),
-
                   const SizedBox(width: 15),
-
                   PillBtnPersonalizated(
                     text: 'Administradores',
                     selected: selectedRole == 'admin',
                     onTap: () {
                       if (selectedRole != 'admin') {
-                        setState(() {
-                          selectedRole = 'admin';
-                        });
+                        setState(() => selectedRole = 'admin');
                         loadUsers('admin');
                       }
                     },
@@ -135,6 +193,7 @@ class _AdminUsersState extends State<SeeUsersScreen> {
 
             const SizedBox(height: 10),
 
+            /// 🔹 LISTA
             Expanded(
               child: isLoading
                   ? const Center(child: CircularProgressIndicator())
@@ -154,45 +213,7 @@ class _AdminUsersState extends State<SeeUsersScreen> {
                           const DividerPersonalizated(thicknessSize: 1),
                       itemBuilder: (context, index) {
                         final user = usersDrivers[index];
-
-                        return ListTile(
-                          leading: const Icon(Icons.person, size: 40),
-                          title: Text(
-                            user.nombre,
-                            style: Theme.of(context).textTheme.titleLarge
-                                ?.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20,
-                                ),
-                          ),
-                          subtitle: Text(
-                            "Placa: ${user.placa ?? 'sin dato'}\n"
-                            "Cliente: ${user.nombreProyecto ?? 'Sede Principal'}",
-                            style: Theme.of(context).textTheme.titleSmall
-                                ?.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 14,
-                                ),
-                          ),
-                          trailing: ElevatedButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (_) =>
-                                      SeeUserScreen(userSelected: user),
-                                ),
-                              );
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFF552235),
-                            ),
-                            child: const Text(
-                              "Ver",
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
-                        );
+                        return _buildUserItem(user);
                       },
                     ),
             ),

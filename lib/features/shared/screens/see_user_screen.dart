@@ -187,6 +187,7 @@ class _SeeUserScreenState extends State<SeeUserScreen> {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text("Usuario actualizado")),
                     );
+                    Navigator.pop(context);
                   } catch (e) {
                     print(e);
 
