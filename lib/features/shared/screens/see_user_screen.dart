@@ -95,109 +95,111 @@ class _SeeUserScreenState extends State<SeeUserScreen> {
         title: const Text("Administrar usuario"),
         centerTitle: true,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Text(widget.userSelected.nombre),
-                Text(widget.userSelected.rol!),
-                Text(widget.userSelected.nombreProyecto ?? 'Sede Principal'),
-              ],
-            ),
-            const SizedBox(height: 30),
-            DividerPersonalizated(thicknessSize: 1),
-            const SizedBox(height: 20),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Text(widget.userSelected.nombre),
+                  Text(widget.userSelected.rol!),
+                  Text(widget.userSelected.nombreProyecto ?? 'Sede Principal'),
+                ],
+              ),
+              const SizedBox(height: 30),
+              DividerPersonalizated(thicknessSize: 1),
+              const SizedBox(height: 20),
 
-            Text(
-              "Dirección de correo electrónico",
-              style: Theme.of(context).textTheme.bodyLarge,
-            ),
-            const SizedBox(height: 10),
+              Text(
+                "Dirección de correo electrónico",
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+              const SizedBox(height: 10),
 
-            FormWidget(
-              icon: Icons.mail_outline_outlined,
-              obscureText: false,
-              controller: emailController,
-              hint: 'correo@fuelsmart.com',
-            ),
+              FormWidget(
+                icon: Icons.mail_outline_outlined,
+                obscureText: false,
+                controller: emailController,
+                hint: 'correo@fuelsmart.com',
+              ),
 
-            const SizedBox(height: 30),
+              const SizedBox(height: 30),
 
-            DropList<UserRol>(
-              label: "Rol de Usuario",
-              hint: "Selecciona un rol",
-              items: roles,
-              value: selectedRole,
-              itemLabel: (rol) => rol.rolName,
-              onChanged: (value) {
-                setState(() {
-                  selectedRole = value;
-                });
-              },
-            ),
-
-            const SizedBox(height: 20),
-
-            DropList<Client>(
-              label: "Centro de operación",
-              hint: "Selecciona un cliente",
-              items: clients,
-              value: selectedClient,
-              itemLabel: (client) => client.name,
-              onChanged: (value) {
-                setState(() {
-                  selectedClient = value;
-                });
-              },
-            ),
-
-            const SizedBox(height: 20),
-
-            DropList<Vehicle>(
-              label: "Asignar vehículo",
-              hint: "Selecciona un vehículo",
-              items: vehicles,
-              value: vehicleSelected,
-              itemLabel: (vehicle) => vehicle.plate,
-              onChanged: (value) {
-                setState(() {
-                  vehicleSelected = value;
-                });
-              },
-            ),
-
-            const SizedBox(height: 20),
-
-            ButtonAction(
-              text: 'Editar usuario',
-              onPressed: () async {
-                try {
-                  var data = await userService.updateUser(auth.token!, {
-                    "id_usuario": widget.userSelected.id,
-                    "rol_id": selectedRole?.rolId,
-                    "cliente_id": selectedClient?.clientId,
-                    "id_vehiculo": vehicleSelected?.vehicleId,
+              DropList<UserRol>(
+                label: "Rol de Usuario",
+                hint: "Selecciona un rol",
+                items: roles,
+                value: selectedRole,
+                itemLabel: (rol) => rol.rolName,
+                onChanged: (value) {
+                  setState(() {
+                    selectedRole = value;
                   });
-                  print('valor de id_vehiculo ${vehicleSelected?.vehicleId}');
+                },
+              ),
 
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text("Usuario actualizado")),
-                  );
-                } catch (e) {
-                  print(e);
+              const SizedBox(height: 20),
 
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text("Error al actualizar")),
-                  );
-                }
-              },
-            ),
-            const SizedBox(height: 40),
-            ButtonAction(text: 'Eliminar Usuario', onPressed: () {}),
-          ],
+              DropList<Client>(
+                label: "Centro de operación",
+                hint: "Selecciona un cliente",
+                items: clients,
+                value: selectedClient,
+                itemLabel: (client) => client.name,
+                onChanged: (value) {
+                  setState(() {
+                    selectedClient = value;
+                  });
+                },
+              ),
+
+              const SizedBox(height: 20),
+
+              DropList<Vehicle>(
+                label: "Asignar vehículo",
+                hint: "Selecciona un vehículo",
+                items: vehicles,
+                value: vehicleSelected,
+                itemLabel: (vehicle) => vehicle.plate,
+                onChanged: (value) {
+                  setState(() {
+                    vehicleSelected = value;
+                  });
+                },
+              ),
+
+              const SizedBox(height: 20),
+
+              ButtonAction(
+                text: 'Editar usuario',
+                onPressed: () async {
+                  try {
+                    var data = await userService.updateUser(auth.token!, {
+                      "id_usuario": widget.userSelected.id,
+                      "rol_id": selectedRole?.rolId,
+                      "cliente_id": selectedClient?.clientId,
+                      "id_vehiculo": vehicleSelected?.vehicleId,
+                    });
+                    print('valor de id_vehiculo ${vehicleSelected?.vehicleId}');
+
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Usuario actualizado")),
+                    );
+                  } catch (e) {
+                    print(e);
+
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Error al actualizar")),
+                    );
+                  }
+                },
+              ),
+              const SizedBox(height: 40),
+              ButtonAction(text: 'Eliminar Usuario', onPressed: () {}),
+            ],
+          ),
         ),
       ),
     );
