@@ -199,9 +199,25 @@ class _SeeUserScreenState extends State<SeeUserScreen> {
               ),
               const SizedBox(height: 40),
               ButtonAction(
-                text: 'Eliminar Usuario',
-                onPressed: () {
-                  //accion elo
+                text: 'Inactivar Usuario',
+                onPressed: () async {
+                  //accion inactivar usuario
+                  try {
+                    var data = await userService.inactiveUser(auth.token!, {
+                      "id_usuario": widget.userSelected.id,
+                    });
+
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Usuario Inactivado")),
+                    );
+                    Navigator.pop(context);
+                  } catch (e) {
+                    print(e);
+
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Error al inactivar")),
+                    );
+                  }
                 },
               ),
             ],

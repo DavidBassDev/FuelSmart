@@ -29,4 +29,16 @@ class UserService {
     print('entra en metodo UpdateUser');
     return response;
   }
+
+  //Inactivar usuario
+  Future<dynamic> inactiveUser(String token, Map<String, dynamic> data) async {
+    final response = await api.putWithToken(
+      "users/inactivateUser",
+      data,
+      token,
+    );
+
+    print('entra en metodo inactivar usuario');
+    return response;
+  }
 }
