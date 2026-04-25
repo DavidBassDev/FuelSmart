@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:fuel_smart/core/api/api_service.dart';
 
 class UserService {
@@ -39,6 +37,14 @@ class UserService {
     );
 
     print('entra en metodo inactivar usuario');
+    return response;
+  }
+
+  //Crear usuario
+  Future<dynamic> createUser(String token, Map<String, dynamic> data) async {
+    final response = await api.postWithToken("users/register", data, token);
+
+    print('entra en metodo crear usuario');
     return response;
   }
 }

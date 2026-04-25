@@ -4,12 +4,14 @@ class FormUser extends StatelessWidget {
   final String label;
   final IconData icon;
   final TextEditingController controller;
+  final bool obscureText;
 
   const FormUser({
     super.key,
     required this.label,
     required this.icon,
     required this.controller,
+    required this.obscureText,
   });
 
   @override
@@ -33,6 +35,7 @@ class FormUser extends StatelessWidget {
               children: [
                 Expanded(
                   child: TextField(
+                    obscureText: obscureText,
                     controller: controller,
                     style: const TextStyle(color: Colors.black),
                     decoration: const InputDecoration(
