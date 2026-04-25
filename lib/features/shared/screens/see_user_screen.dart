@@ -122,7 +122,7 @@ class _SeeUserScreenState extends State<SeeUserScreen> {
                 icon: Icons.mail_outline_outlined,
                 obscureText: false,
                 controller: emailController,
-                hint: 'correo@fuelsmart.com',
+                hint: "${widget.userSelected.placa}",
               ),
 
               const SizedBox(height: 30),
