@@ -175,15 +175,12 @@ class _CreateUserScreenState extends State<CreateUserScreen> {
                     "cliente": selectedClient?.clientId,
                     "id_vehiculo": vehicleSelected?.vehicleId,
                   });
-                  print(data);
 
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text("Usuario actualizado")),
                   );
                   Navigator.pop(context);
                 } catch (e) {
-                  print(e);
-
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text("Error al actualizar")),
                   );
@@ -199,7 +196,6 @@ class _CreateUserScreenState extends State<CreateUserScreen> {
 
   Future<bool> passwordMatch(password, password2) async {
     bool match = false;
-    print('$password enviado $password');
     if (password == password2) {
       match = true;
     }

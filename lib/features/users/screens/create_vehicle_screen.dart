@@ -5,6 +5,7 @@ import 'package:fuel_smart/core/widgets/dividerPersonalizated.dart';
 import 'package:fuel_smart/features/clients/models/client.dart';
 import 'package:fuel_smart/features/shared/services/client_service.dart';
 import 'package:fuel_smart/features/shared/services/role_service.dart';
+import 'package:fuel_smart/features/shared/widgets/card_new_car.dart';
 import 'package:fuel_smart/features/shared/widgets/drop_list.dart';
 import 'package:fuel_smart/features/users/models/user_rol.dart';
 import 'package:fuel_smart/features/users/screens/widgets/create_user_form.dart';
@@ -90,7 +91,7 @@ class _CreateUserScreenState extends State<CreateVehicleScreen> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text("Crear usuario", style: TextStyle(fontSize: 20)),
+            Text("Crear Vehículo", style: TextStyle(fontSize: 20)),
             const Icon(Icons.person_add_alt, size: 35),
           ],
         ),
@@ -98,9 +99,17 @@ class _CreateUserScreenState extends State<CreateVehicleScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
+            const DividerPersonalizated(thicknessSize: 1),
+            CardNewCar(
+              centroOperacion: '',
+              placa: '',
+              rendimientoTeorico: 32,
+              tipoVehiculo: '',
+              usuario: '',
+            ),
             const DividerPersonalizated(thicknessSize: 2),
             const SizedBox(height: 10),
-            Text('Ingresa los datos para crear el nuevo usuario'),
+            Text('Ingresa los datos para crear el nuevo vehículo'),
             const SizedBox(height: 30),
             CreateUserForm(
               fullName: fullName,

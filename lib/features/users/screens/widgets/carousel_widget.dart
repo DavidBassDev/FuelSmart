@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fuel_smart/core/providers/nav_provider.dart';
 import 'package:fuel_smart/core/widgets/carousel_functions.dart';
 import 'package:fuel_smart/features/shared/screens/admin_user_screen.dart';
+import 'package:fuel_smart/features/users/screens/create_vehicle_screen.dart';
 import 'package:provider/provider.dart';
 
 class CarouselWidget extends StatelessWidget {
@@ -36,7 +37,12 @@ class CarouselWidget extends StatelessWidget {
         CarouselFunctions(
           icon: Icons.add_circle,
           text: "Crear\nvehículo",
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => CreateVehicleScreen()),
+            );
+          },
         ),
         SizedBox(width: 20),
         CarouselFunctions(
