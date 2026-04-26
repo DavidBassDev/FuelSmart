@@ -10,6 +10,8 @@ import 'package:fuel_smart/features/shared/services/client_service.dart';
 import 'package:fuel_smart/features/shared/services/vehicle_type_service.dart';
 import 'package:fuel_smart/features/shared/widgets/card_new_car.dart';
 import 'package:fuel_smart/features/shared/widgets/drop_list.dart';
+import 'package:fuel_smart/features/users/models/user.dart';
+import 'package:fuel_smart/features/users/services/user_service.dart';
 import 'package:fuel_smart/features/vehicles/models/type_of_vehicle.dart';
 import 'package:fuel_smart/features/vehicles/models/vehicle.dart';
 import 'package:fuel_smart/features/vehicles/services/vehicle_service.dart';
@@ -34,6 +36,7 @@ class _CreateUserScreenState extends State<CreateVehicleScreen> {
   final ClientService clientService = ClientService();
   final VehicleService vehicleService = VehicleService();
   final VehicleTypeService vehicleTypeService = VehicleTypeService();
+  final UserService userService = UserService();
   String placaPreview = '';
   double rendimientoPreview = 0;
   String tipoVehiculoPreview = '';
@@ -54,6 +57,9 @@ class _CreateUserScreenState extends State<CreateVehicleScreen> {
   List<FuelSupplier> suppliers = [];
   FuelSupplier? supplierFuelSelected;
 
+  List<User> users = [];
+  User? userSelected;
+
   @override
   void initState() {
     super.initState();
@@ -70,6 +76,7 @@ class _CreateUserScreenState extends State<CreateVehicleScreen> {
 
     if (auth.token != null) {
       loadVehicles(auth.token!);
+      listAllUsers(auth.token!);
     }
   }
 
@@ -104,6 +111,14 @@ class _CreateUserScreenState extends State<CreateVehicleScreen> {
     final data = await vehicleTypeService.getList();
     setState(() {
       typeOfVehicle = data;
+    });
+  }
+
+  //LISTAR LOS USUARIOS CREADOS
+  Future<void> listAllUsers(String token) async {
+    final data = await userService.getAllUsers(token);
+    setState(() {
+      users = data;
     });
   }
 
@@ -191,6 +206,21 @@ class _CreateUserScreenState extends State<CreateVehicleScreen> {
                 });
               },
             ),
+            //Asignar usuario del conductor
+            const SizedBox(height: 20),
+            DropList<User>(
+              label: "Asigna usuario al vehiculo",
+              hint: "Seleccionar usuario",
+              items: users,
+              value: userSelected,
+              itemLabel: (users) => users.nombre,
+              onChanged: (value) {
+                setState(() {
+                  userSelected = value;
+                });
+              },
+            ),
+
             const SizedBox(height: 20),
             ButtonAction(
               text: 'Crear vehiculo',

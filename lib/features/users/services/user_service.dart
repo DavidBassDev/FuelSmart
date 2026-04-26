@@ -1,4 +1,5 @@
 import 'package:fuel_smart/core/api/api_service.dart';
+import 'package:fuel_smart/features/users/models/user.dart';
 
 class UserService {
   final ApiService api = ApiService();
@@ -18,6 +19,15 @@ class UserService {
     else {
       return await api.getWithToken("users/listAdmin", token);
     }
+  }
+
+  //TRAER TODOS LOS USUARIOS
+  Future<List<User>> getAllUsers(String token) async {
+    final response = await api.getWithToken("users/listAllUsers", token);
+
+    final List list = response['users'];
+
+    return list.map((e) => User.fromJson(e)).toList();
   }
 
   //Actualizar usuario
