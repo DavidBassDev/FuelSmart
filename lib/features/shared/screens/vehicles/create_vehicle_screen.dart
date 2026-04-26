@@ -3,6 +3,10 @@ import 'package:fuel_smart/core/providers/auth_provider.dart';
 import 'package:fuel_smart/core/widgets/button_action.dart';
 import 'package:fuel_smart/core/widgets/dividerPersonalizated.dart';
 import 'package:fuel_smart/features/clients/models/client.dart';
+import 'package:fuel_smart/features/fuelSupplier/models/fuel_supplier.dart';
+import 'package:fuel_smart/features/fuelSupplier/services/fuel_supplier_service.dart';
+import 'package:fuel_smart/features/refueling/models/supplier_fuel.dart';
+import 'package:fuel_smart/features/refueling/services/refueling_service.dart';
 import 'package:fuel_smart/features/shared/services/client_service.dart';
 import 'package:fuel_smart/features/shared/services/role_service.dart';
 import 'package:fuel_smart/features/shared/widgets/card_new_car.dart';
@@ -12,6 +16,7 @@ import 'package:fuel_smart/features/users/screens/widgets/create_user_form.dart'
 import 'package:fuel_smart/features/users/services/user_service.dart';
 import 'package:fuel_smart/features/vehicles/models/vehicle.dart';
 import 'package:fuel_smart/features/vehicles/services/vehicle_service.dart';
+import 'package:fuel_smart/features/vehicles/widgets/create_car_form.dart';
 import 'package:provider/provider.dart';
 
 class CreateVehicleScreen extends StatefulWidget {
@@ -27,15 +32,14 @@ class _CreateUserScreenState extends State<CreateVehicleScreen> {
   final idRol = TextEditingController();
   final password = TextEditingController();
   final confirmPassword = TextEditingController();
-  final RoleService roleService = RoleService();
+  final FuelSupplierService fuelSupplierService = FuelSupplierService();
   final ClientService clientService = ClientService();
   final VehicleService vehicleService = VehicleService();
   final UserService userService = UserService();
 
   //cargar los datos
 
-  List<UserRol> roles = [];
-  UserRol? selectedRole;
+  List<SupplierFuel> supplierFuel = [];
 
   List<Client> clients = [];
   Client? selectedClient;
@@ -43,10 +47,13 @@ class _CreateUserScreenState extends State<CreateVehicleScreen> {
   List<Vehicle> vehicles = [];
   Vehicle? vehicleSelected;
 
+  List<FuelSupplier> suppliers = [];
+  FuelSupplier? supplierFuelSelected;
+
   @override
   void initState() {
     super.initState();
-    loadRoles();
+    loadSupplierFuel();
     loadClients();
   }
 
@@ -61,10 +68,13 @@ class _CreateUserScreenState extends State<CreateVehicleScreen> {
     }
   }
 
-  Future<void> loadRoles() async {
-    final data = await roleService.getRoles();
+  //cargar lista de proveedores combustible
+  Future<void> loadSupplierFuel() async {
+    final data = await fuelSupplierService.getFuelSupplier();
+
     setState(() {
-      roles = data;
+      suppliers = data;
+      supplierFuelSelected = data.isNotEmpty ? data[0] : null;
     });
   }
 
@@ -101,22 +111,22 @@ class _CreateUserScreenState extends State<CreateVehicleScreen> {
           children: [
             const DividerPersonalizated(thicknessSize: 1),
             CardNewCar(
-              centroOperacion: '',
-              placa: '',
+              centroOperacion: 'test',
+              placa: 'test',
               rendimientoTeorico: 32,
-              tipoVehiculo: '',
-              usuario: '',
+              tipoVehiculo: 'test',
+              usuario: 'test',
             ),
             const DividerPersonalizated(thicknessSize: 2),
             const SizedBox(height: 10),
             Text('Ingresa los datos para crear el nuevo vehículo'),
             const SizedBox(height: 30),
-            CreateUserForm(
+            /*CreateCarForm(
               fullName: fullName,
               email: email,
               password: password,
               passwordConfirm: confirmPassword,
-            ),
+            ),*/
             const SizedBox(height: 30),
 
             DropList<Vehicle>(
@@ -132,15 +142,15 @@ class _CreateUserScreenState extends State<CreateVehicleScreen> {
               },
             ),
             const SizedBox(height: 30),
-            DropList<UserRol>(
+            DropList<FuelSupplier>(
               label: "Rol de Usuario",
               hint: "Selecciona un rol",
-              items: roles,
-              value: selectedRole,
-              itemLabel: (rol) => rol.rolName,
+              items: suppliers,
+              value: supplierFuelSelected,
+              itemLabel: (fs) => fs.nameFuelSupplier,
               onChanged: (value) {
                 setState(() {
-                  selectedRole = value;
+                  supplierFuelSelected = value;
                 });
               },
             ),
@@ -174,7 +184,7 @@ class _CreateUserScreenState extends State<CreateVehicleScreen> {
                     );
                     return; //detengo ejecucion
                   }
-                  var data = await userService.createUser(token!, {
+                  /*var data = await userService.createUser(token!, {
                     "nombre_completo": fullName.text,
                     "correo_electronico": email.text,
                     "password": password.text,
@@ -183,7 +193,7 @@ class _CreateUserScreenState extends State<CreateVehicleScreen> {
                         auth.user!.id, //traer id del usuario que esta creando
                     "cliente": selectedClient?.clientId,
                     "id_vehiculo": vehicleSelected?.vehicleId,
-                  });
+                  });*/
 
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text("Usuario actualizado")),

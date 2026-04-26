@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:fuel_smart/core/providers/nav_provider.dart';
 import 'package:fuel_smart/core/widgets/dividerPersonalizated.dart';
 import 'package:fuel_smart/features/refueling/models/refueling.dart';
 import 'package:fuel_smart/features/refueling/widgets/refueling_detail_card.dart';
 import 'package:fuel_smart/features/vehicles/models/vehicle.dart';
 import 'package:fuel_smart/features/vehicles/widgets/card_vehicle.dart';
-import 'package:provider/provider.dart';
 
 class SeeCashRefueling extends StatelessWidget {
   final Vehicle vehicle;
