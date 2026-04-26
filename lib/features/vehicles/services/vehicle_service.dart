@@ -12,4 +12,10 @@ class VehicleService {
     final response = await api.get("vehicles/listAllVehicles");
     return (response as List).map((item) => Vehicle.fromJson(item)).toList();
   }
+
+  //CREAR VEHICULO
+  Future<dynamic> createVehicle(String token, Map<String, dynamic> data) async {
+    final response = await api.postWithToken("vehicles/create", data, token);
+    return response;
+  }
 }

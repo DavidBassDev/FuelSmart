@@ -125,6 +125,7 @@ class _CreateUserScreenState extends State<CreateVehicleScreen> {
   @override
   Widget build(BuildContext context) {
     final token = context.read<AuthProvider>().token;
+    DateTime now = DateTime.now();
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -225,40 +226,47 @@ class _CreateUserScreenState extends State<CreateVehicleScreen> {
             ButtonAction(
               text: 'Crear vehiculo',
               onPressed: () async {
-                /*
                 final auth = context.read<AuthProvider>();
                 //crear usuario funcion
-                //VALIDAR SI AMBAS CONTRASEÑAS COINCIDEN
-                 
+                //VALIDAR SI FORMULARIO ESTA BIEN
                 try {
-                  if (password.text != confirmPassword.text) {
+                  if (plate.text.isEmpty ||
+                      teoricPerformance.text.isEmpty ||
+                      selectedClient == null ||
+                      typeOfVehicleSelected == null ||
+                      userSelected == null) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
-                        content: Text("Las contraseñas no coinciden"),
+                        content: Text("Debes llenar todos los datos"),
                       ),
                     );
                     return; //detengo ejecucion
                   }
-                  /*var data = await userService.createUser(token!, {
-                    "nombre_completo": fullName.text,
-                    "correo_electronico": email.text,
-                    "password": password.text,
-                    "rol_id": selectedRole?.rolId,
-                    "creado_por":
-                        auth.user!.id, //traer id del usuario que esta creando
-                    "cliente": selectedClient?.clientId,
-                    "id_vehiculo": vehicleSelected?.vehicleId,
-                  });*/
+                  var data = await vehicleService.createVehicle(token!, {
+                    "usuario_id": userSelected?.id,
+                    "placa": plate.text,
+                    "rendimiento_teorico": teoricPerformance.text,
+                    "rentimiento": 0.0,
+                    "cupo_combustible": 72.0,
+                    "estado": true,
+                    "fecha_creacion": now.toIso8601String(),
+                    "fecha_actualizacion": null,
+                    "creado_por": auth.user!.id,
+                    "id_tipo_vehiculo":
+                        typeOfVehicleSelected?.typeOfVehicleId ?? 2,
+                    "id_proveedor": supplierFuelSelected?.idFuelSupplier,
+                  });
 
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text("Usuario actualizado")),
+                    const SnackBar(content: Text("Vehiculo creado")),
                   );
                   Navigator.pop(context);
                 } catch (e) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text("Error al actualizar")),
+                    const SnackBar(content: Text("Error al crear vehiculo")),
                   );
-                }*/
+                  print("error fue $e");
+                }
               },
             ),
             const SizedBox(height: 20),
