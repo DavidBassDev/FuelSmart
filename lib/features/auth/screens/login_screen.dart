@@ -44,7 +44,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 /// TITULO
                 Text(
                   'Iniciar sesión',
-                  style: Theme.of(context).textTheme.headlineMedium,
+                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                    color: Theme.of(context).colorScheme.onSurface,
+                  ),
                 ),
 
                 SizedBox(height: 10),

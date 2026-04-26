@@ -21,7 +21,10 @@ class ButtonAction extends StatelessWidget {
         onPressed: onPressed,
         child: Text(
           text,
-          style: const TextStyle(color: Colors.white, fontSize: 18),
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.onPrimary,
+            fontSize: 18,
+          ),
         ),
       ),
     );

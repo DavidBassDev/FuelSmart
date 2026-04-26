@@ -56,12 +56,12 @@ class AppTheme {
         brightness: Brightness.dark,
         primary: Color(0xFF2D3E2D), // botones principales
         onPrimary: Colors.white, // texto sobre botones
-        secondary: Color(0xFF2D3E2D),
+        secondary: Color(0XFF6E2324),
         onSecondary: Colors.white,
         error: Colors.red,
         onError: Colors.white,
         surface: Color(0xFFA23B3C),
-        onSurface: Colors.white, // texto normal
+        onSurface: Color.fromARGB(255, 0, 0, 0), // texto normal
       ),
     );
   }
