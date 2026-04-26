@@ -7,8 +7,10 @@ import 'package:fuel_smart/features/fuelSupplier/models/fuel_supplier.dart';
 import 'package:fuel_smart/features/fuelSupplier/services/fuel_supplier_service.dart';
 import 'package:fuel_smart/features/refueling/models/supplier_fuel.dart';
 import 'package:fuel_smart/features/shared/services/client_service.dart';
+import 'package:fuel_smart/features/shared/services/vehicle_type_service.dart';
 import 'package:fuel_smart/features/shared/widgets/card_new_car.dart';
 import 'package:fuel_smart/features/shared/widgets/drop_list.dart';
+import 'package:fuel_smart/features/vehicles/models/type_of_vehicle.dart';
 import 'package:fuel_smart/features/vehicles/models/vehicle.dart';
 import 'package:fuel_smart/features/vehicles/services/vehicle_service.dart';
 import 'package:fuel_smart/features/vehicles/widgets/create_car_form.dart';
@@ -31,6 +33,7 @@ class _CreateUserScreenState extends State<CreateVehicleScreen> {
   final FuelSupplierService fuelSupplierService = FuelSupplierService();
   final ClientService clientService = ClientService();
   final VehicleService vehicleService = VehicleService();
+  final VehicleTypeService vehicleTypeService = VehicleTypeService();
 
   //cargar los datos
 
@@ -42,6 +45,9 @@ class _CreateUserScreenState extends State<CreateVehicleScreen> {
   List<Vehicle> vehicles = [];
   Vehicle? vehicleSelected;
 
+  List<TypeOfVehicle> typeOfVehicle = [];
+  TypeOfVehicle? typeOfVehicleSelected;
+
   List<FuelSupplier> suppliers = [];
   FuelSupplier? supplierFuelSelected;
 
@@ -50,6 +56,7 @@ class _CreateUserScreenState extends State<CreateVehicleScreen> {
     super.initState();
     loadSupplierFuel();
     loadClients();
+    listVehicleType();
   }
 
   @override
@@ -65,8 +72,9 @@ class _CreateUserScreenState extends State<CreateVehicleScreen> {
 
   //cargar lista de proveedores combustible
   Future<void> loadSupplierFuel() async {
-    final token = context.read<AuthProvider>().token;
-    final data = await fuelSupplierService.getFuelSupplier(token!);
+    final auth = context.read<AuthProvider>();
+    final token = auth.token ?? 'sin token';
+    final data = await fuelSupplierService.getFuelSupplier(token);
 
     setState(() {
       suppliers = data;
@@ -85,6 +93,14 @@ class _CreateUserScreenState extends State<CreateVehicleScreen> {
     final data = await vehicleService.getVehicles();
     setState(() {
       vehicles = data;
+    });
+  }
+
+  //listar tipos de vehiculos
+  Future<void> listVehicleType() async {
+    final data = await vehicleTypeService.getList();
+    setState(() {
+      typeOfVehicle = data;
     });
   }
 
@@ -120,15 +136,15 @@ class _CreateUserScreenState extends State<CreateVehicleScreen> {
             CreateCarForm(plate: plate, teoricPerformance: teoricPerformance),
             const SizedBox(height: 30),
 
-            DropList<Vehicle>(
-              label: "Asignar vehículo",
-              hint: "Selecciona un vehículo",
-              items: vehicles,
-              value: vehicleSelected,
-              itemLabel: (vehicle) => vehicle.plate,
+            DropList<TypeOfVehicle>(
+              label: "Asignar tipo de vehículo",
+              hint: "Selecciona una tipología",
+              items: typeOfVehicle,
+              value: typeOfVehicleSelected,
+              itemLabel: (typeOfVehicle) => typeOfVehicle.name,
               onChanged: (value) {
                 setState(() {
-                  vehicleSelected = value;
+                  typeOfVehicleSelected = value;
                 });
               },
             ),
