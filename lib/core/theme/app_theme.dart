@@ -44,4 +44,25 @@ class AppTheme {
       ),
     );
   }
+
+  //Tema 2
+  //color rojo
+  static ThemeData theme2() {
+    return ThemeData(
+      useMaterial3: true,
+      brightness: Brightness.dark,
+      scaffoldBackgroundColor: const Color(0xFFA23B3C),
+      colorScheme: const ColorScheme(
+        brightness: Brightness.dark,
+        primary: Color(0xFFA23B3C), // botones principales
+        onPrimary: Colors.white, // texto sobre botones
+        secondary: Color(0XFF6E2324),
+        onSecondary: Colors.white,
+        error: Colors.red,
+        onError: Colors.white,
+        surface: Color(0xFFA23B3C),
+        onSurface: Colors.white, // texto normal
+      ),
+    );
+  }
 }
