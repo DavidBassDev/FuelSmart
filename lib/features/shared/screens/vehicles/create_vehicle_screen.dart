@@ -60,9 +60,6 @@ class _CreateUserScreenState extends State<CreateVehicleScreen> {
     loadSupplierFuel();
     loadClients();
     listVehicleType();
-    plate.addListener(() {
-      actualizarPreview();
-    });
   }
 
   @override
@@ -107,22 +104,6 @@ class _CreateUserScreenState extends State<CreateVehicleScreen> {
     final data = await vehicleTypeService.getList();
     setState(() {
       typeOfVehicle = data;
-    });
-  }
-
-  //actualizar preview
-  void actualizarPreview() {
-    setState(() {
-      placaPreview = plate.text;
-
-      // puedes cambiar esto luego por lógica real/API
-      if (plate.text.isNotEmpty) {
-        rendimientoPreview = 30; // temporal
-        tipoVehiculoPreview = typeOfVehicleSelected?.name ?? '';
-      } else {
-        rendimientoPreview = 0;
-        tipoVehiculoPreview = '';
-      }
     });
   }
 
@@ -180,6 +161,7 @@ class _CreateUserScreenState extends State<CreateVehicleScreen> {
               onChanged: (value) {
                 setState(() {
                   typeOfVehicleSelected = value;
+                  tipoVehiculoPreview = value?.name ?? '';
                 });
               },
             ),
