@@ -4,9 +4,8 @@ import 'package:fuel_smart/features/fuelSupplier/models/fuel_supplier.dart';
 class FuelSupplierService {
   final ApiService api = ApiService();
 
-  Future<List<FuelSupplier>> getFuelSupplier() async {
-    final response = await api.get("fuelSupplier");
-
+  Future<List<FuelSupplier>> getFuelSupplier(String token) async {
+    final response = await api.getWithToken('fuelSupplier', token);
     return (response as List)
         .map((item) => FuelSupplier.fromJson(item))
         .toList();

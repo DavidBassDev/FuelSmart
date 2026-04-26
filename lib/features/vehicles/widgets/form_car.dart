@@ -4,14 +4,12 @@ class FormCar extends StatelessWidget {
   final String label;
   final IconData icon;
   final TextEditingController controller;
-  final bool obscureText;
 
   const FormCar({
     super.key,
     required this.label,
     required this.icon,
     required this.controller,
-    required this.obscureText,
   });
 
   @override
@@ -19,7 +17,7 @@ class FormCar extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start, // 👈 label alineado
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(label, style: Theme.of(context).textTheme.bodyMedium),
 
@@ -35,7 +33,6 @@ class FormCar extends StatelessWidget {
               children: [
                 Expanded(
                   child: TextField(
-                    obscureText: obscureText,
                     controller: controller,
                     style: const TextStyle(color: Colors.black),
                     decoration: const InputDecoration(

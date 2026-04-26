@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fuel_smart/core/providers/auth_provider.dart';
 import 'package:fuel_smart/core/widgets/dividerPersonalizated.dart';
-import 'package:fuel_smart/features/shared/screens/create_user_screen.dart';
+import 'package:fuel_smart/features/shared/screens/users/create_user_screen.dart';
 import 'package:fuel_smart/features/shared/widgets/card_admin_user.dart';
 import 'package:fuel_smart/features/shared/widgets/tip_admin_users.dart';
 import 'package:fuel_smart/features/users/models/user.dart';

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fuel_smart/core/providers/nav_provider.dart';
 import 'package:fuel_smart/core/widgets/carousel_functions.dart';
-import 'package:fuel_smart/features/shared/screens/admin_user_screen.dart';
-import 'package:fuel_smart/features/users/screens/create_vehicle_screen.dart';
+import 'package:fuel_smart/features/shared/screens/users/admin_user_screen.dart';
+import 'package:fuel_smart/features/shared/screens/vehicles/create_vehicle_screen.dart';
 import 'package:provider/provider.dart';
 
 class CarouselWidget extends StatelessWidget {
