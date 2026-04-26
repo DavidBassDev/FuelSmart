@@ -47,16 +47,16 @@ class AppTheme {
 
   //Tema 2
   //color rojo
-  static ThemeData theme2() {
+  static ThemeData beige() {
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.dark,
-      scaffoldBackgroundColor: const Color(0xFFA23B3C),
+      scaffoldBackgroundColor: const Color(0xFFC9C0AB),
       colorScheme: const ColorScheme(
         brightness: Brightness.dark,
-        primary: Color(0xFFA23B3C), // botones principales
+        primary: Color(0xFF2D3E2D), // botones principales
         onPrimary: Colors.white, // texto sobre botones
-        secondary: Color(0XFF6E2324),
+        secondary: Color(0xFF2D3E2D),
         onSecondary: Colors.white,
         error: Colors.red,
         onError: Colors.white,
