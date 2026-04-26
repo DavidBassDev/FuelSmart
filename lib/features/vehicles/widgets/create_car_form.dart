@@ -5,12 +5,16 @@ class CreateCarForm extends StatelessWidget {
   final TextEditingController plate;
   final TextEditingController teoricPerformance;
   final TextInputType? keyboardType;
+  final Function(String)? onPlateChanged;
+  final Function(String)? onPerformanceChanged;
 
   const CreateCarForm({
     super.key,
     required this.plate,
     required this.teoricPerformance,
     this.keyboardType,
+    this.onPlateChanged,
+    this.onPerformanceChanged,
   });
 
   @override
@@ -21,7 +25,12 @@ class CreateCarForm extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            FormCar(label: 'Placa', icon: Icons.credit_card, controller: plate),
+            FormCar(
+              label: 'Placa',
+              icon: Icons.credit_card,
+              controller: plate,
+              onChanged: onPlateChanged,
+            ),
 
             SizedBox(height: 6),
 
@@ -29,6 +38,7 @@ class CreateCarForm extends StatelessWidget {
               label: 'Rendimiento teórico',
               icon: Icons.local_gas_station_outlined,
               controller: teoricPerformance,
+              onChanged: onPerformanceChanged,
             ),
           ],
         ),

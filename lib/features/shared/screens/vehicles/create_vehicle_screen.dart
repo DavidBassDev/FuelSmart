@@ -34,6 +34,9 @@ class _CreateUserScreenState extends State<CreateVehicleScreen> {
   final ClientService clientService = ClientService();
   final VehicleService vehicleService = VehicleService();
   final VehicleTypeService vehicleTypeService = VehicleTypeService();
+  String placaPreview = '';
+  double rendimientoPreview = 0;
+  String tipoVehiculoPreview = '';
 
   //cargar los datos
 
@@ -57,6 +60,9 @@ class _CreateUserScreenState extends State<CreateVehicleScreen> {
     loadSupplierFuel();
     loadClients();
     listVehicleType();
+    plate.addListener(() {
+      actualizarPreview();
+    });
   }
 
   @override
@@ -104,6 +110,22 @@ class _CreateUserScreenState extends State<CreateVehicleScreen> {
     });
   }
 
+  //actualizar preview
+  void actualizarPreview() {
+    setState(() {
+      placaPreview = plate.text;
+
+      // puedes cambiar esto luego por lógica real/API
+      if (plate.text.isNotEmpty) {
+        rendimientoPreview = 30; // temporal
+        tipoVehiculoPreview = typeOfVehicleSelected?.name ?? '';
+      } else {
+        rendimientoPreview = 0;
+        tipoVehiculoPreview = '';
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final token = context.read<AuthProvider>().token;
@@ -123,17 +145,30 @@ class _CreateUserScreenState extends State<CreateVehicleScreen> {
           children: [
             const DividerPersonalizated(thicknessSize: 1),
             CardNewCar(
-              centroOperacion: 'test',
-              placa: 'test',
-              rendimientoTeorico: 32,
-              tipoVehiculo: 'test',
+              centroOperacion: selectedClient?.name ?? '',
+              placa: placaPreview,
+              rendimientoTeorico: rendimientoPreview,
+              tipoVehiculo: tipoVehiculoPreview,
               usuario: 'test',
             ),
             const DividerPersonalizated(thicknessSize: 2),
             const SizedBox(height: 10),
             Text('Ingresa los datos para crear el nuevo vehículo'),
             const SizedBox(height: 20),
-            CreateCarForm(plate: plate, teoricPerformance: teoricPerformance),
+            CreateCarForm(
+              plate: plate,
+              teoricPerformance: teoricPerformance,
+              onPlateChanged: (value) {
+                setState(() {
+                  placaPreview = value;
+                });
+              },
+              onPerformanceChanged: (value) {
+                setState(() {
+                  rendimientoPreview = double.tryParse(value) ?? 0;
+                });
+              },
+            ),
             const SizedBox(height: 30),
 
             DropList<TypeOfVehicle>(

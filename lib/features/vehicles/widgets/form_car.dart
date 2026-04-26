@@ -4,12 +4,14 @@ class FormCar extends StatelessWidget {
   final String label;
   final IconData icon;
   final TextEditingController controller;
+  final Function(String)? onChanged;
 
   const FormCar({
     super.key,
     required this.label,
     required this.icon,
     required this.controller,
+    this.onChanged,
   });
 
   @override
@@ -34,6 +36,7 @@ class FormCar extends StatelessWidget {
                 Expanded(
                   child: TextField(
                     controller: controller,
+                    onChanged: onChanged,
                     style: const TextStyle(color: Colors.black),
                     decoration: const InputDecoration(
                       border: InputBorder.none,
