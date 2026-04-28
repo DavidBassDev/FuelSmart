@@ -14,7 +14,7 @@ class _TipAdminUsersState extends State<TipAdminUsers> {
       margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: const Color.fromARGB(255, 128, 44, 65),
+        color: Theme.of(context).colorScheme.primary,
         borderRadius: BorderRadius.circular(16),
       ),
       child: Column(
@@ -30,6 +30,7 @@ class _TipAdminUsersState extends State<TipAdminUsers> {
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeight.bold,
                   fontSize: 20,
+                  color: Theme.of(context).colorScheme.onPrimary,
                 ),
               ),
             ],
@@ -43,6 +44,7 @@ class _TipAdminUsersState extends State<TipAdminUsers> {
             style: Theme.of(context).textTheme.displayLarge?.copyWith(
               fontWeight: FontWeight.normal,
               fontSize: 15,
+              color: Theme.of(context).colorScheme.onPrimary,
             ),
           ),
 
@@ -60,6 +62,7 @@ class _TipAdminUsersState extends State<TipAdminUsers> {
             style: Theme.of(context).textTheme.displayLarge?.copyWith(
               fontWeight: FontWeight.bold,
               fontSize: 14,
+              color: Theme.of(context).colorScheme.onPrimary,
             ),
           ),
         ],
@@ -80,6 +83,7 @@ class _TipAdminUsersState extends State<TipAdminUsers> {
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
                 fontWeight: FontWeight.normal,
                 fontSize: 20,
+                color: Theme.of(context).colorScheme.onPrimary,
               ),
             ),
           ),

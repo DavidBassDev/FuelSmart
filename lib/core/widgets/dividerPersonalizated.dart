@@ -11,7 +11,7 @@ class DividerPersonalizated extends StatelessWidget {
       thickness: thicknessSize,
       indent: 20,
       endIndent: 0,
-      color: const Color.fromARGB(255, 255, 255, 255),
+      color: Theme.of(context).colorScheme.primary,
     );
   }
 }

@@ -19,9 +19,9 @@ class CardAdminUser extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Color(0xFF883955),
+        color: Theme.of(context).colorScheme.secondary,
         borderRadius: BorderRadius.circular(16),
       ),
       child: Row(
@@ -57,7 +57,9 @@ class CardAdminUser extends StatelessWidget {
                   textAlign: TextAlign.left,
                   descripcion,
                   style: TextStyle(
-                    color: Colors.white.withOpacity(0.8),
+                    color: Theme.of(
+                      context,
+                    ).colorScheme.primary.withOpacity(0.8),
                     fontSize: 13,
                   ),
                 ),
@@ -71,7 +73,7 @@ class CardAdminUser extends StatelessWidget {
           ElevatedButton(
             onPressed: onPressed,
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF5C1F2E),
+              backgroundColor: Theme.of(context).colorScheme.primary,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
@@ -82,6 +84,7 @@ class CardAdminUser extends StatelessWidget {
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.bold,
                 fontSize: 13,
+                color: Theme.of(context).colorScheme.onPrimary,
               ),
             ),
           ),

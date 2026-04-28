@@ -64,7 +64,7 @@ class AdminUserScreen extends StatelessWidget {
                   user.rol ?? 'dintwork',
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.bold,
-                    fontSize: 15,
+                    fontSize: 20,
                   ),
                 ),
               ],
@@ -81,9 +81,14 @@ class AdminUserScreen extends StatelessWidget {
                     style: Theme.of(context).textTheme.titleLarge?.copyWith(
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
+                      color: Theme.of(context).colorScheme.primary,
                     ),
                   ),
-                  Icon(Icons.groups_3_outlined, color: Colors.black, size: 80),
+                  Icon(
+                    Icons.groups_3_outlined,
+                    color: Theme.of(context).colorScheme.primary,
+                    size: 80,
+                  ),
                 ],
               ),
             ),
