@@ -10,7 +10,10 @@ class CardVehicle extends StatelessWidget {
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
-        side: BorderSide(color: Color(0xFF6E2C3E), width: 8),
+        side: BorderSide(
+          color: Theme.of(context).colorScheme.primary,
+          width: 8,
+        ),
       ),
       color: Colors.white,
       child: InkWell(

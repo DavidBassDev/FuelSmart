@@ -104,7 +104,11 @@ class _CreateRefuelingState extends State<CreateRefueling> {
 
             // PREVIEW IMAGEN
             photo == null
-                ? const Icon(Icons.image, size: 80)
+                ? Icon(
+                    Icons.image,
+                    size: 80,
+                    color: Theme.of(context).colorScheme.primary,
+                  )
                 : GestureDetector(
                     onTap: () {
                       showDialog(

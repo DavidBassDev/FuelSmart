@@ -64,7 +64,11 @@ class _RefuelingScreenState extends State<RefuelingScreen> {
       body: Column(
         children: [
           const DividerPersonalizated(thicknessSize: 1),
-          const Icon(Icons.directions_car, size: 110),
+          Icon(
+            Icons.directions_car,
+            size: 110,
+            color: Theme.of(context).colorScheme.primary,
+          ),
           const SizedBox(height: 30),
 
           Text(
@@ -101,7 +105,9 @@ class _RefuelingScreenState extends State<RefuelingScreen> {
                               horizontal: 14,
                               vertical: 8,
                             ),
-                            backgroundColor: const Color(0xFF5C1F2B),
+                            backgroundColor: Theme.of(
+                              context,
+                            ).colorScheme.primary,
                             foregroundColor: Colors.white,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
