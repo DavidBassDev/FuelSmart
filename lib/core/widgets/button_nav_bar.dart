@@ -31,7 +31,7 @@ class ButtonNavBar extends StatelessWidget {
 
       bottomNavigationBar: CurvedNavigationBar(
         index: nav.index,
-        backgroundColor: const Color(0xFF552235),
+        backgroundColor: Theme.of(context).colorScheme.primary,
         color: const Color(0XFFE0E0E0),
         items: items,
         onTap: (i) {

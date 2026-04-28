@@ -42,10 +42,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Center(child: Icon(Icons.person, size: 120)),
+            Center(
+              child: Icon(
+                Icons.person,
+                size: 120,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+            ),
             const SizedBox(height: 70),
 
-            const Text('Nueva contraseña'),
+            Text('Nueva contraseña', style: TextStyle(fontSize: 20)),
             const SizedBox(height: 10),
             FormWidget(
               controller: newPassword,
@@ -55,7 +61,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
             const SizedBox(height: 60),
 
-            const Text('Repetir contraseña'),
+            const Text('Repetir contraseña', style: TextStyle(fontSize: 20)),
             const SizedBox(height: 10),
             FormWidget(
               controller: newPassword2,
@@ -124,7 +130,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   'Cerrar Sesión',
                   style: Theme.of(context).textTheme.titleSmall?.copyWith(
                     fontWeight: FontWeight.bold,
-                    fontSize: 15,
+                    fontSize: 20,
                   ),
                 ),
               ),
