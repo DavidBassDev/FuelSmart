@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fuel_smart/core/providers/themee_provider.dart';
 import 'package:fuel_smart/features/auth/screens/login_screen.dart';
 import 'package:fuel_smart/core/providers/auth_provider.dart';
 import 'package:fuel_smart/core/providers/nav_provider.dart';
@@ -12,6 +13,7 @@ void main() {
       providers: [
         ChangeNotifierProvider(create: (_) => AuthProvider()),
         ChangeNotifierProvider(create: (_) => NavProvider()),
+        ChangeNotifierProvider(create: (_) => ThemeProvider()),
       ],
       child: const MyApp(),
     ),
@@ -40,9 +42,10 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     final auth = Provider.of<AuthProvider>(context);
+    final themeProvider = Provider.of<ThemeProvider>(context);
 
     return MaterialApp(
-      theme: currentTheme,
+      theme: themeProvider.theme, //provider del tema
       home: auth.isLogged ? const ButtonNavBar() : const LoginScreen(),
       debugShowCheckedModeBanner: false,
     );

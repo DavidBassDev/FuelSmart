@@ -26,16 +26,17 @@ class MainScreen extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
-              const SizedBox(height: 20),
+              const SizedBox(height: 40),
 
               Row(
                 children: [
+                  SizedBox(width: 20),
                   Expanded(
                     child: Text(
                       'Bienvenido ${user.nombre}',
                       style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14,
+                        color: Theme.of(context).colorScheme.onSurface,
+                        fontSize: 15,
                       ),
                       textAlign: TextAlign.center,
                     ),
@@ -45,7 +46,7 @@ class MainScreen extends StatelessWidget {
                       user.rol!,
                       style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                         fontWeight: FontWeight.bold,
-                        fontSize: 14,
+                        fontSize: 15,
                       ),
                       textAlign: TextAlign.center,
                     ),
@@ -68,15 +69,15 @@ class MainScreen extends StatelessWidget {
                   Container(
                     width: 20,
                     height: 20,
-                    decoration: const BoxDecoration(
-                      color: Colors.white,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.surface,
                       shape: BoxShape.circle,
                     ),
-                    child: const Center(
+                    child: Center(
                       child: Icon(
                         Icons.arrow_right,
-                        color: Colors.black,
-                        size: 18,
+                        color: Theme.of(context).colorScheme.primary,
+                        size: 20,
                       ),
                     ),
                   ),
@@ -100,14 +101,14 @@ class MainScreen extends StatelessWidget {
                   Container(
                     width: 20,
                     height: 20,
-                    decoration: const BoxDecoration(
-                      color: Colors.white,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.surface,
                       shape: BoxShape.circle,
                     ),
-                    child: const Center(
+                    child: Center(
                       child: Icon(
                         Icons.arrow_right,
-                        color: Colors.black,
+                        color: Theme.of(context).colorScheme.primary,
                         size: 18,
                       ),
                     ),

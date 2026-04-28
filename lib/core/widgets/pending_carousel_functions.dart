@@ -22,7 +22,7 @@ class PendingCarouselFunctions extends StatelessWidget {
             width: 120,
             height: 120,
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: Theme.of(context).colorScheme.onSecondary,
               shape: BoxShape.rectangle,
             ),
             child: Icon(icon, color: Colors.black, size: 80),
@@ -32,8 +32,9 @@ class PendingCarouselFunctions extends StatelessWidget {
             textAlign: TextAlign.center,
             text,
             style: Theme.of(context).textTheme.titleSmall?.copyWith(
-              color: Colors.white,
+              color: Theme.of(context).colorScheme.onSurface,
               fontWeight: FontWeight.bold,
+              fontSize: 15,
             ),
           ),
         ],

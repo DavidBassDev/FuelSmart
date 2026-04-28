@@ -51,16 +51,16 @@ class AppTheme {
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.dark,
-      scaffoldBackgroundColor: const Color(0xFFC9C0AB),
+      scaffoldBackgroundColor: const Color(0xFFF1EDE5),
       colorScheme: const ColorScheme(
         brightness: Brightness.dark,
         primary: Color(0xFF2D3E2D), // botones principales
         onPrimary: Colors.white, // texto sobre botones
-        secondary: Color(0XFF6E2324),
-        onSecondary: Colors.white,
+        secondary: Color(0xFFC9C0AB), //para pantalla login
+        onSecondary: Color(0xFF9DAF89), //verde para widgets
         error: Colors.red,
         onError: Colors.white,
-        surface: Color(0xFFA23B3C),
+        surface: Color(0xFFD4A374), //naranja claro
         onSurface: Color.fromARGB(255, 0, 0, 0), // texto normal
       ),
     );
