@@ -45,7 +45,10 @@ class CreateUserForm extends StatelessWidget {
 
             Text(
               'Ejemplo: nombreapellido@fuelsmart.com',
-              style: TextStyle(fontSize: 12, color: Colors.white70),
+              style: TextStyle(
+                fontSize: 12,
+                color: Theme.of(context).colorScheme.onSurface,
+              ),
             ),
 
             SizedBox(height: 20),

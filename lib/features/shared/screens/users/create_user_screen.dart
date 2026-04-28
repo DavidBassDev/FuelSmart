@@ -85,6 +85,7 @@ class _CreateUserScreenState extends State<CreateUserScreen> {
   Widget build(BuildContext context) {
     final token = context.read<AuthProvider>().token;
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.secondary,
       appBar: AppBar(
         centerTitle: true,
         title: Row(
@@ -100,7 +101,10 @@ class _CreateUserScreenState extends State<CreateUserScreen> {
           children: [
             const DividerPersonalizated(thicknessSize: 2),
             const SizedBox(height: 10),
-            Text('Ingresa los datos para crear el nuevo usuario'),
+            Text(
+              'Ingresa los datos para crear el nuevo usuario',
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
             const SizedBox(height: 30),
             CreateUserForm(
               fullName: fullName,
