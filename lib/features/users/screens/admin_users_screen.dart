@@ -68,7 +68,11 @@ class _AdminUsersState extends State<SeeUsersScreen> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(Icons.person, size: 40),
+          Icon(
+            Icons.person,
+            size: 40,
+            color: Theme.of(context).colorScheme.error,
+          ),
 
           const SizedBox(width: 10),
 
@@ -120,7 +124,7 @@ class _AdminUsersState extends State<SeeUsersScreen> {
               );
             },
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF552235),
+              backgroundColor: Theme.of(context).colorScheme.primary,
             ),
             child: const Text("Ver", style: TextStyle(color: Colors.white)),
           ),

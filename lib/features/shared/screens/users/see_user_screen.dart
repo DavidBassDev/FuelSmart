@@ -86,11 +86,7 @@ class _SeeUserScreenState extends State<SeeUserScreen> {
       return const Scaffold(body: Center(child: Text("Token inválido")));
     }
 
-    final User user = auth.user!;
-    final name = auth.token!;
-
     return Scaffold(
-      backgroundColor: const Color(0xFF883955),
       appBar: AppBar(
         title: const Text("Administrar usuario"),
         centerTitle: true,
@@ -103,7 +99,10 @@ class _SeeUserScreenState extends State<SeeUserScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Text(widget.userSelected.nombre),
+                  Text(
+                    widget.userSelected.nombre,
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
                   Text(widget.userSelected.rol!),
                   Text(widget.userSelected.nombreProyecto ?? 'Sede Principal'),
                 ],
@@ -122,7 +121,7 @@ class _SeeUserScreenState extends State<SeeUserScreen> {
                 icon: Icons.mail_outline_outlined,
                 obscureText: false,
                 controller: emailController,
-                hint: "${widget.userSelected.placa}",
+                hint: "${widget.userSelected.nombre}@fuelsmart.com",
               ),
 
               const SizedBox(height: 30),

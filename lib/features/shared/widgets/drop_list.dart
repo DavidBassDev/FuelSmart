@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fuel_smart/core/widgets/dividerPersonalizated.dart';
 
 class DropList<T> extends StatelessWidget {
   final String label;
@@ -25,19 +26,24 @@ class DropList<T> extends StatelessWidget {
       children: [
         Text(
           label,
-          style: const TextStyle(
+          style: TextStyle(
             fontWeight: FontWeight.bold,
-            color: Colors.white,
+            color: Theme.of(context).colorScheme.onSurface,
           ),
         ),
         const SizedBox(height: 10),
 
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 12),
-          decoration: BoxDecoration(border: Border.all(color: Colors.black)),
+          decoration: BoxDecoration(
+            border: Border.all(color: Theme.of(context).colorScheme.primary),
+          ),
           child: DropdownButton<T>(
             value: value,
-            hint: Text(hint),
+            hint: Text(
+              hint,
+              style: TextStyle(color: Theme.of(context).colorScheme.onSurface),
+            ),
             isExpanded: true,
             underline: const SizedBox(),
 
@@ -53,7 +59,7 @@ class DropList<T> extends StatelessWidget {
         ),
 
         const SizedBox(height: 10),
-        const Divider(color: Colors.white),
+        const DividerPersonalizated(thicknessSize: 1),
       ],
     );
   }

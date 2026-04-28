@@ -58,7 +58,7 @@ class AppTheme {
         onPrimary: Colors.white, // texto sobre botones
         secondary: Color(0xFFC9C0AB), //para pantalla login
         onSecondary: Color(0xFF9DAF89), //verde para widgets
-        error: Colors.red,
+        error: Color(0xFF3E3D56),
         onError: Colors.white,
         surface: Color(0xFFD4A374), //naranja claro
         onSurface: Color.fromARGB(255, 0, 0, 0), // texto normal
