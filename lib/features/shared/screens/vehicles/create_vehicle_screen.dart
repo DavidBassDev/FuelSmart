@@ -6,7 +6,7 @@ import 'package:fuel_smart/features/clients/models/client.dart';
 import 'package:fuel_smart/features/fuelSupplier/models/fuel_supplier.dart';
 import 'package:fuel_smart/features/fuelSupplier/services/fuel_supplier_service.dart';
 import 'package:fuel_smart/features/refueling/models/supplier_fuel.dart';
-import 'package:fuel_smart/features/shared/services/client_service.dart';
+import 'package:fuel_smart/features/clients/services/client_service.dart';
 import 'package:fuel_smart/features/shared/services/vehicle_type_service.dart';
 import 'package:fuel_smart/features/shared/widgets/card_new_car.dart';
 import 'package:fuel_smart/features/shared/widgets/drop_list.dart';

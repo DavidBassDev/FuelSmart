@@ -3,7 +3,7 @@ import 'package:fuel_smart/core/providers/auth_provider.dart';
 import 'package:fuel_smart/core/widgets/button_action.dart';
 import 'package:fuel_smart/core/widgets/dividerPersonalizated.dart';
 import 'package:fuel_smart/features/clients/models/client.dart';
-import 'package:fuel_smart/features/shared/services/client_service.dart';
+import 'package:fuel_smart/features/clients/services/client_service.dart';
 import 'package:fuel_smart/features/shared/services/role_service.dart';
 import 'package:fuel_smart/features/shared/widgets/drop_list.dart';
 import 'package:fuel_smart/features/users/models/user_rol.dart';
