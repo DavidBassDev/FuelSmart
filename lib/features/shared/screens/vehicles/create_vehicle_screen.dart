@@ -40,6 +40,7 @@ class _CreateUserScreenState extends State<CreateVehicleScreen> {
   String placaPreview = '';
   double rendimientoPreview = 0;
   String tipoVehiculoPreview = '';
+  String userPreview = '';
 
   //cargar los datos
 
@@ -146,7 +147,7 @@ class _CreateUserScreenState extends State<CreateVehicleScreen> {
               placa: placaPreview,
               rendimientoTeorico: rendimientoPreview,
               tipoVehiculo: tipoVehiculoPreview,
-              usuario: 'test',
+              usuario: userPreview,
             ),
             const DividerPersonalizated(thicknessSize: 2),
             const SizedBox(height: 10),
@@ -218,6 +219,7 @@ class _CreateUserScreenState extends State<CreateVehicleScreen> {
               onChanged: (value) {
                 setState(() {
                   userSelected = value;
+                  userPreview = value?.nombre ?? '';
                 });
               },
             ),
