@@ -9,4 +9,11 @@ class ClientService {
 
     return (response as List).map((item) => Client.fromJson(item)).toList();
   }
+
+  //Traer cantidad de placas por cliente
+  Future<List<Client>> getPlatesByClient() async {
+    final response = await api.get("clients/listPlates");
+
+    return (response as List).map((item) => Client.fromJson(item)).toList();
+  }
 }
