@@ -20,6 +20,7 @@ class RefuelingDetailCard extends StatelessWidget {
     );
     final imageUrl = "$baseUrl${refueling.refuelingImage}";
     return Card(
+      color: Theme.of(context).colorScheme.onSecondary,
       elevation: 5,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       margin: const EdgeInsets.all(12),
@@ -31,7 +32,7 @@ class RefuelingDetailCard extends StatelessWidget {
             Text(
               "Resumen repostaje",
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                color: const Color.fromARGB(255, 255, 255, 255),
+                color: Theme.of(context).colorScheme.onSurface,
               ),
             ),
 
@@ -54,7 +55,7 @@ class RefuelingDetailCard extends StatelessWidget {
             Text(
               "Justificación uso caja menor:",
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                color: const Color.fromARGB(255, 255, 255, 255),
+                color: Theme.of(context).colorScheme.onSurface,
               ),
             ),
             Text(refueling.comment!),

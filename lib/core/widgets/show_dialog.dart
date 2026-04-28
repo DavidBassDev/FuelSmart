@@ -17,7 +17,10 @@ class ShowDialogPersonalizated extends StatelessWidget {
             Text(
               text.toString(),
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 20),
+              style: TextStyle(
+                fontSize: 20,
+                color: Theme.of(context).colorScheme.onSurface,
+              ),
             ),
 
             const SizedBox(height: 20),
@@ -26,7 +29,7 @@ class ShowDialogPersonalizated extends StatelessWidget {
               width: double.infinity,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF6A2335),
+                  backgroundColor: Theme.of(context).colorScheme.primary,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(25),
                   ),
