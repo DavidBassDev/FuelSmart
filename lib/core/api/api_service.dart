@@ -64,6 +64,7 @@ class ApiService {
 
   ///  GET con token
   Future<dynamic> getWithToken(String endpoint, String token) async {
+    print('$baseUrl/$endpoint');
     final response = await http.get(
       Uri.parse('$baseUrl/$endpoint'),
       headers: {

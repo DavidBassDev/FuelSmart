@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:fuel_smart/core/providers/auth_provider.dart';
 import 'package:fuel_smart/core/widgets/dividerPersonalizated.dart';
+import 'package:fuel_smart/features/refueling/services/refueling_service.dart';
 import 'package:fuel_smart/features/vehicles/models/vehicle.dart';
 import 'package:fuel_smart/features/vehicles/services/vehicle_service.dart';
 import 'package:fuel_smart/features/vehicles/widgets/admin_card_vehicle.dart';
+import 'package:fuel_smart/features/vehicles/widgets/fuel_circle.dart';
 import 'package:provider/provider.dart';
 
 class AdminVehicleScreen extends StatefulWidget {
@@ -17,25 +19,31 @@ class AdminVehicleScreen extends StatefulWidget {
 
 class _AdminVehicleScreenState extends State<AdminVehicleScreen> {
   final VehicleService vehicleService = VehicleService();
+  final RefuelingService refuelingService = RefuelingService();
 
   bool isLoading = true;
 
   Vehicle? vehicle;
+  double totalGallons = 0.0;
 
   @override
   void initState() {
     super.initState();
     loadVehicle(widget.vehicleSelected);
+    print('recibo el vehiculo ${widget.vehicleSelected}');
   }
 
   Future<void> loadVehicle(int vehicleSelected) async {
     try {
-      Provider.of<AuthProvider>(context, listen: false);
-
       final response = await vehicleService.getVehicle(vehicleSelected);
 
       setState(() {
         vehicle = response;
+      });
+      //ESPERAR QUE TRAIGA LOS GALONES
+      await getGallonsConsumed();
+
+      setState(() {
         isLoading = false;
       });
     } catch (e) {
@@ -44,6 +52,35 @@ class _AdminVehicleScreenState extends State<AdminVehicleScreen> {
       setState(() {
         isLoading = false;
       });
+    }
+  }
+
+  // Cargar consumos del vehículo
+  Future<void> getGallonsConsumed() async {
+    try {
+      final authProvider = Provider.of<AuthProvider>(context, listen: false);
+
+      final token = authProvider.token;
+
+      if (token == null) return;
+
+      final int currentMonth = DateTime.now().month;
+
+      final response = await refuelingService.getGallonsConsumed(
+        token,
+        widget.vehicleSelected,
+        currentMonth,
+      );
+
+      setState(() {
+        totalGallons =
+            double.tryParse(response['data']['total_galones'].toString()) ??
+            0.0;
+      });
+
+      print("TOTAL GALONES: $totalGallons");
+    } catch (e) {
+      print("Error cargando consumos del vehículo: $e");
     }
   }
 
@@ -118,6 +155,10 @@ class _AdminVehicleScreenState extends State<AdminVehicleScreen> {
             ),
             SizedBox(height: 20),
             DividerPersonalizated(thicknessSize: 1),
+            FuelCircleWidget(
+              totalGallons: totalGallons,
+              availableFuel: vehicle!.avaliableFuel,
+            ),
           ],
         ),
       ),
