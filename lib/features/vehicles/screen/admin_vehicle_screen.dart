@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:fuel_smart/core/providers/auth_provider.dart';
+import 'package:fuel_smart/core/widgets/dividerPersonalizated.dart';
 import 'package:fuel_smart/features/vehicles/models/vehicle.dart';
 import 'package:fuel_smart/features/vehicles/services/vehicle_service.dart';
+import 'package:fuel_smart/features/vehicles/widgets/admin_card_vehicle.dart';
 import 'package:provider/provider.dart';
 
 class AdminVehicleScreen extends StatefulWidget {
@@ -76,12 +78,46 @@ class _AdminVehicleScreenState extends State<AdminVehicleScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Placa: ${vehicle!.plate}"),
-            Text("Conductor: ${vehicle!.userName}"),
-            Text("Tipo: ${vehicle!.typeOfVehicle}"),
-            Text("Cupo combustible: ${vehicle!.avaliableFuel}"),
-            Text("Rendimiento teórico: ${vehicle!.teoricPerformance}"),
-            Text("Estado: ${vehicle!.state ? "Activo" : "Inactivo"}"),
+            DividerPersonalizated(thicknessSize: 1),
+            AdminCardVehicle(vehicle: vehicle!),
+            SizedBox(height: 30),
+            Row(
+              children: [
+                Column(
+                  children: [
+                    Icon(
+                      Icons.remove_red_eye_outlined,
+                      color: Theme.of(context).colorScheme.primary,
+                      size: 30,
+                    ),
+                    Text(
+                      "Ver rendimiento y consumos",
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(width: 30),
+                Column(
+                  children: [
+                    Icon(
+                      Icons.pause,
+                      color: Theme.of(context).colorScheme.primary,
+                      size: 30,
+                    ),
+                    Text(
+                      "Suspender vehículo",
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            SizedBox(height: 20),
+            DividerPersonalizated(thicknessSize: 1),
           ],
         ),
       ),
