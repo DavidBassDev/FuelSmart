@@ -17,7 +17,28 @@ class RefuelingService {
     );
   }
 
+  //ver repostaje caja menor
   Future seeRefuelingPC(String token, String idRefueling) async {
     return await api.getWithToken("refueling/pettycash/$idRefueling", token);
+  }
+
+  //ver cantidad galones consumidos placa y mes
+  Future getGallonsConsumed(String token, int vehicleId, int month) async {
+    return await api.getWithToken(
+      "refueling/totalByMonth?vehiculo_id=$vehicleId&month=$month",
+      token,
+    );
+  }
+
+  //VEHICULOS Y CONSUMOS POR CLIENTE
+  Future getVehiclesWithGallonsByClient(
+    String token,
+    int clientId,
+    int month,
+  ) async {
+    return await api.getWithToken(
+      "refueling/vehiclesByClient?id_cliente=$clientId&month=$month",
+      token,
+    );
   }
 }

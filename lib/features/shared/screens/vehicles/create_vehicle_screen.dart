@@ -274,7 +274,6 @@ class _CreateUserScreenState extends State<CreateVehicleScreen> {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text("Error al crear vehiculo")),
                   );
-                  print("error fue $e");
                 }
               },
             ),

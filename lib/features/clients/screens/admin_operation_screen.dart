@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fuel_smart/core/providers/auth_provider.dart';
 import 'package:fuel_smart/core/widgets/dividerPersonalizated.dart';
+import 'package:fuel_smart/features/clients/screens/admin_client_screen.dart';
 import 'package:fuel_smart/features/clients/services/client_service.dart';
 import 'package:fuel_smart/features/clients/widgets/build_client_item_widget.dart';
 import 'package:fuel_smart/features/clients/models/clients.dart';
@@ -134,7 +135,14 @@ class _AdminOperationScreenState extends State<AdminOperationScreen> {
                         return BuildClientItemWidget(
                           client: client,
                           onPressed: () {
-                            print("Cliente seleccionado: ${client.name}");
+                            //ir a pantalla del cliente
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) =>
+                                    AdminClientScreen(clientSelected: client),
+                              ),
+                            );
                           },
                         );
                       },
