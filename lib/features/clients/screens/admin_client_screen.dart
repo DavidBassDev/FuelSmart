@@ -6,6 +6,7 @@ import 'package:fuel_smart/core/widgets/dividerPersonalizated.dart';
 import 'package:fuel_smart/features/clients/models/clients.dart';
 import 'package:fuel_smart/features/refueling/models/vehicle_gallons.dart';
 import 'package:fuel_smart/features/refueling/services/refueling_service.dart';
+import 'package:fl_chart/fl_chart.dart';
 
 class AdminClientScreen extends StatefulWidget {
   final Clients clientSelected;
@@ -112,11 +113,73 @@ class _AdminClientScreenState extends State<AdminClientScreen> {
                           onPressed: () {
                             // acción futura
                           },
-                          child: const Text("Seleccionar"),
+                          child: const Text("ver"),
                         ),
                       );
                     },
                   ),
+          ),
+          DividerPersonalizated(thicknessSize: 1),
+          // grafica consumo galones por placa
+          SizedBox(
+            height: 300,
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: BarChart(
+                BarChartData(
+                  alignment: BarChartAlignment.spaceAround,
+                  maxY: 500,
+
+                  titlesData: FlTitlesData(
+                    topTitles: const AxisTitles(
+                      sideTitles: SideTitles(showTitles: false),
+                    ),
+
+                    rightTitles: const AxisTitles(
+                      sideTitles: SideTitles(showTitles: false),
+                    ),
+
+                    bottomTitles: AxisTitles(
+                      sideTitles: SideTitles(
+                        showTitles: true,
+                        getTitlesWidget: (value, meta) {
+                          int index = value.toInt();
+
+                          if (index >= 0 && index < vehicles.length) {
+                            return Padding(
+                              padding: const EdgeInsets.only(top: 8),
+                              child: Text(
+                                vehicles[index].placa,
+                                style: const TextStyle(fontSize: 10),
+                              ),
+                            );
+                          }
+
+                          return const SizedBox();
+                        },
+                      ),
+                    ),
+                  ),
+
+                  borderData: FlBorderData(show: false),
+
+                  barGroups: List.generate(vehicles.length, (index) {
+                    final vehicle = vehicles[index];
+
+                    return BarChartGroupData(
+                      x: index,
+                      barRods: [
+                        BarChartRodData(
+                          toY: double.parse(vehicle.totalGalones),
+                          width: 18,
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                      ],
+                    );
+                  }),
+                ),
+              ),
+            ),
           ),
         ],
       ),
