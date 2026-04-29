@@ -102,11 +102,15 @@ class _AdminVehicleScreenState extends State<AdminVehicleScreen> {
           onPressed: () => Navigator.pop(context),
           icon: const Icon(Icons.arrow_back, size: 30),
         ),
-        title: Text(
-          "Administrar vehículo ${vehicle!.plate}",
-          style: Theme.of(context).textTheme.titleLarge?.copyWith(
-            fontWeight: FontWeight.bold,
-            fontSize: 20,
+        title: FittedBox(
+          fit: BoxFit.scaleDown,
+          alignment: Alignment.centerLeft,
+          child: Text(
+            "Administrar vehículo ${vehicle!.plate}",
+            style: Theme.of(context).textTheme.titleLarge?.copyWith(
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+            ),
           ),
         ),
       ),
@@ -155,9 +159,24 @@ class _AdminVehicleScreenState extends State<AdminVehicleScreen> {
             ),
             SizedBox(height: 20),
             DividerPersonalizated(thicknessSize: 1),
-            FuelCircleWidget(
-              totalGallons: totalGallons,
-              availableFuel: vehicle!.avaliableFuel,
+            SizedBox(
+              height: 320,
+              child: FuelCircleWidget(
+                totalGallons: totalGallons,
+                availableFuel: vehicle!.avaliableFuel,
+              ),
+            ),
+            SizedBox(height: 20),
+            Row(
+              children: [
+                Text('Aumentar cupo'),
+                IconButton(
+                  icon: Icon(Icons.add),
+                  onPressed: () {
+                    print('funca');
+                  },
+                ),
+              ],
             ),
           ],
         ),

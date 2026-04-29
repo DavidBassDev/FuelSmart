@@ -20,10 +20,12 @@ class FuelCircleWidget extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
+    final screenWidth = MediaQuery.of(context).size.width;
+
     return Center(
       child: CircularPercentIndicator(
-        radius: 90.0,
-        lineWidth: 18.0,
+        radius: screenWidth * 0.38, // más grande y responsive
+        lineWidth: 22.0,
         percent: percent,
         animation: true,
         circularStrokeCap: CircularStrokeCap.round,
@@ -32,13 +34,13 @@ class FuelCircleWidget extends StatelessWidget {
         center: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.local_gas_station, size: 40, color: colorScheme.primary),
-            const SizedBox(height: 8),
+            Icon(Icons.local_gas_station, size: 50, color: colorScheme.primary),
+            const SizedBox(height: 10),
             Text(
               "${totalGallons.toStringAsFixed(2)} / ${availableFuel.toStringAsFixed(2)} Gal.\nConsumidos",
               textAlign: TextAlign.center,
               style: textTheme.bodyMedium?.copyWith(
-                fontSize: 16,
+                fontSize: 18,
                 fontWeight: FontWeight.bold,
                 color: colorScheme.primary,
               ),

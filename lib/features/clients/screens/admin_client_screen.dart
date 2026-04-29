@@ -69,11 +69,16 @@ class _AdminClientScreenState extends State<AdminClientScreen> {
           onPressed: () => Navigator.pop(context),
           icon: const Icon(Icons.arrow_back, size: 30),
         ),
-        title: Text(
-          "Administrar vehículos cliente ${widget.clientSelected.name}",
-          style: Theme.of(context).textTheme.titleLarge?.copyWith(
-            fontWeight: FontWeight.bold,
-            fontSize: 20,
+        title: FittedBox(
+          fit: BoxFit.scaleDown,
+          alignment: Alignment.centerLeft,
+          child: Text(
+            "Administrar vehículos cliente ${widget.clientSelected.name}",
+            maxLines: 1,
+            style: Theme.of(context).textTheme.titleLarge?.copyWith(
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+            ),
           ),
         ),
       ),
