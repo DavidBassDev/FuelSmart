@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fuel_smart/core/providers/auth_provider.dart';
 import 'package:fuel_smart/core/widgets/button_action.dart';
 import 'package:fuel_smart/core/widgets/dividerPersonalizated.dart';
-import 'package:fuel_smart/features/clients/models/client.dart';
+import 'package:fuel_smart/features/clients/models/clients.dart';
 import 'package:fuel_smart/features/fuelSupplier/models/fuel_supplier.dart';
 import 'package:fuel_smart/features/fuelSupplier/services/fuel_supplier_service.dart';
 import 'package:fuel_smart/features/refueling/models/supplier_fuel.dart';
@@ -46,8 +46,8 @@ class _CreateUserScreenState extends State<CreateVehicleScreen> {
 
   List<SupplierFuel> supplierFuel = [];
 
-  List<Client> clients = [];
-  Client? selectedClient;
+  List<Clients> clients = [];
+  Clients? selectedClient;
 
   List<Vehicle> vehicles = [];
   Vehicle? vehicleSelected;
@@ -141,7 +141,7 @@ class _CreateUserScreenState extends State<CreateVehicleScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const DividerPersonalizated(thicknessSize: 1),
+            SizedBox(height: 20),
             CardNewCar(
               centroOperacion: selectedClient?.name ?? '',
               placa: placaPreview,
@@ -149,9 +149,16 @@ class _CreateUserScreenState extends State<CreateVehicleScreen> {
               tipoVehiculo: tipoVehiculoPreview,
               usuario: userPreview,
             ),
+            const SizedBox(height: 5),
             const DividerPersonalizated(thicknessSize: 2),
             const SizedBox(height: 10),
-            Text('Ingresa los datos para crear el nuevo vehículo'),
+            Text(
+              textAlign: TextAlign.center,
+              'Ingresa los datos para crear el nuevo vehículo',
+              style: Theme.of(
+                context,
+              ).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
+            ),
             const SizedBox(height: 20),
             CreateCarForm(
               plate: plate,
@@ -183,7 +190,7 @@ class _CreateUserScreenState extends State<CreateVehicleScreen> {
               },
             ),
             const SizedBox(height: 30),
-            DropList<Client>(
+            DropList<Clients>(
               label: "Centro de operación",
               hint: "Selecciona un cliente",
               items: clients,

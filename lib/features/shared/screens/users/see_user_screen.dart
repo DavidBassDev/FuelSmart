@@ -3,7 +3,7 @@ import 'package:fuel_smart/core/providers/auth_provider.dart';
 import 'package:fuel_smart/core/widgets/button_action.dart';
 import 'package:fuel_smart/core/widgets/dividerPersonalizated.dart';
 import 'package:fuel_smart/core/widgets/form_widget.dart';
-import 'package:fuel_smart/features/clients/models/client.dart';
+import 'package:fuel_smart/features/clients/models/clients.dart';
 import 'package:fuel_smart/features/clients/services/client_service.dart';
 import 'package:fuel_smart/features/shared/services/role_service.dart';
 import 'package:fuel_smart/features/shared/widgets/drop_list.dart';
@@ -33,8 +33,8 @@ class _SeeUserScreenState extends State<SeeUserScreen> {
   List<UserRol> roles = [];
   UserRol? selectedRole;
 
-  List<Client> clients = [];
-  Client? selectedClient;
+  List<Clients> clients = [];
+  Clients? selectedClient;
 
   List<Vehicle> vehicles = [];
   Vehicle? vehicleSelected;
@@ -141,7 +141,7 @@ class _SeeUserScreenState extends State<SeeUserScreen> {
 
               const SizedBox(height: 20),
 
-              DropList<Client>(
+              DropList<Clients>(
                 label: "Centro de operación",
                 hint: "Selecciona un cliente",
                 items: clients,

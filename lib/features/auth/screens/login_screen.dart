@@ -6,6 +6,7 @@ import 'package:fuel_smart/core/widgets/button_action.dart';
 import 'package:fuel_smart/core/widgets/dividerPersonalizated.dart';
 import 'package:fuel_smart/core/widgets/form_widget.dart';
 import 'package:fuel_smart/core/widgets/show_dialog.dart';
+import 'package:fuel_smart/core/providers/themee_provider.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -20,6 +21,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.secondary,
       body: SingleChildScrollView(
@@ -150,7 +152,36 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 SizedBox(height: 15),
                 DividerPersonalizated(thicknessSize: 1),
-                SizedBox(height: 80),
+                Text(
+                  "Selecciona tu tema favorito",
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+                Row(
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        themeProvider.changeTheme(AppThemeType.beige);
+                      },
+                      icon: Icon(
+                        Icons.circle_rounded,
+                        color: Color(0xFFF1EDE5),
+                        size: 50,
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        themeProvider.changeTheme(AppThemeType.wine);
+                      },
+                      icon: Icon(
+                        Icons.circle_rounded,
+                        color: Color(0xFF552235),
+                        size: 50,
+                      ),
+                    ),
+                  ],
+                ),
+
+                SizedBox(height: 30),
                 Text(
                   'Solicita tu usuario contactando a admin@correo.com',
                   style: Theme.of(context).textTheme.titleSmall?.copyWith(

@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:fuel_smart/core/providers/auth_provider.dart';
 import 'package:fuel_smart/core/widgets/button_action.dart';
 import 'package:fuel_smart/core/widgets/dividerPersonalizated.dart';
-import 'package:fuel_smart/features/clients/models/client.dart';
+import 'package:fuel_smart/features/clients/models/clients.dart';
 import 'package:fuel_smart/features/clients/services/client_service.dart';
 import 'package:fuel_smart/features/shared/services/role_service.dart';
 import 'package:fuel_smart/features/shared/widgets/drop_list.dart';
 import 'package:fuel_smart/features/users/models/user_rol.dart';
-import 'package:fuel_smart/features/users/screens/widgets/create_user_form.dart';
+import 'package:fuel_smart/features/users/widgets/create_user_form.dart';
 import 'package:fuel_smart/features/users/services/user_service.dart';
 import 'package:fuel_smart/features/vehicles/models/vehicle.dart';
 import 'package:fuel_smart/features/vehicles/services/vehicle_service.dart';
@@ -36,8 +36,8 @@ class _CreateUserScreenState extends State<CreateUserScreen> {
   List<UserRol> roles = [];
   UserRol? selectedRole;
 
-  List<Client> clients = [];
-  Client? selectedClient;
+  List<Clients> clients = [];
+  Clients? selectedClient;
 
   List<Vehicle> vehicles = [];
   Vehicle? vehicleSelected;
@@ -103,7 +103,9 @@ class _CreateUserScreenState extends State<CreateUserScreen> {
             const SizedBox(height: 10),
             Text(
               'Ingresa los datos para crear el nuevo usuario',
-              style: Theme.of(context).textTheme.titleMedium,
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                color: Theme.of(context).colorScheme.onSurface,
+              ),
             ),
             const SizedBox(height: 30),
             CreateUserForm(
@@ -140,7 +142,7 @@ class _CreateUserScreenState extends State<CreateUserScreen> {
               },
             ),
             const SizedBox(height: 30),
-            DropList<Client>(
+            DropList<Clients>(
               label: "Centro de operación",
               hint: "Selecciona un cliente",
               items: clients,
@@ -181,7 +183,7 @@ class _CreateUserScreenState extends State<CreateUserScreen> {
                   });
 
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text("Usuario actualizado")),
+                    const SnackBar(content: Text("Usuario creado")),
                   );
                   Navigator.pop(context);
                 } catch (e) {

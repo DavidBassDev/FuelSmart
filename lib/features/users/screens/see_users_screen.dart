@@ -11,10 +11,10 @@ class SeeUsersScreen extends StatefulWidget {
   const SeeUsersScreen({super.key});
 
   @override
-  State<SeeUsersScreen> createState() => _AdminUsersState();
+  State<SeeUsersScreen> createState() => _SeeUsersScreen();
 }
 
-class _AdminUsersState extends State<SeeUsersScreen> {
+class _SeeUsersScreen extends State<SeeUsersScreen> {
   List<User> usersDrivers = [];
   bool isLoading = true;
   bool _loaded = false;

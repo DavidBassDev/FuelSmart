@@ -5,7 +5,7 @@ import 'package:fuel_smart/features/shared/screens/users/create_user_screen.dart
 import 'package:fuel_smart/features/shared/widgets/card_admin_user.dart';
 import 'package:fuel_smart/features/shared/widgets/tip_admin_users.dart';
 import 'package:fuel_smart/features/users/models/user.dart';
-import 'package:fuel_smart/features/users/screens/admin_users_screen.dart';
+import 'package:fuel_smart/features/users/screens/see_users_screen.dart';
 import 'package:provider/provider.dart';
 
 class AdminUserScreen extends StatelessWidget {

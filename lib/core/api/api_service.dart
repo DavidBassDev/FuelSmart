@@ -17,6 +17,22 @@ class ApiService {
     return jsonDecode(response.body);
   }
 
+  //
+  Future<dynamic> get2(String endpoint, {Map<String, dynamic>? params}) async {
+    final uri = Uri.parse('$baseUrl/$endpoint').replace(
+      queryParameters: params?.map(
+        (key, value) => MapEntry(key, value.toString()),
+      ),
+    );
+
+    final response = await http.get(
+      uri,
+      headers: {"Content-Type": "application/json"},
+    );
+
+    return jsonDecode(response.body);
+  }
+
   /// POST sin token
   Future<dynamic> post(String endpoint, Map<String, dynamic> data) async {
     final response = await http.post(

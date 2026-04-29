@@ -11,14 +11,14 @@ class AppTheme {
 
       colorScheme: const ColorScheme(
         brightness: Brightness.dark,
-        primary: Color(0xFF552235), // botones principales
+        primary: Color(0xFF883955), // es el principal*botones principales
         onPrimary: Colors.white, // texto sobre botones
         secondary: Color(0xFF552235),
         onSecondary: Colors.white,
         error: Colors.red,
         onError: Colors.white,
-        surface: Color(0xFF883955),
-        onSurface: Colors.white, // texto normal
+        surface: Color(0xFF552235),
+        onSurface: Color.fromARGB(255, 255, 255, 255), // texto normal
       ),
 
       textTheme: appTextTheme,
@@ -46,7 +46,6 @@ class AppTheme {
   }
 
   //Tema 2
-  //color rojo
   static ThemeData beige() {
     return ThemeData(
       useMaterial3: true,

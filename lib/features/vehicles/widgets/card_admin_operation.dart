@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fuel_smart/core/providers/themee_provider.dart';
+import 'package:fuel_smart/features/clients/screens/admin_operation_screen.dart';
 import 'package:provider/provider.dart';
 
 class CardAdminOperation extends StatelessWidget {
@@ -23,7 +24,12 @@ class CardAdminOperation extends StatelessWidget {
       color: Theme.of(context).colorScheme.primary,
       child: InkWell(
         onTap: () {
-          print("Abrir módulo");
+          {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => AdminOperationScreen()),
+            );
+          }
         },
         child: Padding(
           padding: const EdgeInsets.all(20),

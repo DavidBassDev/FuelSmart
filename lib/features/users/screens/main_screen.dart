@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fuel_smart/features/users/models/user.dart';
-import 'package:fuel_smart/features/users/screens/widgets/carousel_widget.dart';
+import 'package:fuel_smart/features/users/widgets/carousel_widget.dart';
 import 'package:fuel_smart/core/providers/auth_provider.dart';
-import 'package:fuel_smart/features/users/screens/widgets/pending_carousel_widget.dart';
+import 'package:fuel_smart/features/users/widgets/pending_carousel_widget.dart';
 import 'package:fuel_smart/features/vehicles/widgets/card_admin_operation.dart';
 import 'package:provider/provider.dart';
 

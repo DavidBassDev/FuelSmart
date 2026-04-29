@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:fuel_smart/core/providers/nav_provider.dart';
+import 'package:fuel_smart/features/refueling/screens/refueling_screen.dart';
 import 'package:fuel_smart/core/widgets/carousel_functions.dart';
 import 'package:fuel_smart/features/shared/screens/users/admin_user_screen.dart';
-import 'package:fuel_smart/features/shared/screens/vehicles/create_vehicle_screen.dart';
-import 'package:provider/provider.dart';
 
 class CarouselWidget extends StatelessWidget {
-  final String token;
-
-  const CarouselWidget({super.key, required this.token});
+  const CarouselWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -29,9 +25,7 @@ class CarouselWidget extends StatelessWidget {
         CarouselFunctions(
           icon: Icons.directions_car,
           text: "Admin.\nvehículos",
-          onPressed: () {
-            print('work');
-          },
+          onPressed: () {},
         ),
         SizedBox(width: 20),
         CarouselFunctions(
@@ -40,7 +34,7 @@ class CarouselWidget extends StatelessWidget {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (_) => CreateVehicleScreen()),
+              MaterialPageRoute(builder: (context) => RefuelingScreen()),
             );
           },
         ),
@@ -49,7 +43,10 @@ class CarouselWidget extends StatelessWidget {
           icon: Icons.local_gas_station,
           text: "Registrar\nrepostaje",
           onPressed: () {
-            Provider.of<NavProvider>(context, listen: false).changeIndex(1);
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => RefuelingScreen()),
+            );
           },
         ),
         SizedBox(width: 20),
