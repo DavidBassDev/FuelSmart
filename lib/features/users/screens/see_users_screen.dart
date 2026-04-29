@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:fuel_smart/core/providers/auth_provider.dart';
 import 'package:fuel_smart/core/widgets/dividerPersonalizated.dart';
-import 'package:fuel_smart/features/shared/screens/users/see_user_screen.dart';
 import 'package:fuel_smart/features/shared/widgets/pill_btn_personalizated.dart';
 import 'package:fuel_smart/features/users/models/user.dart';
 import 'package:fuel_smart/features/users/services/user_service.dart';
+import 'package:fuel_smart/features/users/widgets/build_user_item_widget.dart';
 import 'package:provider/provider.dart';
 
 class SeeUsersScreen extends StatefulWidget {
@@ -31,26 +31,19 @@ class _SeeUsersScreen extends State<SeeUsersScreen> {
     }
   }
 
-  Future<void> loadUsers(String selectedRole) async {
+  Future<void> loadUsers(String role) async {
     final auth = Provider.of<AuthProvider>(context, listen: false);
 
     if (auth.token == null) {
-      setState(() {
-        isLoading = false;
-      });
+      setState(() => isLoading = false);
       return;
     }
 
-    setState(() {
-      isLoading = true;
-    });
+    setState(() => isLoading = true);
 
     final userService = UserService();
 
-    final response = await userService.getUsersByRole(
-      auth.token!,
-      selectedRole,
-    );
+    final response = await userService.getUsersByRole(auth.token!, role);
 
     if (!mounted) return;
 
@@ -60,77 +53,6 @@ class _SeeUsersScreen extends State<SeeUsersScreen> {
           .toList();
       isLoading = false;
     });
-  }
-
-  Widget _buildUserItem(User user) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Icon(
-            Icons.person,
-            size: 40,
-            color: Theme.of(context).colorScheme.error,
-          ),
-
-          const SizedBox(width: 10),
-
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  user.nombre,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  "Placa: ${user.placa ?? 'sin dato'}",
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14,
-                  ),
-                ),
-                Text(
-                  "Cliente: ${user.nombreProyecto ?? 'Sede Principal'}",
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14,
-                  ),
-                ),
-              ],
-            ),
-          ),
-
-          const SizedBox(width: 10),
-
-          ElevatedButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => SeeUserScreen(userSelected: user),
-                ),
-              );
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Theme.of(context).colorScheme.primary,
-            ),
-            child: const Text("Ver", style: TextStyle(color: Colors.white)),
-          ),
-        ],
-      ),
-    );
   }
 
   @override
@@ -153,6 +75,7 @@ class _SeeUsersScreen extends State<SeeUsersScreen> {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
+            /// FILTROS
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
@@ -195,7 +118,7 @@ class _SeeUsersScreen extends State<SeeUsersScreen> {
 
             const SizedBox(height: 10),
 
-            //LISTA
+            /// LISTA
             Expanded(
               child: isLoading
                   ? const Center(child: CircularProgressIndicator())
@@ -215,7 +138,8 @@ class _SeeUsersScreen extends State<SeeUsersScreen> {
                           const DividerPersonalizated(thicknessSize: 1),
                       itemBuilder: (context, index) {
                         final user = usersDrivers[index];
-                        return _buildUserItem(user);
+
+                        return BuildUserItemWidget(user: user);
                       },
                     ),
             ),
