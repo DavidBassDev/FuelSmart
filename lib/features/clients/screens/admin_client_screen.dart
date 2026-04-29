@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fuel_smart/features/vehicles/screen/admin_vehicle_screen.dart';
 import 'package:provider/provider.dart';
 
 import 'package:fuel_smart/core/providers/auth_provider.dart';
@@ -111,7 +112,15 @@ class _AdminClientScreenState extends State<AdminClientScreen> {
                             ),
                           ),
                           onPressed: () {
-                            // acción futura
+                            //ir a pantalla para administrar vehiculo
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => AdminVehicleScreen(
+                                  vehicleSelected: vehicle.idVehiculo,
+                                ),
+                              ),
+                            );
                           },
                           child: const Text("ver"),
                         ),
@@ -128,7 +137,7 @@ class _AdminClientScreenState extends State<AdminClientScreen> {
               child: BarChart(
                 BarChartData(
                   alignment: BarChartAlignment.spaceAround,
-                  maxY: 500,
+                  maxY: 300,
 
                   titlesData: FlTitlesData(
                     topTitles: const AxisTitles(
@@ -173,6 +182,7 @@ class _AdminClientScreenState extends State<AdminClientScreen> {
                           toY: double.parse(vehicle.totalGalones),
                           width: 18,
                           borderRadius: BorderRadius.circular(6),
+                          color: Theme.of(context).colorScheme.onSecondary,
                         ),
                       ],
                     );

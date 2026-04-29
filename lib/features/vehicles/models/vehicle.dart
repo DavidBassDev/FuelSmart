@@ -11,6 +11,7 @@ class Vehicle {
   final DateTime creationDate;
   final DateTime updateDate;
   final int createBy;
+  final String? userName;
 
   const Vehicle({
     required this.vehicleId,
@@ -25,6 +26,7 @@ class Vehicle {
     required this.creationDate,
     required this.updateDate,
     required this.createBy,
+    this.userName,
   });
 
   factory Vehicle.fromJson(Map<String, dynamic> json) {
@@ -63,6 +65,7 @@ class Vehicle {
           DateTime.now(),
 
       createBy: int.tryParse(json['creado_por']?.toString() ?? '') ?? 0,
+      userName: json['nombre_usuario']?.toString() ?? '',
     );
   }
 
