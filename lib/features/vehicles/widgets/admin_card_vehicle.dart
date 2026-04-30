@@ -45,7 +45,7 @@ class AdminCardVehicle extends StatelessWidget {
                       style: Theme.of(
                         context,
                       ).textTheme.titleSmall?.copyWith(color: Colors.black),
-
+                      maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
                     Text(
@@ -53,6 +53,7 @@ class AdminCardVehicle extends StatelessWidget {
                       style: Theme.of(
                         context,
                       ).textTheme.titleSmall?.copyWith(color: Colors.black),
+                      maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
                   ],

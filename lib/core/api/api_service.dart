@@ -33,6 +33,41 @@ class ApiService {
     return jsonDecode(response.body);
   }
 
+  //
+  Future<dynamic> get3(String endpoint, {Map<String, dynamic>? params}) async {
+    final uri = Uri.parse('$baseUrl/$endpoint').replace(
+      queryParameters: params?.map(
+        (key, value) => MapEntry(key, value.toString()),
+      ),
+    );
+
+    print("URL FINAL: $uri");
+
+    final response = await http.get(
+      uri,
+      headers: {"Content-Type": "application/json"},
+    );
+
+    print("STATUS: ${response.statusCode}");
+    print("BODY: ${response.body}");
+
+    // 🔥 VALIDACIÓN CLAVE
+    if (response.statusCode != 200) {
+      throw Exception("Error HTTP ${response.statusCode}: ${response.body}");
+    }
+
+    // 🔥 EVITAR CRASH POR HTML
+    if (response.body.trim().startsWith("<!DOCTYPE")) {
+      throw Exception("El backend devolvió HTML en vez de JSON");
+    }
+
+    try {
+      return jsonDecode(response.body);
+    } catch (e) {
+      throw Exception("Error parseando JSON: ${response.body}");
+    }
+  }
+
   /// POST sin token
   Future<dynamic> post(String endpoint, Map<String, dynamic> data) async {
     final response = await http.post(
