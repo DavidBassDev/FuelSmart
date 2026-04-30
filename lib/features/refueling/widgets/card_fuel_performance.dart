@@ -45,15 +45,12 @@ class _CardFuelPerformanceState extends State<CardFuelPerformance> {
         currentYear.toString(),
       );
 
-      print("RAW RESPONSE: $response");
-
-      // 🔥 Validar que sea JSON válido
+      //validar que sea JSON valido
       if (response == null || response is! Map<String, dynamic>) {
-        print("Respuesta inválida (no es JSON): $response");
         return;
       }
 
-      // 🔥 Manejo seguro de tipos (string, int, double)
+      //anejo seguro de tipo
       final distancia = response['total_distancia_km'];
 
       final parsedDistance = distancia is num
@@ -67,9 +64,7 @@ class _CardFuelPerformanceState extends State<CardFuelPerformance> {
           widget.totalGallons,
         );
       });
-    } catch (e) {
-      print("Error cargando datos gps: $e");
-    }
+    } catch (e) {}
   }
 
   double calculatePerformance(double distance, double gallons) {

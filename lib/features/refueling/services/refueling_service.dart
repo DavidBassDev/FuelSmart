@@ -1,5 +1,7 @@
 import 'dart:io';
+import 'package:flutter/material.dart';
 import 'package:fuel_smart/core/api/api_service.dart';
+import 'package:fuel_smart/features/refueling/models/refueling_list_item.dart';
 
 class RefuelingService {
   final ApiService api = ApiService();
@@ -40,5 +42,28 @@ class RefuelingService {
       "refueling/vehiclesByClient?id_cliente=$clientId&month=$month",
       token,
     );
+  }
+
+  //TRAER LISTA DE CONSUMOS DE UNA PLACA
+  Future<List<RefuelingListItem>> getVehiclesWithGallonsList(
+    String token,
+    int vehicleId,
+  ) async {
+    final response = await api.getWithToken(
+      "refueling/refuelingPlate?vehiculo_id=15", //hay problemas trayendo el id real
+      token,
+    );
+    final body = response is Map ? response : response.data;
+
+    if (body == null || body['data'] == null) {
+      debugPrint("Respuesta inválida: $body");
+      return [];
+    }
+
+    final List data = body['data'];
+
+    debugPrint("RESPONSE COMPLETO: ${response.toString()}");
+
+    return data.map((e) => RefuelingListItem.fromJson(e)).toList();
   }
 }
