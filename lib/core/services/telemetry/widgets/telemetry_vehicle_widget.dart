@@ -53,7 +53,7 @@ class TelemetryVehicleWidget extends StatelessWidget {
                 ),
 
                 Text(
-                  "Odómetro Final: ${item['odometro'] ?? 0}",
+                  "Odómetro Final: ${item['odometro_km'] ?? 0}",
                   style: const TextStyle(color: Colors.white70),
                 ),
               ],
