@@ -136,7 +136,6 @@ class _AdminVehicleScreenState extends State<AdminVehicleScreen> {
                         ),
                         onPressed: () {
                           final int = widget.vehicleSelected;
-                          print('llega el id vehicle $int');
                           Navigator.push(
                             context,
                             MaterialPageRoute(

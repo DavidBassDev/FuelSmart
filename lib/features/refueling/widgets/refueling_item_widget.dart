@@ -17,18 +17,18 @@ class RefuelingItemWidget extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 6),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: const Color(0xFF7B2D3B), // cambiar al color del tema
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(6),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          //ICONO
+          // ICONO
           Container(
             width: 50,
             height: 50,
             decoration: BoxDecoration(
-              border: Border.all(color: Colors.black54),
+              border: Border.all(color: Theme.of(context).colorScheme.error),
               borderRadius: BorderRadius.circular(6),
             ),
             child: const Icon(Icons.receipt_long, size: 30),
@@ -36,44 +36,55 @@ class RefuelingItemWidget extends StatelessWidget {
 
           const SizedBox(width: 12),
 
-          //INFO
+          // INFO
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _text("Cantidad galones: ${item.galones.toStringAsFixed(2)}"),
-                _text("Odómetro: ${currencyFormat.format(item.odometro)}"),
-                _text("Valor: \$${currencyFormat.format(item.valor)}"),
-                _text("Proveedor: ${item.tipo}"),
-                _text("Fecha: ${dateFormat.format(item.fecha)}"),
+                _text(
+                  context,
+                  "Cantidad galones: ${item.galones.toStringAsFixed(2)}",
+                ),
+                _text(
+                  context,
+                  "Odómetro: ${currencyFormat.format(item.odometro)}",
+                ),
+                _text(context, "Valor: \$${currencyFormat.format(item.valor)}"),
+                _text(context, "Proveedor: ${item.tipo}"),
+                _text(context, "Fecha: ${dateFormat.format(item.fecha)}"),
               ],
             ),
           ),
 
-          //funcion boton
+          // BOTÓN
           if (onTap != null)
             ElevatedButton(
               onPressed: onTap,
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF5A1F2A), //cambiar segun tema
+                backgroundColor: Theme.of(context).colorScheme.primary,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
               ),
-              child: const Text("Ver"),
+              child: Text(
+                "Ver",
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onPrimary,
+                ),
+              ),
             ),
         ],
       ),
     );
   }
 
-  Widget _text(String text) {
+  Widget _text(BuildContext context, String text) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 2),
       child: Text(
         text,
-        style: const TextStyle(
-          color: Colors.white, //cambiar segun tema
+        style: TextStyle(
+          color: Theme.of(context).colorScheme.onSurface,
           fontSize: 13,
         ),
       ),

@@ -57,7 +57,6 @@ class _SeeRefuelingsVehicleScreenState
 
   @override
   Widget build(BuildContext context) {
-    print('id ahora: ${widget.vehicleId}');
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -104,8 +103,9 @@ class _SeeRefuelingsVehicleScreenState
                           item: item,
 
                           // solo si es por  Caja Menor
-                          onTap: item.tipo.toLowerCase() == "caja menor"
+                          onTap: item.tipo == "caja_menor"
                               ? () {
+                                  //navegar al detalle de ese repostaje
                                   debugPrint("Ver detalle ${item.id}");
                                 }
                               : null,
