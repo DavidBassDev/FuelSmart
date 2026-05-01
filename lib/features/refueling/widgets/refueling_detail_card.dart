@@ -58,7 +58,8 @@ class RefuelingDetailCard extends StatelessWidget {
                 color: Theme.of(context).colorScheme.onSurface,
               ),
             ),
-            Text(refueling.comment!),
+            if (refueling.comment != null && refueling.comment!.isNotEmpty)
+              Text(refueling.comment!),
 
             const SizedBox(height: 15),
             DividerPersonalizated(thicknessSize: 1),

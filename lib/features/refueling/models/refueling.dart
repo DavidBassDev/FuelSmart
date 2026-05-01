@@ -11,8 +11,9 @@ class Refueling {
   final String? refuelingImage;
   final String? comment;
   final double odometer;
-  static const _sentinel =
-      Object(); //un sentinela o marcador, para manejar los null desde la bd
+
+  static const _sentinel = Object();
+
   Refueling({
     required this.refuelingId,
     required this.supplierId,
@@ -29,6 +30,13 @@ class Refueling {
   });
 
   factory Refueling.fromJson(Map<String, dynamic> json) {
+    double toDouble(dynamic value) {
+      if (value == null) return 0.0;
+      if (value is num) return value.toDouble();
+      if (value is String) return double.tryParse(value) ?? 0.0;
+      return 0.0;
+    }
+
     return Refueling(
       refuelingId: json['id_repostaje'] ?? 0,
       supplierId: json['proveedor_id'] ?? 0,
@@ -39,16 +47,15 @@ class Refueling {
           ? DateTime.parse(json['fecha_repostaje'])
           : DateTime.now(),
 
-      suppliedGallons: double.parse(json['galones_suministrados']),
-      cost: double.parse(json['valor_dinero']),
+      suppliedGallons: toDouble(json['galones_suministrados']),
+      cost: toDouble(json['valor_dinero']),
+      odometer: toDouble(json['odometro']),
 
       refuelingType: json['tipo_repostaje'] ?? '',
 
       ticketSerial: json['numero_soporte'],
       refuelingImage: json['vaucher_url'],
       comment: json['comentario'],
-
-      odometer: double.parse(json['odometro']),
     );
   }
 

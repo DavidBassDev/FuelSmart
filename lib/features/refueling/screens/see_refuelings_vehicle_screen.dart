@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fuel_smart/core/providers/auth_provider.dart';
 import 'package:fuel_smart/core/widgets/dividerPersonalizated.dart';
+import 'package:fuel_smart/features/refueling/screens/see_cash_refueling.dart';
 import 'package:fuel_smart/features/refueling/widgets/card_fuel_performance.dart';
 import 'package:fuel_smart/features/refueling/widgets/refueling_item_widget.dart';
 import 'package:fuel_smart/features/refueling/models/refueling_list_item.dart';
@@ -12,6 +13,7 @@ class SeeRefuelingsVehicleScreen extends StatefulWidget {
   final Vehicle vehicle;
   final double totalGallons;
   final int vehicleId;
+
   const SeeRefuelingsVehicleScreen({
     super.key,
     required this.vehicle,
@@ -52,6 +54,35 @@ class _SeeRefuelingsVehicleScreenState
     } catch (e) {
       setState(() => isLoading = false);
       debugPrint("Error cargando consumos: $e");
+    }
+  }
+
+  Future<void> _seeRefuelingPC(int refuelingId) async {
+    try {
+      final token = context.read<AuthProvider>().token;
+
+      final refueling = await _service.seeRefuelingPC(
+        token!,
+        refuelingId.toString(),
+      );
+
+      if (!mounted) return;
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) =>
+              SeeCashRefueling(refueling: refueling, vehicle: widget.vehicle),
+        ),
+      );
+    } catch (e) {
+      debugPrint("Error cargando detalle: $e");
+
+      if (!mounted) return;
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Error al cargar el detalle")),
+      );
     }
   }
 
@@ -102,12 +133,9 @@ class _SeeRefuelingsVehicleScreenState
                         return RefuelingItemWidget(
                           item: item,
 
-                          // solo si es por  Caja Menor
+                          // 🔥 SOLO PARA CAJA MENOR
                           onTap: item.tipo == "caja_menor"
-                              ? () {
-                                  //navegar al detalle de ese repostaje
-                                  debugPrint("Ver detalle ${item.id}");
-                                }
+                              ? () => _seeRefuelingPC(item.id)
                               : null,
                         );
                       },

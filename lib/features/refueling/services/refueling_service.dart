@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:fuel_smart/core/api/api_service.dart';
+import 'package:fuel_smart/features/refueling/models/refueling.dart';
 import 'package:fuel_smart/features/refueling/models/refueling_list_item.dart';
 
 class RefuelingService {
@@ -20,8 +21,13 @@ class RefuelingService {
   }
 
   //ver repostaje caja menor
-  Future seeRefuelingPC(String token, String idRefueling) async {
-    return await api.getWithToken("refueling/pettycash/$idRefueling", token);
+  Future<Refueling> seeRefuelingPC(String token, String idRefueling) async {
+    final response = await api.getWithToken(
+      "refueling/pettycash/$idRefueling",
+      token,
+    );
+
+    return Refueling.fromJson(response);
   }
 
   //ver cantidad galones consumidos placa y mes
