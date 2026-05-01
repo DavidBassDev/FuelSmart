@@ -7,4 +7,9 @@ class FeaturesService {
   Future<dynamic> getLowFuelVehicles(String token) async {
     return await api.getWithToken("api/dashboard/LowFuelVehicles", token);
   }
+
+  //TRAER VEHICULOS QUE ESTAN DIRECTAMENTE SIN COMBUSTIBLE
+  Future<dynamic> noAvaliableFuelQuota(String token) async {
+    return await api.getWithToken("api/dashboard/AllGallonsConsumed", token);
+  }
 }

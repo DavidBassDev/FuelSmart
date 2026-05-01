@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fuel_smart/core/widgets/pending_carousel_functions.dart';
 import 'package:fuel_smart/features/dashboard/screens/low_fuel_screen.dart';
+import 'package:fuel_smart/features/dashboard/screens/no_avaliable_fuel_quota_screen.dart';
 
 class PendingCarouselWidget extends StatelessWidget {
   final String token;
@@ -34,7 +35,12 @@ class PendingCarouselWidget extends StatelessWidget {
         PendingCarouselFunctions(
           icon: Icons.car_crash,
           text: "Vehiculos sin\ncupo disponible",
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => NoAvaliableFuelQuotaScreen()),
+            );
+          },
         ),
       ],
     );

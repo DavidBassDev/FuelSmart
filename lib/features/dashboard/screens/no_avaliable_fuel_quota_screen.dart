@@ -7,14 +7,15 @@ import 'package:fuel_smart/features/dashboard/widgets/low_fuel_item.dart';
 import 'package:fuel_smart/features/vehicles/screen/admin_vehicle_screen.dart';
 import 'package:provider/provider.dart';
 
-class LowFuelScreen extends StatefulWidget {
-  const LowFuelScreen({super.key});
+class NoAvaliableFuelQuotaScreen extends StatefulWidget {
+  const NoAvaliableFuelQuotaScreen({super.key});
 
   @override
-  State<LowFuelScreen> createState() => _LowFuelScreen();
+  State<NoAvaliableFuelQuotaScreen> createState() =>
+      _NoAvaliableFuelQuotaScreen();
 }
 
-class _LowFuelScreen extends State<LowFuelScreen> {
+class _NoAvaliableFuelQuotaScreen extends State<NoAvaliableFuelQuotaScreen> {
   final FeaturesService featuresService = FeaturesService();
   bool isLoading = true;
 
@@ -23,14 +24,14 @@ class _LowFuelScreen extends State<LowFuelScreen> {
   @override
   void initState() {
     super.initState();
-    loadLowFuelList();
+    loadNoAvaliableFuelQuota();
   }
 
-  Future<void> loadLowFuelList() async {
+  Future<void> loadNoAvaliableFuelQuota() async {
     try {
       final auth = Provider.of<AuthProvider>(context, listen: false);
       String token = auth.token!;
-      final response = await featuresService.getLowFuelVehicles(token);
+      final response = await featuresService.noAvaliableFuelQuota(token);
 
       final List data = response['data'];
 
@@ -42,7 +43,7 @@ class _LowFuelScreen extends State<LowFuelScreen> {
         isLoading = false;
       });
     } catch (e) {
-      print("Error cargando lista de vehículos con poco combusitble: $e");
+      print("Error cargando lista de vehículos sin combustible $e");
 
       setState(() {
         isLoading = false;
@@ -62,7 +63,7 @@ class _LowFuelScreen extends State<LowFuelScreen> {
           fit: BoxFit.scaleDown,
           alignment: Alignment.centerLeft,
           child: Text(
-            "Vehículos con poco cupo de combustible",
+            "Vehículos con cupo agotado",
             maxLines: 1,
             style: Theme.of(context).textTheme.titleLarge?.copyWith(
               fontWeight: FontWeight.bold,
