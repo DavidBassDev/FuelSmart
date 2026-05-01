@@ -46,9 +46,17 @@ class _SeeVehicleTelemetryScreen extends State<SeeVehicleTelemetryScreen> {
           onPressed: () => Navigator.pop(context),
           icon: const Icon(Icons.arrow_back, size: 30),
         ),
-        title: Text(
-          "Registros telemetria gps ${widget.plate}",
-          style: const TextStyle(fontWeight: FontWeight.bold),
+        title: FittedBox(
+          fit: BoxFit.scaleDown,
+          alignment: Alignment.centerLeft,
+          child: Text(
+            "Registros telemetria GPS ${widget.plate}",
+            maxLines: 1,
+            style: Theme.of(context).textTheme.titleLarge?.copyWith(
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+            ),
+          ),
         ),
       ),
 
