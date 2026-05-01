@@ -11,11 +11,12 @@ import 'package:provider/provider.dart';
 class SeeRefuelingsVehicleScreen extends StatefulWidget {
   final Vehicle vehicle;
   final double totalGallons;
-
+  final int vehicleId;
   const SeeRefuelingsVehicleScreen({
     super.key,
     required this.vehicle,
     required this.totalGallons,
+    required this.vehicleId,
   });
 
   @override
@@ -39,10 +40,9 @@ class _SeeRefuelingsVehicleScreenState
   Future<void> _loadRefuelings() async {
     try {
       final token = context.read<AuthProvider>().token;
-
       final data = await _service.getVehiclesWithGallonsList(
         token!,
-        widget.vehicle.vehicleId,
+        widget.vehicleId,
       );
 
       setState(() {
@@ -57,6 +57,7 @@ class _SeeRefuelingsVehicleScreenState
 
   @override
   Widget build(BuildContext context) {
+    print('id ahora: ${widget.vehicleId}');
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(

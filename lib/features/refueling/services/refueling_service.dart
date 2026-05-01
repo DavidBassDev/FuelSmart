@@ -50,7 +50,7 @@ class RefuelingService {
     int vehicleId,
   ) async {
     final response = await api.getWithToken(
-      "refueling/refuelingPlate?vehiculo_id=15", //hay problemas trayendo el id real
+      "refueling/refuelingPlate?vehiculo_id=$vehicleId", //hay problemas trayendo el id real
       token,
     );
     final body = response is Map ? response : response.data;
@@ -59,6 +59,7 @@ class RefuelingService {
       debugPrint("Respuesta inválida: $body");
       return [];
     }
+    print('vehiculeId es $vehicleId');
 
     final List data = body['data'];
 

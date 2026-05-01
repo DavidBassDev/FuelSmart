@@ -31,7 +31,14 @@ class Vehicle {
 
   factory Vehicle.fromJson(Map<String, dynamic> json) {
     return Vehicle(
-      vehicleId: int.tryParse(json['id_vehiculo']?.toString() ?? '') ?? 0,
+      vehicleId:
+          int.tryParse(
+            json['id_vehiculo']?.toString() ??
+                json['vehicle_id']?.toString() ??
+                json['id']?.toString() ??
+                '',
+          ) ??
+          0,
 
       userId: int.tryParse(json['usuario_id']?.toString() ?? '') ?? 0,
 

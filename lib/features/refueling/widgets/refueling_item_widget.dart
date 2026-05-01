@@ -23,7 +23,7 @@ class RefuelingItemWidget extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // 🧾 ICONO
+          //ICONO
           Container(
             width: 50,
             height: 50,

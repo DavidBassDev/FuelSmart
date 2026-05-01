@@ -135,10 +135,13 @@ class _AdminVehicleScreenState extends State<AdminVehicleScreen> {
                           size: 30,
                         ),
                         onPressed: () {
+                          final int = widget.vehicleSelected;
+                          print('llega el id vehicle $int');
                           Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (_) => SeeRefuelingsVehicleScreen(
+                                vehicleId: int,
                                 vehicle: vehicle!,
                                 totalGallons: totalGallons,
                               ),

@@ -61,8 +61,6 @@ class _AdminClientScreenState extends State<AdminClientScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print('llego el cliente ${widget.clientSelected.name}');
-
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
