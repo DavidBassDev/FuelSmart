@@ -5,7 +5,7 @@ class LowFuelItem extends StatelessWidget {
   final int galonesConsumidos;
   final int galonesDisponibles;
   final String cliente;
-  final String observacion;
+
   final VoidCallback onTap;
 
   const LowFuelItem({
@@ -14,7 +14,7 @@ class LowFuelItem extends StatelessWidget {
     required this.galonesConsumidos,
     required this.galonesDisponibles,
     required this.cliente,
-    required this.observacion,
+
     required this.onTap,
   });
 
@@ -24,18 +24,18 @@ class LowFuelItem extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 10),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: const Color(0xFF8E3B52), // adaptar al tema
+        color: Theme.of(context).colorScheme.onSecondary,
         borderRadius: BorderRadius.circular(8),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // ICONO
-          const Icon(
+          Icon(
             Icons.person,
             size: 40,
-            color: Colors.black,
-          ), //adaptar al tema
+            color: Theme.of(context).colorScheme.onError,
+          ),
 
           const SizedBox(width: 10),
 
@@ -46,40 +46,33 @@ class LowFuelItem extends StatelessWidget {
               children: [
                 Text(
                   placa,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.onSurface,
                   ),
                 ),
                 const SizedBox(height: 6),
 
                 Text(
                   "Galones Consumidos: $galonesConsumidos",
-                  style: const TextStyle(
-                    color: Colors.white70,
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.onError,
                   ), //adaptar al tema
                 ),
 
                 Text(
                   "Galones Disponibles: $galonesDisponibles",
-                  style: const TextStyle(
-                    color: Colors.white, //adaptar al tema
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.onError,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
 
                 Text(
                   "Cliente $cliente",
-                  style: const TextStyle(
-                    color: Colors.white70,
-                  ), //adaptar al tema
-                ),
-
-                Text(
-                  "Observación: $observacion",
-                  style: const TextStyle(
-                    color: Colors.white54,
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.onSurface,
                   ), //adaptar al tema
                 ),
               ],

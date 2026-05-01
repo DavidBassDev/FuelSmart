@@ -83,14 +83,15 @@ class _LowFuelScreen extends State<LowFuelScreen> {
                     itemCount: lowFuelList.length,
                     itemBuilder: (context, index) {
                       final item = lowFuelList[index];
+                      var clienteName = item.clienteNombre;
+                      clienteName ??= 'Sede principal';
 
                       return LowFuelItem(
                         placa: item.placa,
                         galonesConsumidos: item.totalGalones.toInt(),
                         galonesDisponibles:
                             (item.cupoCombustible - item.totalGalones).toInt(),
-                        cliente: "#2",
-                        observacion: "Apoya recorridos mas extensos",
+                        cliente: clienteName,
                         onTap: () {
                           print("Ver ${item.placa}");
                         },
