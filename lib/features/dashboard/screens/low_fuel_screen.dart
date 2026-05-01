@@ -4,6 +4,7 @@ import 'package:fuel_smart/core/widgets/dividerPersonalizated.dart';
 import 'package:fuel_smart/features/dashboard/models/low_fuel.dart';
 import 'package:fuel_smart/features/dashboard/services/features_service.dart';
 import 'package:fuel_smart/features/dashboard/widgets/low_fuel_item.dart';
+import 'package:fuel_smart/features/vehicles/screen/admin_vehicle_screen.dart';
 import 'package:provider/provider.dart';
 
 class LowFuelScreen extends StatefulWidget {
@@ -61,7 +62,7 @@ class _LowFuelScreen extends State<LowFuelScreen> {
           fit: BoxFit.scaleDown,
           alignment: Alignment.centerLeft,
           child: Text(
-            "Vehículos con solicitud de cupo",
+            "Vehículos con poco cupo de combustible",
             maxLines: 1,
             style: Theme.of(context).textTheme.titleLarge?.copyWith(
               fontWeight: FontWeight.bold,
@@ -93,7 +94,15 @@ class _LowFuelScreen extends State<LowFuelScreen> {
                             (item.cupoCombustible - item.totalGalones).toInt(),
                         cliente: clienteName,
                         onTap: () {
-                          print("Ver ${item.placa}");
+                          //ir a pantalla para administrar vehiculo
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => AdminVehicleScreen(
+                                vehicleSelected: item.idVehiculo,
+                              ),
+                            ),
+                          );
                         },
                       );
                     },

@@ -32,7 +32,7 @@ class LowFuelItem extends StatelessWidget {
         children: [
           // ICONO
           Icon(
-            Icons.person,
+            Icons.directions_car,
             size: 40,
             color: Theme.of(context).colorScheme.onError,
           ),
@@ -83,7 +83,9 @@ class LowFuelItem extends StatelessWidget {
           ElevatedButton(
             onPressed: onTap,
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF5E2330), //adaptar al tema
+              backgroundColor: Theme.of(
+                context,
+              ).colorScheme.onPrimary, //adaptar al tema
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),

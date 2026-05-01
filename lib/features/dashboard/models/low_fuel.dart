@@ -3,11 +3,13 @@ class LowFuelVehicle {
   final double cupoCombustible;
   final double totalGalones;
   final String? clienteNombre;
+  final int idVehiculo;
 
   LowFuelVehicle({
     required this.placa,
     required this.cupoCombustible,
     required this.totalGalones,
+    required this.idVehiculo,
     this.clienteNombre,
   });
 
@@ -23,6 +25,7 @@ class LowFuelVehicle {
       cupoCombustible: parseToDouble(json['cupo_combustible']),
       totalGalones: parseToDouble(json['total_galones']),
       clienteNombre: json['cliente_nombre'],
+      idVehiculo: (json['id_vehiculo']),
     );
   }
 }
