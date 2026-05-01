@@ -133,7 +133,7 @@ class _SeeRefuelingsVehicleScreenState
                         return RefuelingItemWidget(
                           item: item,
 
-                          // 🔥 SOLO PARA CAJA MENOR
+                          //
                           onTap: item.tipo == "caja_menor"
                               ? () => _seeRefuelingPC(item.id)
                               : null,

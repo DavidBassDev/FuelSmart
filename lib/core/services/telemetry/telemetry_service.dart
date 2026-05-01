@@ -8,4 +8,8 @@ class TelemetryService {
       "api/telemetria/mensual?placa=$plate&mes=$month&anio=$year",
     );
   }
+
+  Future<dynamic> getTelemetryPlateList(String plate) async {
+    return await api.get3("api/telemetria/getTelemetryVehicle?placa=$plate");
+  }
 }

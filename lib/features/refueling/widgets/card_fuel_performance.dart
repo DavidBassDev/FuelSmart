@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fuel_smart/core/providers/auth_provider.dart';
+import 'package:fuel_smart/core/services/telemetry/see_vehicle_telemetry_screen.dart';
 import 'package:fuel_smart/core/services/telemetry/telemetry_service.dart';
 import 'package:fuel_smart/features/vehicles/models/vehicle.dart';
 import 'package:provider/provider.dart';
@@ -150,13 +151,14 @@ class _CardFuelPerformanceState extends State<CardFuelPerformance> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        /*Navigator.push(
+                        Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => /*NuevaPantalla(),*/
+                            builder: (context) => SeeVehicleTelemetryScreen(
+                              plate: widget.vehicle.plate,
+                            ),
                           ),
-                        );*/
-                        print('funca');
+                        );
                       },
                       child: Text(
                         "Distancia recorrida $totalDistance",
