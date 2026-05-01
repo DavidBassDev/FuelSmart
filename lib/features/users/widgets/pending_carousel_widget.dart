@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:fuel_smart/core/providers/nav_provider.dart';
 import 'package:fuel_smart/core/widgets/pending_carousel_functions.dart';
-import 'package:provider/provider.dart';
+import 'package:fuel_smart/features/dashboard/screens/low_fuel_screen.dart';
 
 class PendingCarouselWidget extends StatelessWidget {
   final String token;
@@ -24,15 +23,18 @@ class PendingCarouselWidget extends StatelessWidget {
         PendingCarouselFunctions(
           icon: Icons.local_gas_station_outlined,
           text: "Vehículos con\npoco cupo disponible",
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => LowFuelScreen()),
+            );
+          },
         ),
         SizedBox(width: 20),
         PendingCarouselFunctions(
           icon: Icons.car_crash,
           text: "Vehiculos sin\ncupo disponible",
-          onPressed: () {
-            Provider.of<NavProvider>(context, listen: false).changeIndex(1);
-          },
+          onPressed: () {},
         ),
       ],
     );

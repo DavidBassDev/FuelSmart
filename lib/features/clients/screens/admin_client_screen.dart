@@ -20,6 +20,7 @@ class AdminClientScreen extends StatefulWidget {
 
 class _AdminClientScreenState extends State<AdminClientScreen> {
   final RefuelingService refuelingService = RefuelingService();
+  int currentMonth = DateTime.now().month;
 
   bool isLoading = true;
 
@@ -40,7 +41,7 @@ class _AdminClientScreenState extends State<AdminClientScreen> {
       final response = await refuelingService.getVehiclesWithGallonsByClient(
         token!,
         widget.clientSelected.clientId!,
-        4, // abril
+        currentMonth, //mes actual
       );
 
       final List data = response['data'];
