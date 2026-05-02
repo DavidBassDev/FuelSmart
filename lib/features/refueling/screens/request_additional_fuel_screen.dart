@@ -83,7 +83,10 @@ class _RequestAdditionalFuelScreenState
                 const SizedBox(height: 20),
                 DividerPersonalizated(thicknessSize: 1),
                 const SizedBox(height: 20),
-                CardStatusWidget(vehicle: vehicle!),
+                CardStatusWidget(
+                  vehicle: vehicle!,
+                  intVehicle: vehicle!.vehicleId,
+                ),
                 const SizedBox(height: 20),
                 DividerPersonalizated(thicknessSize: 1),
                 //Formulario Solicitud
