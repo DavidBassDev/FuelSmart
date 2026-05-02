@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fuel_smart/core/widgets/pending_carousel_functions.dart';
 import 'package:fuel_smart/features/dashboard/screens/low_fuel_screen.dart';
+import 'package:fuel_smart/features/refueling/screens/refueling_screen.dart';
 
 class CarouselWidgetDriver extends StatelessWidget {
   final String token;
@@ -20,18 +21,19 @@ class CarouselWidgetDriver extends StatelessWidget {
             icon: Icons.car_repair,
             text: 'Registrar repostaje',
             onPressed: () {
-              print("pressed");
+              RefuelingScreen();
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => RefuelingScreen()),
+              );
             },
           );
         } else {
           return PendingCarouselFunctions(
             icon: Icons.local_gas_station_outlined,
-            text: "Vehículos ampliación de cupo",
+            text: "Solicitar ampliación de cupo",
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => const LowFuelScreen()),
-              );
+              //SCREEN NUEVA
             },
           );
         }
