@@ -100,7 +100,9 @@ class _CardStatusWidgetState extends State<CardStatusWidget> {
 
   @override
   Widget build(BuildContext context) {
-    double performance = totalGallons / totalDistance;
+    double performance = totalDistance / totalGallons;
+    double perfomanceReached =
+        performance / widget.vehicle.teoricPerformance * 100;
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
@@ -143,7 +145,15 @@ class _CardStatusWidgetState extends State<CardStatusWidget> {
                       overflow: TextOverflow.ellipsis,
                     ),
                     Text(
-                      "Rendimiento: $performance%",
+                      "Rendimiento: ${performance.toStringAsFixed(2)} km/gal",
+                      style: Theme.of(
+                        context,
+                      ).textTheme.titleSmall?.copyWith(color: Colors.black),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    Text(
+                      "Eficiencia: ${perfomanceReached.toStringAsFixed(2)} %",
                       style: Theme.of(
                         context,
                       ).textTheme.titleSmall?.copyWith(color: Colors.black),
