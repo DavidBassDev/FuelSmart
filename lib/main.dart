@@ -6,6 +6,7 @@ import 'package:fuel_smart/core/providers/nav_provider.dart';
 import 'package:fuel_smart/core/theme/app_theme.dart';
 import 'package:fuel_smart/core/widgets/button_nav_bar.dart';
 import 'package:fuel_smart/features/users/screens/driver_user_screen.dart';
+import 'package:fuel_smart/features/users/widgets/driver_nav_bar.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -48,7 +49,7 @@ class _MyAppState extends State<MyApp> {
         return const ButtonNavBar();
 
       case 'conductor':
-        return const DriverUserScreen();
+        return const DriverNavBar();
 
       default:
         return const LoginScreen();
