@@ -5,8 +5,8 @@ import 'package:fuel_smart/features/users/widgets/carousel_widget_driver.dart';
 import 'package:fuel_smart/features/vehicles/widgets/card_admin_vehicle_driver.dart';
 import 'package:provider/provider.dart';
 
-class MainScreen extends StatelessWidget {
-  const MainScreen({super.key});
+class DriverUserScreen extends StatelessWidget {
+  const DriverUserScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

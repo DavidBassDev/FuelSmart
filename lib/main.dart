@@ -5,6 +5,7 @@ import 'package:fuel_smart/core/providers/auth_provider.dart';
 import 'package:fuel_smart/core/providers/nav_provider.dart';
 import 'package:fuel_smart/core/theme/app_theme.dart';
 import 'package:fuel_smart/core/widgets/button_nav_bar.dart';
+import 'package:fuel_smart/features/users/screens/driver_user_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -39,6 +40,21 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
+  Widget _getHomeByRole(AuthProvider auth) {
+    final role = auth.user?.rol;
+
+    switch (role) {
+      case 'admin':
+        return const ButtonNavBar();
+
+      case 'conductor':
+        return const DriverUserScreen();
+
+      default:
+        return const LoginScreen();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final auth = Provider.of<AuthProvider>(context);
@@ -46,7 +62,7 @@ class _MyAppState extends State<MyApp> {
 
     return MaterialApp(
       theme: themeProvider.theme, //provider del tema
-      home: auth.isLogged ? const ButtonNavBar() : const LoginScreen(),
+      home: auth.isLogged ? _getHomeByRole(auth) : const LoginScreen(),
       debugShowCheckedModeBanner: false,
     );
   }
