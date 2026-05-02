@@ -22,7 +22,8 @@ class _RequestAdditionalFuelScreenState
 
   bool isLoading = true;
   Vehicle? vehicle;
-  final emailController = TextEditingController();
+  final gallonsController = TextEditingController();
+  final commentController = TextEditingController();
 
   @override
   void initState() {
@@ -86,16 +87,40 @@ class _RequestAdditionalFuelScreenState
                 const SizedBox(height: 20),
                 DividerPersonalizated(thicknessSize: 1),
                 //Formulario Solicitud
-                Text(
-                  "Fecha solciitud", //traerla auto
-                  style: Theme.of(context).textTheme.bodyLarge,
+                SizedBox(height: 20),
+                Row(
+                  children: [
+                    Text(
+                      "Galones solicitados",
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: FormWidget(
+                        icon: Icons.local_gas_station_outlined,
+                        obscureText: false,
+                        controller: gallonsController,
+                      ),
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 10),
-
-                FormWidget(
-                  icon: Icons.mail_outline_outlined,
-                  obscureText: false,
-                  controller: emailController,
+                SizedBox(height: 30),
+                Row(
+                  children: [
+                    Text(
+                      "Observación solicitud",
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                    const SizedBox(width: 10),
+                  ],
+                ),
+                SizedBox(height: 25),
+                Expanded(
+                  child: FormWidget(
+                    icon: Icons.edit_document,
+                    obscureText: false,
+                    controller: commentController,
+                  ),
                 ),
               ],
             ),
