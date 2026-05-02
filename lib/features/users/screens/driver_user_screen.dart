@@ -34,7 +34,7 @@ class DriverUserScreen extends StatelessWidget {
                         'Bienvenido ${user.nombre}',
                         style: Theme.of(context).textTheme.titleMedium
                             ?.copyWith(fontWeight: FontWeight.w500),
-                        overflow: TextOverflow.ellipsis, // 🔥 evita overflow
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
                     const SizedBox(width: 10),
@@ -84,7 +84,7 @@ class DriverUserScreen extends StatelessWidget {
                 const SizedBox(height: 15),
 
                 SizedBox(
-                  height: 170,
+                  height: 210,
                   child: CarouselWidgetDriver(token: token),
                 ),
 

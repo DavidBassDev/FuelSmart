@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class PendingCarouselFunctions extends StatelessWidget {
   final IconData icon;
   final String text;
+  final String? subtitle;
   final VoidCallback onPressed;
 
   const PendingCarouselFunctions({
@@ -10,6 +11,7 @@ class PendingCarouselFunctions extends StatelessWidget {
     required this.icon,
     required this.text,
     required this.onPressed,
+    this.subtitle,
   });
 
   @override
@@ -37,6 +39,19 @@ class PendingCarouselFunctions extends StatelessWidget {
               fontSize: 15,
             ),
           ),
+          if (subtitle != null) ...[
+            const SizedBox(height: 4),
+            Text(
+              subtitle!,
+              textAlign: TextAlign.center,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                fontSize: 12,
+                color: Colors.grey[700],
+              ),
+            ),
+          ],
         ],
       ),
     );

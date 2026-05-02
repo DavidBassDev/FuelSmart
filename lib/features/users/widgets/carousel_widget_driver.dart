@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:fuel_smart/core/widgets/pending_carousel_functions.dart';
-import 'package:fuel_smart/features/dashboard/screens/low_fuel_screen.dart';
 import 'package:fuel_smart/features/refueling/screens/refueling_screen.dart';
 
 class CarouselWidgetDriver extends StatelessWidget {
@@ -20,6 +19,8 @@ class CarouselWidgetDriver extends StatelessWidget {
           return PendingCarouselFunctions(
             icon: Icons.car_repair,
             text: 'Registrar repostaje',
+            subtitle:
+                'Utiliza este módulo solo\nSi vas a repostar bajo caja menor.',
             onPressed: () {
               RefuelingScreen();
               Navigator.push(
@@ -32,6 +33,8 @@ class CarouselWidgetDriver extends StatelessWidget {
           return PendingCarouselFunctions(
             icon: Icons.local_gas_station_outlined,
             text: "Solicitar ampliación de cupo",
+            subtitle:
+                'Solicita ampliar el cupo de \ntu vehículo para continuar tu operación',
             onPressed: () {
               //SCREEN NUEVA
             },
