@@ -21,11 +21,13 @@ class _CardStatusWidgetState extends State<CardStatusWidget> {
   FuelAssignment? fuelAssignment;
   bool isLoading = true;
   double totalGallons = 0.0;
+  double totalDistance = 0.0;
 
   @override
   void initState() {
     super.initState();
     getGallonsConsumed();
+    getTelemetryVehicle();
   }
 
   // Cargar consumos del vehículo
@@ -61,9 +63,44 @@ class _CardStatusWidgetState extends State<CardStatusWidget> {
     }
   }
 
+  // Cargar recorridos del vehículo
+  Future<void> getTelemetryVehicle() async {
+    try {
+      final authProvider = Provider.of<AuthProvider>(context, listen: false);
+
+      final token = authProvider.token;
+
+      if (token == null) return;
+
+      final currentMonth = DateTime.now().month.toString();
+
+      final currentYear = DateTime.now().year.toString();
+      print("enviado en placa ${widget.vehicle.plate}");
+      final response = await telemetryService.getTelemetry(
+        widget.vehicle.plate,
+        currentMonth,
+        currentYear,
+      );
+
+      setState(() {
+        totalDistance =
+            double.tryParse(
+              response['total_distancia_km']?.toString() ?? '0',
+            ) ??
+            0.0;
+
+        isLoading = false;
+      });
+
+      print("TOTAL DISTANCIA: $totalDistance");
+    } catch (e) {
+      print("Error cargando telemetria: $e");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    double performance = totalGallons / 100;
+    double performance = totalGallons / totalDistance;
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),

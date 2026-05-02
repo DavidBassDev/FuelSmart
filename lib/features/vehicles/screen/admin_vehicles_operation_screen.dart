@@ -7,16 +7,16 @@ import 'package:fuel_smart/features/clients/widgets/build_client_item_widget.dar
 import 'package:fuel_smart/features/clients/models/clients.dart';
 import 'package:provider/provider.dart';
 
-class AdminVehcilesOperationScreen extends StatefulWidget {
-  const AdminVehcilesOperationScreen({super.key});
+class AdminVehiclesOperationScreen extends StatefulWidget {
+  const AdminVehiclesOperationScreen({super.key});
 
   @override
-  State<AdminVehcilesOperationScreen> createState() =>
+  State<AdminVehiclesOperationScreen> createState() =>
       _AdminVehcilesOperationScreen();
 }
 
 class _AdminVehcilesOperationScreen
-    extends State<AdminVehcilesOperationScreen> {
+    extends State<AdminVehiclesOperationScreen> {
   List<Clients> platesClient = [];
   bool isLoading = true;
   bool _loaded = false;
