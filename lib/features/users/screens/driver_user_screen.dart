@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:fuel_smart/core/widgets/dividerPersonalizated.dart';
 import 'package:fuel_smart/features/users/models/user.dart';
 import 'package:fuel_smart/core/providers/auth_provider.dart';
 import 'package:fuel_smart/features/users/widgets/carousel_widget_driver.dart';
+import 'package:fuel_smart/features/users/widgets/tip_driver_users.dart';
 import 'package:fuel_smart/features/vehicles/widgets/card_admin_vehicle_driver.dart';
 import 'package:provider/provider.dart';
 
@@ -48,6 +50,7 @@ class DriverUserScreen extends StatelessWidget {
                 ),
 
                 const SizedBox(height: 15),
+                const DividerPersonalizated(thicknessSize: 1),
 
                 //CARD VEHICULO
                 const CardAdminVehicleDriver(),
@@ -89,6 +92,8 @@ class DriverUserScreen extends StatelessWidget {
                 ),
 
                 const SizedBox(height: 20),
+                DividerPersonalizated(thicknessSize: 1),
+                TipDriverUsers(),
               ],
             ),
           ),
