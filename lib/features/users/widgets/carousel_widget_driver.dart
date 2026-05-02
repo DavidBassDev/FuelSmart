@@ -9,29 +9,33 @@ class CarouselWidgetDriver extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
+    return ListView.separated(
       scrollDirection: Axis.horizontal,
-      children: [
-        PendingCarouselFunctions(
-          icon: Icons.car_repair,
-          text: 'Registrar repostaje',
-          onPressed: () {
-            print("pressed");
-          },
-        ),
-        SizedBox(width: 20),
-        PendingCarouselFunctions(
-          icon: Icons.local_gas_station_outlined,
-          text: "Vehículos ampliacion\nde cupo",
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (_) => LowFuelScreen()),
-            );
-          },
-        ),
-        SizedBox(width: 20),
-      ],
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      itemCount: 2,
+      separatorBuilder: (_, __) => const SizedBox(width: 15),
+      itemBuilder: (context, index) {
+        if (index == 0) {
+          return PendingCarouselFunctions(
+            icon: Icons.car_repair,
+            text: 'Registrar repostaje',
+            onPressed: () {
+              print("pressed");
+            },
+          );
+        } else {
+          return PendingCarouselFunctions(
+            icon: Icons.local_gas_station_outlined,
+            text: "Vehículos ampliación de cupo",
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const LowFuelScreen()),
+              );
+            },
+          );
+        }
+      },
     );
   }
 }

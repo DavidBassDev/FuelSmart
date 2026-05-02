@@ -20,75 +20,78 @@ class DriverUserScreen extends StatelessWidget {
     final token = auth.token!;
 
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              const SizedBox(height: 40),
-
-              Row(
-                children: [
-                  SizedBox(width: 20),
-                  Expanded(
-                    child: Text(
-                      'Bienvenido ${user.nombre}',
-                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                        color: Theme.of(context).colorScheme.onSurface,
-                        fontSize: 15,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // 🔹 HEADER
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        'Bienvenido ${user.nombre}',
+                        style: Theme.of(context).textTheme.titleMedium
+                            ?.copyWith(fontWeight: FontWeight.w500),
+                        overflow: TextOverflow.ellipsis, // 🔥 evita overflow
                       ),
-                      textAlign: TextAlign.center,
                     ),
-                  ),
-                  Expanded(
-                    child: Text(
-                      user.rol!,
+                    const SizedBox(width: 10),
+                    Text(
+                      user.rol ?? '',
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+
+                const SizedBox(height: 15),
+
+                //CARD VEHICULO
+                const CardAdminVehicleDriver(),
+
+                const SizedBox(height: 20),
+
+                Row(
+                  children: [
+                    Text(
+                      'Acciones',
                       style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                         fontWeight: FontWeight.bold,
-                        fontSize: 15,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ],
-              ),
-              CardAdminVehicleDriver(),
-              const SizedBox(height: 20),
-
-              Row(
-                children: [
-                  Text(
-                    'Acciones',
-                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  Container(
-                    width: 20,
-                    height: 20,
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.surface,
-                      shape: BoxShape.circle,
-                    ),
-                    child: Center(
-                      child: Icon(
-                        Icons.arrow_right,
-                        color: Theme.of(context).colorScheme.primary,
-                        size: 20,
                       ),
                     ),
-                  ),
-                ],
-              ),
+                    const SizedBox(width: 8),
+                    Container(
+                      width: 22,
+                      height: 22,
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.surface,
+                        shape: BoxShape.circle,
+                      ),
+                      child: Center(
+                        child: Icon(
+                          Icons.arrow_right,
+                          color: Theme.of(context).colorScheme.primary,
+                          size: 18,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
 
-              const SizedBox(height: 15),
-              //CAROUSEL SUPERIOR
-              SizedBox(height: 120, child: CarouselWidgetDriver(token: token)),
-              const SizedBox(height: 50),
+                const SizedBox(height: 15),
 
-              //RESUMEN INFERIOR
-            ],
+                SizedBox(
+                  height: 170,
+                  child: CarouselWidgetDriver(token: token),
+                ),
+
+                const SizedBox(height: 20),
+              ],
+            ),
           ),
         ),
       ),
