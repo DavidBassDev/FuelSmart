@@ -24,7 +24,7 @@ class User {
 
       rol: json["rol"] ?? 'errorAca',
 
-      idVehicle: json["id_vehiculo"],
+      idVehicle: json["id_vehiculo"] ?? json["idVehicle"],
       placa: json["placa"],
       nombreProyecto: json["nombre_proyecto"],
     );

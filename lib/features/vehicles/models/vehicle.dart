@@ -36,6 +36,7 @@ class Vehicle {
             json['id_vehiculo']?.toString() ??
                 json['vehicle_id']?.toString() ??
                 json['id']?.toString() ??
+                json['idVehicle']?.toString() ??
                 '',
           ) ??
           0,

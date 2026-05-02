@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fuel_smart/core/widgets/pending_carousel_functions.dart';
 import 'package:fuel_smart/features/refueling/screens/refueling_screen.dart';
+import 'package:fuel_smart/features/refueling/screens/request_additional_fuel_screen.dart';
 
 class CarouselWidgetDriver extends StatelessWidget {
   final String token;
@@ -36,7 +37,13 @@ class CarouselWidgetDriver extends StatelessWidget {
             subtitle:
                 'Solicita ampliar el cupo de \ntu vehículo para continuar tu operación',
             onPressed: () {
-              //SCREEN NUEVA
+              RefuelingScreen();
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => RequestAdditionalFuelScreen(),
+                ),
+              );
             },
           );
         }
