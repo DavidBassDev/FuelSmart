@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fuel_smart/core/providers/auth_provider.dart';
 import 'package:fuel_smart/core/widgets/button_action.dart';
 import 'package:fuel_smart/core/widgets/dividerPersonalizated.dart';
+import 'package:fuel_smart/core/widgets/show_dialog.dart';
 import 'package:fuel_smart/features/clients/models/clients.dart';
 import 'package:fuel_smart/features/clients/services/client_service.dart';
 import 'package:fuel_smart/features/shared/services/role_service.dart';
@@ -41,6 +42,7 @@ class _CreateUserScreenState extends State<CreateUserScreen> {
 
   List<Vehicle> vehicles = [];
   Vehicle? vehicleSelected;
+  String? myRol;
 
   @override
   void initState() {
@@ -84,6 +86,7 @@ class _CreateUserScreenState extends State<CreateUserScreen> {
   @override
   Widget build(BuildContext context) {
     final token = context.read<AuthProvider>().token;
+    final myRol = context.read<AuthProvider>().user!.rol;
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.secondary,
       appBar: AppBar(
@@ -159,25 +162,37 @@ class _CreateUserScreenState extends State<CreateUserScreen> {
               text: 'Crear usuario',
               onPressed: () async {
                 final auth = context.read<AuthProvider>();
-                //crear usuario funcion
-                //VALIDAR SI AMBAS CONTRASEÑAS COINCIDEN
+                final myRol = auth.user!.rol;
+
+                // 🔥 VALIDAR SI INTENTA CREAR ADMIN
+                if (myRol != 'admin' && selectedRole?.rolId == 1) {
+                  showDialog(
+                    context: context,
+                    builder: (context) => ShowDialogPersonalizated(
+                      text:
+                          'Solo los usuarios administradores pueden crear administradores',
+                    ),
+                  );
+                  return;
+                }
+
+                // 🔐 VALIDAR CONTRASEÑAS
+                if (password.text != confirmPassword.text) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text("Las contraseñas no coinciden"),
+                    ),
+                  );
+                  return;
+                }
 
                 try {
-                  if (password.text != confirmPassword.text) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text("Las contraseñas no coinciden"),
-                      ),
-                    );
-                    return; //detengo ejecucion
-                  }
-                  var data = await userService.createUser(token!, {
+                  var data = await userService.createUser(auth.token!, {
                     "nombre_completo": fullName.text,
                     "correo_electronico": email.text,
                     "password": password.text,
                     "rol_id": selectedRole?.rolId,
-                    "creado_por":
-                        auth.user!.id, //traer id del usuario que esta creando
+                    "creado_por": auth.user!.id,
                     "cliente": selectedClient?.clientId,
                     "id_vehiculo": vehicleSelected?.vehicleId,
                   });
@@ -185,10 +200,11 @@ class _CreateUserScreenState extends State<CreateUserScreen> {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text("Usuario creado")),
                   );
+
                   Navigator.pop(context);
                 } catch (e) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text("Error al actualizar")),
+                    const SnackBar(content: Text("Error al crear usuario")),
                   );
                 }
               },
