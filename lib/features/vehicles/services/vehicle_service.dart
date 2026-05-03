@@ -25,4 +25,30 @@ class VehicleService {
     final response = await api.postWithToken("vehicles/create", data, token);
     return response;
   }
+
+  //SUSPENDER VEHICULO
+  Future<dynamic> inactivateVehicle(String token, int idVehiculo) async {
+    final data = {"id_vehiculo": idVehiculo};
+
+    final response = await api.putWithToken(
+      "vehicles/inactivateVehicle",
+      data,
+      token,
+    );
+
+    return response;
+  }
+
+  //ACTIVAR VEHICULO
+  Future<dynamic> activateVehicle(String token, int idVehiculo) async {
+    final data = {"id_vehiculo": idVehiculo};
+
+    final response = await api.putWithToken(
+      "vehicles/activateVehicle",
+      data,
+      token,
+    );
+
+    return response;
+  }
 }

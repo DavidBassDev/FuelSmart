@@ -23,6 +23,9 @@ class _AdminVehicleScreenState extends State<AdminVehicleScreen> {
   final RefuelingService refuelingService = RefuelingService();
 
   bool isLoading = true;
+  bool statusVehicle = true;
+  IconData activityVehicle = Icons.pause;
+  String actionStatusVehicle = 'Suspender vehículo';
 
   Vehicle? vehicle;
   double totalGallons = 0.0;
@@ -31,24 +34,29 @@ class _AdminVehicleScreenState extends State<AdminVehicleScreen> {
   void initState() {
     super.initState();
     loadVehicle(widget.vehicleSelected);
-    print('recibo el vehiculo ${widget.vehicleSelected}');
   }
 
   Future<void> loadVehicle(int vehicleSelected) async {
     try {
       final response = await vehicleService.getVehicle(vehicleSelected);
 
+      if (!mounted) return;
+
       setState(() {
         vehicle = response;
       });
-      //ESPERAR QUE TRAIGA LOS GALONES
+
       await getGallonsConsumed();
+
+      if (!mounted) return;
 
       setState(() {
         isLoading = false;
       });
     } catch (e) {
       print("Error cargando vehículo: $e");
+
+      if (!mounted) return;
 
       setState(() {
         isLoading = false;
@@ -73,15 +81,71 @@ class _AdminVehicleScreenState extends State<AdminVehicleScreen> {
         currentMonth,
       );
 
+      if (!mounted) return;
+
       setState(() {
         totalGallons =
             double.tryParse(response['data']['total_galones'].toString()) ??
             0.0;
       });
-
-      print("TOTAL GALONES: $totalGallons");
     } catch (e) {
       print("Error cargando consumos del vehículo: $e");
+    }
+  }
+
+  Future<void> handleToggleVehicle() async {
+    final auth = Provider.of<AuthProvider>(context, listen: false);
+
+    final isActive = vehicle!.state;
+
+    final confirm = await showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: Text(isActive ? "Inactivar vehículo" : "Activar vehículo"),
+        content: Text(
+          isActive
+              ? "¿Seguro que deseas inactivarlo?"
+              : "¿Seguro que deseas activarlo?",
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: const Text("Cancelar"),
+          ),
+          ElevatedButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: const Text("Confirmar"),
+          ),
+        ],
+      ),
+    );
+
+    if (confirm != true) return;
+
+    try {
+      if (isActive) {
+        await vehicleService.inactivateVehicle(auth.token!, vehicle!.vehicleId);
+      } else {
+        await vehicleService.activateVehicle(auth.token!, vehicle!.vehicleId);
+      }
+
+      if (!mounted) return;
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(isActive ? "Vehículo inactivado" : "Vehículo activado"),
+        ),
+      );
+
+      setState(() {
+        isLoading = true;
+      });
+
+      await loadVehicle(widget.vehicleSelected);
+    } catch (e) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("Error: $e")));
     }
   }
 
@@ -96,6 +160,12 @@ class _AdminVehicleScreenState extends State<AdminVehicleScreen> {
         body: Center(child: Text("No se pudo cargar el vehículo")),
       );
     }
+    if (statusVehicle == false) {
+      activityVehicle = Icons.play_arrow;
+      actionStatusVehicle = 'Activar vehiculo';
+    } else {
+      activityVehicle = Icons.pause;
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -103,27 +173,23 @@ class _AdminVehicleScreenState extends State<AdminVehicleScreen> {
           onPressed: () => Navigator.pop(context),
           icon: const Icon(Icons.arrow_back, size: 30),
         ),
-        title: FittedBox(
-          fit: BoxFit.scaleDown,
-          alignment: Alignment.centerLeft,
-          child: Text(
-            "Administrar vehículo ${vehicle!.plate}",
-            style: Theme.of(context).textTheme.titleLarge?.copyWith(
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
-            ),
-          ),
+        title: Text(
+          "Administrar vehículo ${vehicle!.plate}",
+          style: Theme.of(
+            context,
+          ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
         ),
       ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               DividerPersonalizated(thicknessSize: 1),
               AdminCardVehicle(vehicle: vehicle!),
-              SizedBox(height: 30),
+
+              const SizedBox(height: 30),
+
               Row(
                 children: [
                   Column(
@@ -135,12 +201,11 @@ class _AdminVehicleScreenState extends State<AdminVehicleScreen> {
                           size: 30,
                         ),
                         onPressed: () {
-                          final int = widget.vehicleSelected;
                           Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (_) => SeeRefuelingsVehicleScreen(
-                                vehicleId: int,
+                                vehicleId: widget.vehicleSelected,
                                 vehicle: vehicle!,
                                 totalGallons: totalGallons,
                               ),
@@ -148,29 +213,26 @@ class _AdminVehicleScreenState extends State<AdminVehicleScreen> {
                           );
                         },
                       ),
-                      Text(
-                        "Ver rendimiento y consumos",
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+                      const Text("Ver rendimiento y consumos"),
                     ],
                   ),
-                  SizedBox(width: 30),
+
+                  const SizedBox(width: 30),
+
                   Column(
                     children: [
                       IconButton(
                         icon: Icon(
-                          Icons.pause,
+                          vehicle!.state ? Icons.pause : Icons.play_arrow,
                           color: Theme.of(context).colorScheme.primary,
                           size: 30,
                         ),
-                        onPressed: () {
-                          print('funca');
-                        },
+                        onPressed: handleToggleVehicle, // 🔥 SIEMPRE activo
                       ),
                       Text(
-                        "Suspender vehículo",
+                        vehicle!.state
+                            ? 'Suspender vehículo'
+                            : 'Activar vehículo',
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
@@ -179,8 +241,10 @@ class _AdminVehicleScreenState extends State<AdminVehicleScreen> {
                   ),
                 ],
               ),
-              SizedBox(height: 20),
+
+              const SizedBox(height: 20),
               DividerPersonalizated(thicknessSize: 1),
+
               SizedBox(
                 height: 320,
                 child: FuelCircleWidget(
@@ -188,18 +252,8 @@ class _AdminVehicleScreenState extends State<AdminVehicleScreen> {
                   availableFuel: vehicle!.avaliableFuel,
                 ),
               ),
-              SizedBox(height: 20),
-              Row(
-                children: [
-                  Text('Aumentar cupo'),
-                  IconButton(
-                    icon: Icon(Icons.add, size: 30),
-                    onPressed: () {
-                      print('funca');
-                    },
-                  ),
-                ],
-              ),
+
+              const SizedBox(height: 20),
             ],
           ),
         ),
