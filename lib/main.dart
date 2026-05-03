@@ -51,6 +51,9 @@ class _MyAppState extends State<MyApp> {
       case 'conductor':
         return const DriverNavBar();
 
+      case 'coordinador':
+        return const ButtonNavBar();
+
       default:
         return const LoginScreen();
     }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fuel_smart/core/providers/auth_provider.dart';
 import 'package:fuel_smart/core/widgets/dividerPersonalizated.dart';
+import 'package:fuel_smart/core/widgets/show_dialog.dart';
 import 'package:fuel_smart/features/shared/widgets/pill_btn_personalizated.dart';
 import 'package:fuel_smart/features/users/models/user.dart';
 import 'package:fuel_smart/features/users/services/user_service.dart';
@@ -18,6 +19,7 @@ class _SeeUsersScreen extends State<SeeUsersScreen> {
   List<User> usersDrivers = [];
   bool isLoading = true;
   bool _loaded = false;
+  String? rolUser;
 
   String selectedRole = 'conductor';
 
@@ -38,6 +40,7 @@ class _SeeUsersScreen extends State<SeeUsersScreen> {
       setState(() => isLoading = false);
       return;
     }
+    rolUser = auth.user!.rol;
 
     setState(() => isLoading = true);
 
@@ -106,6 +109,17 @@ class _SeeUsersScreen extends State<SeeUsersScreen> {
                     text: 'Administradores',
                     selected: selectedRole == 'admin',
                     onTap: () {
+                      if (rolUser != 'admin') {
+                        showDialog(
+                          context: context,
+                          builder: (_) => ShowDialogPersonalizated(
+                            text:
+                                'Solo los administradores\n pueden acceder a este filtro',
+                          ),
+                        );
+                        return;
+                      }
+
                       if (selectedRole != 'admin') {
                         setState(() => selectedRole = 'admin');
                         loadUsers('admin');
