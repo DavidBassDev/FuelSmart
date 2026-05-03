@@ -23,9 +23,6 @@ class _AdminVehicleScreenState extends State<AdminVehicleScreen> {
   final RefuelingService refuelingService = RefuelingService();
 
   bool isLoading = true;
-  bool statusVehicle = true;
-  IconData activityVehicle = Icons.pause;
-  String actionStatusVehicle = 'Suspender vehículo';
 
   Vehicle? vehicle;
   double totalGallons = 0.0;
@@ -64,11 +61,9 @@ class _AdminVehicleScreenState extends State<AdminVehicleScreen> {
     }
   }
 
-  // Cargar consumos del vehículo
   Future<void> getGallonsConsumed() async {
     try {
       final authProvider = Provider.of<AuthProvider>(context, listen: false);
-
       final token = authProvider.token;
 
       if (token == null) return;
@@ -149,6 +144,74 @@ class _AdminVehicleScreenState extends State<AdminVehicleScreen> {
     }
   }
 
+  // 🔥 NUEVO MODAL PARA AGREGAR GALONES
+  void showAddFuelDialog() {
+    final TextEditingController gallonsController = TextEditingController();
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text("Galones a adicionar"),
+          content: TextField(
+            controller: gallonsController,
+            keyboardType: TextInputType.number,
+            textAlign: TextAlign.center,
+            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            decoration: const InputDecoration(hintText: "Ej: 20"),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text("Cancelar"),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                final auth = Provider.of<AuthProvider>(context, listen: false);
+
+                final token = auth.token;
+
+                final galones = double.tryParse(gallonsController.text);
+
+                if (galones == null || galones <= 0) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text("Valor inválido")),
+                  );
+                  return;
+                }
+
+                try {
+                  await refuelingService.addFuelToVehicle(
+                    token!,
+                    idVehiculo: widget.vehicleSelected,
+                    galones: galones,
+                  );
+
+                  if (!mounted) return;
+
+                  Navigator.pop(context);
+
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text("Cupo actualizado correctamente"),
+                    ),
+                  );
+
+                  await loadVehicle(widget.vehicleSelected);
+                } catch (e) {
+                  ScaffoldMessenger.of(
+                    context,
+                  ).showSnackBar(SnackBar(content: Text("Error: $e")));
+                }
+              },
+              child: const Text("Aceptar"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     if (isLoading) {
@@ -160,12 +223,6 @@ class _AdminVehicleScreenState extends State<AdminVehicleScreen> {
         body: Center(child: Text("No se pudo cargar el vehículo")),
       );
     }
-    if (statusVehicle == false) {
-      activityVehicle = Icons.play_arrow;
-      actionStatusVehicle = 'Activar vehiculo';
-    } else {
-      activityVehicle = Icons.pause;
-    }
 
     return Scaffold(
       appBar: AppBar(
@@ -175,9 +232,10 @@ class _AdminVehicleScreenState extends State<AdminVehicleScreen> {
         ),
         title: Text(
           "Administrar vehículo ${vehicle!.plate}",
-          style: Theme.of(
-            context,
-          ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+          style: Theme.of(context).textTheme.titleLarge?.copyWith(
+            fontWeight: FontWeight.bold,
+            fontSize: 19,
+          ),
         ),
       ),
       body: SingleChildScrollView(
@@ -192,52 +250,56 @@ class _AdminVehicleScreenState extends State<AdminVehicleScreen> {
 
               Row(
                 children: [
-                  Column(
-                    children: [
-                      IconButton(
-                        icon: Icon(
-                          Icons.remove_red_eye_outlined,
-                          color: Theme.of(context).colorScheme.primary,
-                          size: 30,
-                        ),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => SeeRefuelingsVehicleScreen(
-                                vehicleId: widget.vehicleSelected,
-                                vehicle: vehicle!,
-                                totalGallons: totalGallons,
+                  Expanded(
+                    child: Column(
+                      children: [
+                        IconButton(
+                          icon: Icon(
+                            Icons.remove_red_eye_outlined,
+                            color: Theme.of(context).colorScheme.primary,
+                            size: 30,
+                          ),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => SeeRefuelingsVehicleScreen(
+                                  vehicleId: widget.vehicleSelected,
+                                  vehicle: vehicle!,
+                                  totalGallons: totalGallons,
+                                ),
                               ),
-                            ),
-                          );
-                        },
-                      ),
-                      const Text("Ver rendimiento y consumos"),
-                    ],
+                            );
+                          },
+                        ),
+                        const Text(
+                          "Ver rendimiento y consumos",
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
                   ),
-
-                  const SizedBox(width: 30),
-
-                  Column(
-                    children: [
-                      IconButton(
-                        icon: Icon(
-                          vehicle!.state ? Icons.pause : Icons.play_arrow,
-                          color: Theme.of(context).colorScheme.primary,
-                          size: 30,
+                  Expanded(
+                    child: Column(
+                      children: [
+                        IconButton(
+                          icon: Icon(
+                            vehicle!.state ? Icons.pause : Icons.play_arrow,
+                            color: Theme.of(context).colorScheme.primary,
+                            size: 30,
+                          ),
+                          onPressed: handleToggleVehicle,
                         ),
-                        onPressed: handleToggleVehicle, // 🔥 SIEMPRE activo
-                      ),
-                      Text(
-                        vehicle!.state
-                            ? 'Suspender vehículo'
-                            : 'Activar vehículo',
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          fontWeight: FontWeight.bold,
+                        Text(
+                          vehicle!.state
+                              ? 'Suspender vehículo'
+                              : 'Activar vehículo',
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context).textTheme.bodySmall
+                              ?.copyWith(fontWeight: FontWeight.bold),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ],
               ),
@@ -251,6 +313,17 @@ class _AdminVehicleScreenState extends State<AdminVehicleScreen> {
                   totalGallons: totalGallons,
                   availableFuel: vehicle!.avaliableFuel,
                 ),
+              ),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('Aumentar cupo', style: TextStyle(fontSize: 20)),
+                  IconButton(
+                    icon: const Icon(Icons.add, size: 35),
+                    onPressed: showAddFuelDialog,
+                  ),
+                ],
               ),
 
               const SizedBox(height: 20),

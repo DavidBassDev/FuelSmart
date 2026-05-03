@@ -125,6 +125,27 @@ class RefuelingService {
     return data;
   }
 
+  // TRAER SOLICITUDES PENDIENTES PARA EL CONDUCTOR
+  Future<List<dynamic>> getMyFuelRequest(String token) async {
+    final response = await api.getWithToken(
+      "api/fuelrequest/mypendingRequests",
+      token,
+    );
+
+    final body = response is Map ? response : response.data;
+
+    if (body == null || body['data'] == null) {
+      debugPrint("Respuesta inválida: $body");
+      return [];
+    }
+
+    final List data = body['data'];
+
+    debugPrint("SOLICITUD: $data");
+
+    return data;
+  }
+
   //APROBAR O RECHAZAR SOLICITUD
   Future updateFuelRequestStatus(
     String token, {
@@ -147,6 +168,27 @@ class RefuelingService {
     );
 
     debugPrint("RESPONSE UPDATE STATUS: $response");
+
+    return response;
+  }
+
+  //  AUMENTAR CUPO DIRECTO
+  Future addFuelToVehicle(
+    String token, {
+    required int idVehiculo,
+    required double galones,
+  }) async {
+    final data = {"id_vehiculo": idVehiculo, "galones": galones};
+
+    debugPrint("BODY ADD FUEL: $data");
+
+    final response = await api.postWithToken(
+      "api/fuelrequest/addFuel",
+      data,
+      token,
+    );
+
+    debugPrint("RESPONSE ADD FUEL: $response");
 
     return response;
   }
