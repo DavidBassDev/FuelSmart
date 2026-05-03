@@ -33,6 +33,29 @@ class ApiService {
     return jsonDecode(response.body);
   }
 
+  //get 4
+  Future<dynamic> getRequest(
+    String endpoint, {
+    Map<String, dynamic>? params,
+    String? token,
+  }) async {
+    final uri = Uri.parse('$baseUrl/$endpoint').replace(
+      queryParameters: params?.map(
+        (key, value) => MapEntry(key, value.toString()),
+      ),
+    );
+
+    final response = await http.get(
+      uri,
+      headers: {
+        "Content-Type": "application/json",
+        if (token != null) "Authorization": "Bearer $token",
+      },
+    );
+
+    return jsonDecode(response.body);
+  }
+
   //
   Future<dynamic> get3(String endpoint, {Map<String, dynamic>? params}) async {
     final uri = Uri.parse('$baseUrl/$endpoint').replace(

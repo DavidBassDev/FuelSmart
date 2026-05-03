@@ -43,7 +43,10 @@ class _AdminVehcilesOperationScreen
     setState(() => isLoading = true);
 
     final clientService = ClientService();
-    final response = await clientService.getPlatesByClient(rol: 1);
+    final response = await clientService.getPlatesByClient(
+      rol: 1,
+      token: auth.token!, // 🔥 AQUÍ
+    );
 
     if (!mounted) return;
 

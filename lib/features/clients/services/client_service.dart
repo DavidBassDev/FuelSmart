@@ -10,15 +10,21 @@ class ClientService {
     return (response as List).map((item) => Clients.fromJson(item)).toList();
   }
 
-  //Traer cantidad de placas por cliente
   Future<List<Clients>> getPlatesByClient({
     int? idCliente,
     required int rol,
+    required String token, // 🔥 nuevo
   }) async {
-    final response = await api.get2(
-      "clients/listPlates",
-      params: {"rol": rol, if (idCliente != null) "id_cliente": idCliente},
+    final response = await api.getWithToken(
+      "clients/listPlates?rol=$rol${idCliente != null ? "&id_cliente=$idCliente" : ""}",
+      token,
     );
+
+    print("RESPONSE: $response");
+
+    if (response == null || response['data'] == null) {
+      return [];
+    }
 
     final List data = response['data'];
 
