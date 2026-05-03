@@ -5,8 +5,8 @@ import 'package:fuel_smart/core/providers/auth_provider.dart';
 import 'package:fuel_smart/core/providers/nav_provider.dart';
 import 'package:fuel_smart/core/theme/app_theme.dart';
 import 'package:fuel_smart/core/widgets/button_nav_bar.dart';
-import 'package:fuel_smart/features/users/screens/driver_user_screen.dart';
-import 'package:fuel_smart/features/users/widgets/driver_nav_bar.dart';
+import 'package:fuel_smart/features/users/presentation/screens/driver_user_screen.dart';
+import 'package:fuel_smart/features/users/presentation/widgets/driver_nav_bar.dart';
 import 'package:provider/provider.dart';
 
 void main() {
