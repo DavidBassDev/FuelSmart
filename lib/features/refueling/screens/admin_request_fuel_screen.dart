@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fuel_smart/core/providers/auth_provider.dart';
 import 'package:fuel_smart/features/refueling/services/refueling_service.dart';
 import 'package:fuel_smart/features/refueling/widgets/fuel_request_card.dart';
+import 'package:fuel_smart/features/vehicles/screen/admin_vehicle_screen.dart';
 import 'package:provider/provider.dart';
 
 class FuelRequestListScreen extends StatefulWidget {
@@ -59,11 +60,16 @@ class _FuelRequestListScreenState extends State<FuelRequestListScreen> {
                 final item = requests[index];
 
                 // 🔥 parsing seguro
-                final int consumidos =
-                    int.tryParse(item['galones_consumidos'].toString()) ?? 0;
+                final double consumidos =
+                    double.tryParse(item['galones_consumidos'].toString()) ??
+                    0.0;
 
-                final int disponibles =
-                    int.tryParse(item['cupo_combustible'].toString()) ?? 0;
+                final double disponibles =
+                    double.tryParse(item['cupo_combustible'].toString()) ?? 0.0;
+
+                final double solicitados =
+                    double.tryParse(item['galones_solicitados'].toString()) ??
+                    0.0;
 
                 return FuelRequestCard(
                   placa: item['placa'] ?? '',
@@ -71,11 +77,17 @@ class _FuelRequestListScreenState extends State<FuelRequestListScreen> {
                   disponibles: disponibles,
                   cliente: item['cliente'] ?? '',
                   observacion: item['comentario'] ?? '',
+                  solicitados: solicitados,
                   onPressed: () {
-                    print("Ver solicitud ${item['id_solicitud']}");
-
-                    // 👉 luego puedes navegar a detalle
-                    // Navigator.push(...)
+                    //IR A LA PANTALLA DE ADMINISTRAR VEHICULO
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => AdminVehicleScreen(
+                          vehicleSelected: item['id_vehiculo'],
+                        ),
+                      ),
+                    );
                   },
                 );
               },
