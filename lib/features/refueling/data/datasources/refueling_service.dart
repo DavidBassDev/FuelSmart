@@ -124,4 +124,30 @@ class RefuelingService {
 
     return data;
   }
+
+  //APROBAR O RECHAZAR SOLICITUD
+  Future updateFuelRequestStatus(
+    String token, {
+    required int idSolicitud,
+    required String estado, //
+    required int respondidoPor,
+  }) async {
+    final data = {
+      "id_solicitud": idSolicitud,
+      "estado": estado,
+      "respondido_por": respondidoPor,
+    };
+
+    debugPrint("BODY UPDATE STATUS: $data");
+
+    final response = await api.putWithToken(
+      "api/fuelrequest/updateFuelRequestStatus",
+      data,
+      token,
+    );
+
+    debugPrint("RESPONSE UPDATE STATUS: $response");
+
+    return response;
+  }
 }

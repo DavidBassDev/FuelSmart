@@ -17,6 +17,7 @@ class _FuelRequestListScreenState extends State<FuelRequestListScreen> {
 
   List<dynamic> requests = [];
   bool isLoading = true;
+  String? token;
 
   @override
   void initState() {
@@ -27,7 +28,7 @@ class _FuelRequestListScreenState extends State<FuelRequestListScreen> {
   Future<void> loadRequests() async {
     try {
       final auth = Provider.of<AuthProvider>(context, listen: false);
-
+      token = auth.token;
       final data = await service.getPendingFuelRequests(auth.token!);
 
       setState(() {
@@ -42,6 +43,7 @@ class _FuelRequestListScreenState extends State<FuelRequestListScreen> {
 
   @override
   Widget build(BuildContext context) {
+    token = token;
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -92,10 +94,86 @@ class _FuelRequestListScreenState extends State<FuelRequestListScreen> {
                       ),
                     );
                   },
-                  onApprove: () {},
+                  onApprove: () {
+                    final auth = Provider.of<AuthProvider>(
+                      context,
+                      listen: false,
+                    );
+
+                    showApproveDialog(
+                      context: context,
+                      onYes: () async {
+                        try {
+                          await service.updateFuelRequestStatus(
+                            token!,
+                            idSolicitud: item['id_solicitud'],
+                            estado: 'aprobado',
+                            respondidoPor: auth.user!.id,
+                          );
+
+                          await loadRequests();
+                        } catch (e) {
+                          debugPrint("ERROR aprobar: $e");
+                        }
+                      },
+                      onNo: () async {
+                        try {
+                          await service.updateFuelRequestStatus(
+                            token!,
+                            idSolicitud: item['id_solicitud'],
+                            estado: 'rechazado',
+                            respondidoPor: auth.user!.id,
+                          );
+
+                          await loadRequests();
+                        } catch (e) {
+                          debugPrint("ERROR rechazar: $e");
+                        }
+                      },
+                    );
+                  },
                 );
               },
             ),
+    );
+  }
+
+  void showApproveDialog({
+    required BuildContext context,
+    required VoidCallback onYes,
+    required VoidCallback onNo,
+  }) {
+    showDialog(
+      context: context,
+      barrierDismissible: false, // evita cerrar tocando afuera
+      builder: (context) {
+        return AlertDialog(
+          title: const Text("Confirmación"),
+          content: const Text("¿Desea aprobar la solicitud?"),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context); // cerrar
+              },
+              child: const Text("Cancelar"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+                onNo(); // 👈 acción NO
+              },
+              child: const Text("No"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+                onYes(); // 👈 acción SI
+              },
+              child: const Text("Sí"),
+            ),
+          ],
+        );
+      },
     );
   }
 }
