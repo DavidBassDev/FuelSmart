@@ -3,6 +3,8 @@ import 'package:fuel_smart/core/providers/auth_provider.dart';
 import 'package:fuel_smart/core/widgets/button_action.dart';
 import 'package:fuel_smart/core/widgets/dividerPersonalizated.dart';
 import 'package:fuel_smart/core/widgets/form_widget.dart';
+import 'package:fuel_smart/core/widgets/show_dialog.dart';
+import 'package:fuel_smart/features/refueling/services/refueling_service.dart';
 import 'package:fuel_smart/features/users/models/user.dart';
 import 'package:fuel_smart/features/vehicles/models/vehicle.dart';
 import 'package:fuel_smart/features/vehicles/services/vehicle_service.dart';
@@ -24,6 +26,7 @@ class _RequestAdditionalFuelScreenState
   String observation = "";
   bool isLoading = true;
   Vehicle? vehicle;
+  int? requestBy;
   final gallonsController = TextEditingController();
   final commentController = TextEditingController();
 
@@ -54,6 +57,7 @@ class _RequestAdditionalFuelScreenState
       final Vehicle data = response;
 
       setState(() {
+        requestBy = user!.id;
         vehicle = data;
         isLoading = false;
       });
@@ -140,7 +144,57 @@ class _RequestAdditionalFuelScreenState
                   DividerPersonalizated(thicknessSize: 1),
                   VehicleObservationWidget(observation: observation),
                   SizedBox(height: 30),
-                  ButtonAction(text: 'Solicitar aumento', onPressed: () {}),
+                  ButtonAction(
+                    text: 'Solicitar aumento',
+                    onPressed: () async {
+                      try {
+                        final auth = Provider.of<AuthProvider>(
+                          context,
+                          listen: false,
+                        );
+
+                        final galones = double.tryParse(gallonsController.text);
+
+                        if (galones == null || galones <= 0) {
+                          throw Exception(
+                            "Ingrese una cantidad válida de galones",
+                          );
+                        }
+
+                        if (vehicle == null || requestBy == null) {
+                          throw Exception("Datos del vehículo no disponibles");
+                        }
+                        final idFuelSupplier = vehicle?.fuelSupplierId ?? 3;
+
+                        final response = await RefuelingService()
+                            .createFuelRequest(
+                              auth.token!,
+                              idVehiculo: vehicle!.vehicleId,
+                              galones: galones,
+                              comentario: commentController.text,
+                              solicitadoPor: requestBy!,
+                              idProveedor: idFuelSupplier,
+                            );
+
+                        print("RESPONSE: $response");
+
+                        await showDialog(
+                          context: context,
+                          builder: (context) => const ShowDialogPersonalizated(
+                            text: 'Solicitud registrada correctamente!',
+                          ),
+                        );
+                      } catch (e) {
+                        print("ERROR: $e");
+
+                        await showDialog(
+                          context: context,
+                          builder: (context) =>
+                              ShowDialogPersonalizated(text: e.toString()),
+                        );
+                      }
+                    },
+                  ),
                 ],
               ),
       ),

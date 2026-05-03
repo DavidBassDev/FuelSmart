@@ -73,4 +73,34 @@ class RefuelingService {
 
     return data.map((e) => RefuelingListItem.fromJson(e)).toList();
   }
+
+  //CREAR SOLICITUD AUMENTO GALONES
+  Future createFuelRequest(
+    String token, {
+    required int idVehiculo,
+    required int idProveedor,
+    required double galones,
+    required String comentario,
+    required int solicitadoPor,
+  }) async {
+    final data = {
+      "id_vehiculo": idVehiculo,
+      "id_proveedor": idProveedor,
+      "galones_solicitados": galones,
+      "comentario": comentario,
+      "solicitado_por": solicitadoPor,
+    };
+
+    debugPrint("BODY REQUEST: $data");
+
+    final response = await api.postWithToken(
+      "api/fuelrequest/fuel-request", //ruta
+      data,
+      token,
+    );
+
+    debugPrint("RESPONSE REQUEST: $response");
+
+    return response;
+  }
 }

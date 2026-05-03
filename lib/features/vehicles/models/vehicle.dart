@@ -1,7 +1,7 @@
 class Vehicle {
   final int vehicleId;
   final int userId;
-  final String? fuelSupplierId;
+  final int? fuelSupplierId; // 🔥 ahora es int
   final String plate;
   final double teoricPerformance;
   final double actualPerformance;
@@ -43,7 +43,8 @@ class Vehicle {
 
       userId: int.tryParse(json['usuario_id']?.toString() ?? '') ?? 0,
 
-      fuelSupplierId: json['proveedor']?.toString() ?? '',
+      // 🔥 CORREGIDO
+      fuelSupplierId: int.tryParse(json['id_proveedor']?.toString() ?? ''),
 
       plate: json['placa']?.toString() ?? '',
 
@@ -73,7 +74,8 @@ class Vehicle {
           DateTime.now(),
 
       createBy: int.tryParse(json['creado_por']?.toString() ?? '') ?? 0,
-      userName: json['nombre_usuario']?.toString() ?? '',
+
+      userName: json['nombre_usuario']?.toString(),
     );
   }
 
@@ -92,8 +94,9 @@ class Vehicle {
       'creado_por': createBy,
     };
 
+    // 🔥 CORREGIDO
     if (fuelSupplierId != null) {
-      data['proveedor_id'] = fuelSupplierId;
+      data['id_proveedor'] = fuelSupplierId;
     }
 
     return data;
@@ -102,7 +105,7 @@ class Vehicle {
   Vehicle copyWith({
     int? vehicleId,
     int? userId,
-    String? fuelSupplierId,
+    int? fuelSupplierId,
     String? plate,
     double? teoricPerformance,
     double? actualPerformance,
@@ -112,11 +115,12 @@ class Vehicle {
     DateTime? creationDate,
     DateTime? updateDate,
     int? createBy,
+    String? userName,
   }) {
     return Vehicle(
       vehicleId: vehicleId ?? this.vehicleId,
       userId: userId ?? this.userId,
-      fuelSupplierId: fuelSupplierId ?? this.fuelSupplierId,
+      fuelSupplierId: fuelSupplierId ?? this.fuelSupplierId, // 🔥 FIX
       plate: plate ?? this.plate,
       teoricPerformance: teoricPerformance ?? this.teoricPerformance,
       actualPerformance: actualPerformance ?? this.actualPerformance,
@@ -126,6 +130,7 @@ class Vehicle {
       creationDate: creationDate ?? this.creationDate,
       updateDate: updateDate ?? this.updateDate,
       createBy: createBy ?? this.createBy,
+      userName: userName ?? this.userName,
     );
   }
 }
