@@ -9,7 +9,13 @@ import 'package:provider/provider.dart';
 class CardStatusWidget extends StatefulWidget {
   final Vehicle vehicle;
   final intVehicle;
-  const CardStatusWidget({super.key, required this.vehicle, this.intVehicle});
+  final Function(String)? onObservationChanged;
+  const CardStatusWidget({
+    super.key,
+    required this.vehicle,
+    this.intVehicle,
+    this.onObservationChanged,
+  });
 
   @override
   State<CardStatusWidget> createState() => _CardStatusWidgetState();
@@ -22,6 +28,7 @@ class _CardStatusWidgetState extends State<CardStatusWidget> {
   bool isLoading = true;
   double totalGallons = 0.0;
   double totalDistance = 0.0;
+  String observation = "";
 
   @override
   void initState() {
@@ -92,6 +99,9 @@ class _CardStatusWidgetState extends State<CardStatusWidget> {
         isLoading = false;
       });
 
+      //exponer resultado de comportamiento
+      widget.onObservationChanged?.call(observation);
+
       print("TOTAL DISTANCIA: $totalDistance");
     } catch (e) {
       print("Error cargando telemetria: $e");
@@ -103,6 +113,15 @@ class _CardStatusWidgetState extends State<CardStatusWidget> {
     double performance = totalDistance / totalGallons;
     double perfomanceReached =
         performance / widget.vehicle.teoricPerformance * 100;
+    observation = "";
+    if (perfomanceReached > 0.8) {
+      observation =
+          "Tu vehículo no está cumpliendo con el rendimiento esperado,revisa tus hábitos de conducción y estado mecánico";
+    } else {
+      observation =
+          "Genial!, mantiene tus buenos hábitos de conducción y del estado general para cumplir con el rendimiento esperado";
+    }
+
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),

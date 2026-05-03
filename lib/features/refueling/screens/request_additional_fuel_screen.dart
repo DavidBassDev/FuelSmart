@@ -66,6 +66,7 @@ class _RequestAdditionalFuelScreenState
 
   @override
   Widget build(BuildContext context) {
+    String observation = "";
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -86,6 +87,12 @@ class _RequestAdditionalFuelScreenState
                 CardStatusWidget(
                   vehicle: vehicle!,
                   intVehicle: vehicle!.vehicleId,
+                  onObservationChanged: (value) {
+                    setState(() {
+                      observation = value;
+                      print("comentario que llega $observation");
+                    });
+                  },
                 ),
                 const SizedBox(height: 20),
                 DividerPersonalizated(thicknessSize: 1),
@@ -125,6 +132,7 @@ class _RequestAdditionalFuelScreenState
                     controller: commentController,
                   ),
                 ),
+                SizedBox(height: 25),
               ],
             ),
     );
