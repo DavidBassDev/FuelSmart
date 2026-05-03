@@ -60,7 +60,7 @@ class CardAdminUser extends StatelessWidget {
                     color: Theme.of(
                       context,
                     ).colorScheme.primary.withOpacity(0.8),
-                    fontSize: 13,
+                    fontSize: 15,
                   ),
                 ),
               ],
@@ -83,7 +83,7 @@ class CardAdminUser extends StatelessWidget {
               nameButtom,
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.bold,
-                fontSize: 13,
+                fontSize: 15,
                 color: Theme.of(context).colorScheme.onPrimary,
               ),
             ),

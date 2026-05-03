@@ -48,7 +48,7 @@ class AdminUserScreen extends StatelessWidget {
                 Icon(
                   Icons.person,
                   color: Color.fromARGB(255, 35, 35, 35),
-                  size: 80,
+                  size: 65,
                 ),
                 SizedBox(width: 20),
                 Text(
@@ -107,6 +107,7 @@ class AdminUserScreen extends StatelessWidget {
               nameButtom: 'Ir',
             ),
             DividerPersonalizated(thicknessSize: 1),
+            const SizedBox(height: 5),
             CardAdminUser(
               icon: Icons.person_add_alt_1,
               titulo: 'Crear usuario',
@@ -121,6 +122,7 @@ class AdminUserScreen extends StatelessWidget {
               nameButtom: 'Crear',
             ),
             DividerPersonalizated(thicknessSize: 1),
+            SizedBox(height: 20),
             TipAdminUsers(),
           ],
         ),

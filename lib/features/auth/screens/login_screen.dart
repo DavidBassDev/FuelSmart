@@ -174,7 +174,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       },
                       icon: Icon(
                         Icons.circle_rounded,
-                        color: Color(0xFF552235),
+                        color: Color(0xFF883955),
                         size: 50,
                       ),
                     ),

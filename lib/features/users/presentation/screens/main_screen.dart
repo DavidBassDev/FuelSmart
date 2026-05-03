@@ -36,7 +36,7 @@ class MainScreen extends StatelessWidget {
                       'Bienvenido ${user.nombre}',
                       style: Theme.of(context).textTheme.titleSmall?.copyWith(
                         color: Theme.of(context).colorScheme.onSurface,
-                        fontSize: 15,
+                        fontSize: 18,
                       ),
                       textAlign: TextAlign.center,
                     ),
@@ -46,7 +46,7 @@ class MainScreen extends StatelessWidget {
                       user.rol!,
                       style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                         fontWeight: FontWeight.bold,
-                        fontSize: 15,
+                        fontSize: 20,
                       ),
                       textAlign: TextAlign.center,
                     ),
@@ -55,13 +55,13 @@ class MainScreen extends StatelessWidget {
               ),
 
               const CardAdminOperation(),
-              const SizedBox(height: 20),
+              const SizedBox(height: 25),
 
               Row(
                 children: [
                   Text(
                     'Acciones',
-                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -87,13 +87,13 @@ class MainScreen extends StatelessWidget {
               const SizedBox(height: 15),
               //CAROUSEL SUPERIOR
               SizedBox(height: 120, child: CarouselWidget(token: token)),
-              const SizedBox(height: 50),
+              const SizedBox(height: 80),
               //CAROUSEL INFERIOR
               Row(
                 children: [
                   Text(
                     'Pendientes',
-                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
                   ),

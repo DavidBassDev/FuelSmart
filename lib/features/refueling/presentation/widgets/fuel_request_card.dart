@@ -8,6 +8,7 @@ class FuelRequestCard extends StatelessWidget {
   final String cliente;
   final String observacion;
   final VoidCallback onPressed;
+  final VoidCallback onApprove; // 👈 nuevo callback
 
   const FuelRequestCard({
     super.key,
@@ -18,14 +19,15 @@ class FuelRequestCard extends StatelessWidget {
     required this.observacion,
     required this.onPressed,
     required this.solicitados,
+    required this.onApprove,
   });
-  //ACOMODAR TODOS LOS COLORES AL THEME
+
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         // 🔹 Icono
-        const Icon(Icons.person, size: 40),
+        const Icon(Icons.person, size: 40, color: Colors.black),
 
         const SizedBox(width: 12),
 
@@ -53,11 +55,30 @@ class FuelRequestCard extends StatelessWidget {
           ),
         ),
 
-        // 🔹 Botón
-        ElevatedButton(
-          onPressed: onPressed,
-          style: ElevatedButton.styleFrom(backgroundColor: Colors.black26),
-          child: const Text("Ver"),
+        // 🔹 Botones
+        Column(
+          children: [
+            ElevatedButton(
+              onPressed: onApprove,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Color(0xFF2D3E2D),
+              ),
+              child: const Text(
+                "Aprobar",
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+
+            const SizedBox(height: 8),
+
+            ElevatedButton(
+              onPressed: onPressed,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Color(0xFF2D3E2D),
+              ),
+              child: const Text("Ver", style: TextStyle(color: Colors.white)),
+            ),
+          ],
         ),
       ],
     );

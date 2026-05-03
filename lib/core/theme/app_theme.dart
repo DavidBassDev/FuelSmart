@@ -7,18 +7,29 @@ class AppTheme {
       useMaterial3: true,
       fontFamily: "SFProText",
       brightness: Brightness.dark,
-      scaffoldBackgroundColor: const Color(0xFF883955),
+
+      // Fondo principal (pantalla)
+      scaffoldBackgroundColor: const Color(0xFF6E2C44),
 
       colorScheme: const ColorScheme(
         brightness: Brightness.dark,
-        primary: Color(0xFF883955), // es el principal*botones principales
-        onPrimary: Colors.white, // texto sobre botones
-        secondary: Color(0xFF552235),
+
+        // 🔴 Botones principales (como verde oscuro en beige)
+        primary: Color(0xFF883955),
+        onPrimary: Colors.white,
+
+        // 🟣 Fondos secundarios (inputs / cards suaves)
+        secondary: Color(0xFF9E4A68),
         onSecondary: Colors.white,
+
+        // 🟤 Superficies elevadas (cards tipo "Administrar")
+        surface: Color(0xFF552235),
+
+        // 🔥 TEXTO en superficies oscuras → SIEMPRE claro
+        onSurface: Colors.white,
+
         error: Colors.red,
         onError: Colors.white,
-        surface: Color(0xFF552235),
-        onSurface: Color.fromARGB(255, 255, 255, 255), // texto normal
       ),
 
       textTheme: appTextTheme,
@@ -29,8 +40,9 @@ class AppTheme {
   static ThemeData redTheme() {
     return ThemeData(
       useMaterial3: true,
+      fontFamily: "SFProText",
       brightness: Brightness.dark,
-      scaffoldBackgroundColor: const Color(0xFFA23B3C),
+      scaffoldBackgroundColor: const Color(0xFF883955),
       colorScheme: const ColorScheme(
         brightness: Brightness.dark,
         primary: Color(0xFFA23B3C), // botones principales

@@ -44,7 +44,10 @@ class _FuelRequestListScreenState extends State<FuelRequestListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Vehículos con solicitud de cupo"),
+        title: Text(
+          "Vehículos con solicitud de cupo",
+          style: TextStyle(fontSize: 18),
+        ),
         centerTitle: true,
       ),
 
@@ -89,6 +92,7 @@ class _FuelRequestListScreenState extends State<FuelRequestListScreen> {
                       ),
                     );
                   },
+                  onApprove: () {},
                 );
               },
             ),

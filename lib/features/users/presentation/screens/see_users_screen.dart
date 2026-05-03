@@ -95,7 +95,7 @@ class _SeeUsersScreen extends State<SeeUsersScreen> {
                   ),
                   const SizedBox(width: 15),
                   PillBtnPersonalizated(
-                    text: 'Supervisores',
+                    text: 'Coordinadores',
                     selected: selectedRole == 'supervisor',
                     onTap: () {
                       if (selectedRole != 'supervisor') {
