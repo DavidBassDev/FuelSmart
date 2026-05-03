@@ -13,7 +13,6 @@ class DriverUserScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final auth = Provider.of<AuthProvider>(context);
-
     if (!auth.isLogged || auth.user == null || auth.token == null) {
       return const Scaffold(body: Center(child: Text("Token inválido")));
     }

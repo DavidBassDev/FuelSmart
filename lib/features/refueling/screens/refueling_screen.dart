@@ -97,7 +97,7 @@ class _RefuelingScreenState extends State<RefuelingScreen> {
                         leading: const Icon(Icons.directions_car, size: 50),
                         title: Text(vehicle.plate),
                         subtitle: Text(
-                          "Rendimiento: ${vehicle.teoricPerformance}",
+                          "Rendimiento Teórico: ${vehicle.teoricPerformance}",
                         ),
                         trailing: ElevatedButton(
                           style: ElevatedButton.styleFrom(
