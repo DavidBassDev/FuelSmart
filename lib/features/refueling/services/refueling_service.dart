@@ -103,4 +103,25 @@ class RefuelingService {
 
     return response;
   }
+
+  // TRAER SOLICITUDES PENDIENTES
+  Future<List<dynamic>> getPendingFuelRequests(String token) async {
+    final response = await api.getWithToken(
+      "api/fuelrequest/pendingRequests",
+      token,
+    );
+
+    final body = response is Map ? response : response.data;
+
+    if (body == null || body['data'] == null) {
+      debugPrint("Respuesta inválida: $body");
+      return [];
+    }
+
+    final List data = body['data'];
+
+    debugPrint("SOLICITUDES: $data");
+
+    return data;
+  }
 }

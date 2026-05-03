@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fuel_smart/core/widgets/pending_carousel_functions.dart';
 import 'package:fuel_smart/features/dashboard/screens/low_fuel_screen.dart';
 import 'package:fuel_smart/features/dashboard/screens/no_avaliable_fuel_quota_screen.dart';
+import 'package:fuel_smart/features/refueling/screens/admin_request_fuel_screen.dart';
 
 class PendingCarouselWidget extends StatelessWidget {
   final String token;
@@ -17,7 +18,10 @@ class PendingCarouselWidget extends StatelessWidget {
           icon: Icons.car_repair,
           text: 'Vehículos con \nsolicitud de cupo',
           onPressed: () {
-            print("pressed");
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => FuelRequestListScreen()),
+            );
           },
         ),
         SizedBox(width: 20),
